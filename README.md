@@ -33,5 +33,7 @@ NodeJS、Express、MongoDB、AngularJS、Bootstarp
 ## 目录结构
 
 admin  >> 后台管理 
+
 client >> 客户网站
+
 api    >> 为admin、client提供api支持
