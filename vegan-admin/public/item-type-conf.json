@@ -1,0 +1,26 @@
+[
+  {
+    "name": "文本",
+    "type": "text"
+  }, 
+  {
+    "name": "数字",
+    "type": "number"
+  },
+  {
+    "name": "邮箱",
+    "type": "email"
+  },
+  {
+    "name": "日期",
+    "type": "date"
+  }, 
+  {
+    "name": "单选",
+    "type": "radio"
+  }, 
+  {
+    "name": "多选",
+    "type": "checkbox"
+  }
+]

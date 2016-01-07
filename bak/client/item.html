@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app="itemApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="../bootstrap/css/bootstrap.min.css"rel="stylesheet">
+    <link href="../stylesheets/style.min.css" rel="stylesheet">
+    <base href="/client/"></base>
+    <title>资料录入</title>
+  </head>
+  <body ng-controller="ItemCtrl">
+    <div class="container">
+      <div class="page-header text-center">
+        <h3>{{task.template.name}}</h3>
+      </div>
+      <form novalidate>
+        <div class="form-group" ng-repeat="item in task.template.items">
+          <label>{{item.name}}</label>
+          <input ng-if="item.itemType.type == 'text'" class="form-control" 
+            type="text" 
+            ng-model="item.value" 
+            required>
+          <input ng-if="item.itemType.type == 'number'" class="form-control" 
+            type="number" 
+            ng-model="item.value" 
+            required>
+          <input ng-if="item.itemType.type == 'email'" class="form-control"
+            type="email" 
+            ng-model="item.value" 
+            required>
+          <input ng-if="item.itemType.type == 'date'" class="form-control" 
+            type="text" 
+            ng-model="item.value" 
+            required>
+        </div>
+        <hr>
+        <div class="form-group">
+          <label>留言</label>
+          <textarea class="form-control" rows="3" ng-model="task.remark"></textarea>
+        </div>
+        <button type="button" class="btn btn-success" ng-click="ok()">提交</button>
+      </form>
+    </div>
+    <script src="../angular/angular.min.js"></script>
+    <script src="../angular/ui-bootstrap.min.js"></script>
+    <script src="../angular/ui-bootstrap-tpls.min.js"></script>
+    <script src="../javascripts/item.min.js"></script>
+  </body>
+</html>
