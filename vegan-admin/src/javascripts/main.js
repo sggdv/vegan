@@ -12,52 +12,47 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 var veganCtrl = angular.module('veganCtrl', []);
 
-
-/*
-
-signinApp.controller('SignInCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
-
-  // init alert
+veganCtrl.controller('SignInCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
   $scope.alert = { isCollapsed : true };
 
   // 登陆 
   // 去掉空格
   // 验证字符格式
   $scope.signin = function() {
-    if ($scope.signin_form.$invalid) return;
+    if ($scope.signin_form.$invalid) 
+      return;
     
     // 去掉空格
     $scope.username = $scope.username.replace(/\s/gi, '');
     $scope.pwd = $scope.pwd.replace(/\s/gi, '');
     
-    // http request start -----
     $http.post('signin', {
       username: $scope.username,
       pwd: $scope.pwd
     })
     .success(function (data) {
       if (data.success) {
-        location.href = 'dashboard';
+       // location.href = 'dashboard';
       } else {
-        $scope.alert.msg = '用户名或密码不正确';
-        $scope.alert.isCollapsed = false;
-        $timeout(function () {
-          $scope.alert.isCollapsed = true;
-        }, 5000);
+        $scope.alertMsg("用户名或密码不正确");
       }
     })
     .error(function (data, status) {
-      $scope.alert.msg = "Request failed : " + status;
-      $scope.alert.isCollapsed = false;
-      $timeout(function () {
-        $scope.alert.isCollapsed = true;
-      }, 5000);
+      $scope.alertMsg("Request failed : " + status);
     });
-    // ----- http request end
+  };
+
+  $scope.alertMsg = function (msg) {
+    $scope.alert.msg = msg;
+    $scope.alert.isCollapsed = false;
+    $timeout(function () {
+      $scope.alert.isCollapsed = true;
+    }, 5000);
   };
   
 }]);
 
+/*
 veganCtrl.controller('InstanceCtrl', ['$scope','$http', '$modal', function ($scope, $http, $modal) {
   $http.get('/instances')
   .success(function (data) {
