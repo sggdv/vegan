@@ -1,17 +1,18 @@
-var express     = require('express');
-var path        = require('path');
-var logger      = require('morgan');
-var mongodb     = require('mongodb');
-var MongoClient = mongodb.MongoClient;
-var bodyParser  = require('body-parser');
+var express      = require('express');
+var path         = require('path');
+var logger       = require('morgan');
+var mongodb      = require('mongodb');
+var bodyParser   = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 var app = express();
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
-MongoClient.connect('mongodb://127.0.0.1:27017/vegan', function (err, db) {
+mongodb.MongoClient.connect('mongodb://127.0.0.1:27017/vegan', function (err, db) {
   if (err) {
     console.log(err);
     return;
@@ -26,7 +27,7 @@ MongoClient.connect('mongodb://127.0.0.1:27017/vegan', function (err, db) {
   app.listen(3000);
 });
 
-
+//用户登陆，将ObjectId存放在cookies中。
 app.post('/signin', function (req, res) {
   var query = {
     name : req.body.username,
@@ -39,6 +40,7 @@ app.post('/signin', function (req, res) {
       return res.json({ success: false});
     }
     console.log(doc);
+    res.cookie('uid', doc._id);
     res.json({ success: true });
   };
 
@@ -47,7 +49,6 @@ app.post('/signin', function (req, res) {
 
 // var favicon = require('serve-favicon');
 
-// var cookieParser = require('cookie-parser');
 // var session = require('express-session');
 
 // var admin = require('./routes/admin');
@@ -65,7 +66,6 @@ app.post('/signin', function (req, res) {
 // app.use(favicon(__dirname + '/public/favicon.ico'));
 
 // app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser());
 
 // app.use(session({ 
 //   secret: 'keyboard cat', 
