@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="page-header">
+    <h3>我的表单</h3>
+  </div>
+  <div class="form-group">
+    <a class="btn btn-danger" href="#template-save">
+      <span class="glyphicon glyphicon-plus"></span> 新建表单
+    </a>
+  </div>
+  <hr>
+  <div class="panel panel-info" ng-repeat="t in templates">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-sm-4">{{t.name}}</div>
+          <div class="col-sm-8">
+            <span class="glyphicon glyphicon-time"></span> {{t.createDate | date : 'yyyy/MM/dd HH:mm'}}
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <tr ng-repeat="item in t.items">
+            <td class="col-sm-2">{{$index + 1}}</td>
+            <td class="col-sm-2">{{item.name}}</td>
+            <td class="col-sm-3">{{item.itemType.name || '-'}}</td>
+            <td class="col-sm-5">{{item.desc || '-'}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="panel-footer">
+        <button type="button" class="btn btn-sm btn-success" ng-click="editTemplate(t)">
+          <span class="glyphicon glyphicon-ok"></span> 编辑
+        </button>
+        <a class="btn btn-sm btn-default" href="/client/item.html?id={{t._id}}" target="_blank">
+          <span class="glyphicon glyphicon-search"></span> 预览
+        </a>
+        <button type="button" class="btn btn-sm btn-default" ng-click="removeTemplate($index)">
+          <span class="glyphicon glyphicon-trash"></span> 删除
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

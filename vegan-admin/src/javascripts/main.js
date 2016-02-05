@@ -1,4 +1,4 @@
-var app = angular.module('vegan', ['ngRoute', 'veganCtrl']);
+var app = angular.module('vegan', ['ngRoute', 'ngCookies', 'veganCtrl']);
 
 app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider
@@ -12,17 +12,14 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 var veganCtrl = angular.module('veganCtrl', []);
 
-veganCtrl.controller('SignInCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+veganCtrl.controller('SignInCtrl', ['$scope', '$rootScope', '$http', '$timeout', function ($scope, $http, $timeout) {
   $scope.alert = { isCollapsed : true };
 
-  // 登陆 
-  // 去掉空格
-  // 验证字符格式
   $scope.signin = function() {
-    if ($scope.signin_form.$invalid) 
+    if ($scope.signin_form.$invalid) { 
       return;
+    }
     
-    // 去掉空格
     $scope.username = $scope.username.replace(/\s/gi, '');
     $scope.pwd = $scope.pwd.replace(/\s/gi, '');
     
@@ -32,7 +29,6 @@ veganCtrl.controller('SignInCtrl', ['$scope', '$http', '$timeout', function ($sc
     })
     .success(function (data) {
       if (data.success) {
-       // location.href = 'dashboard';
       } else {
         $scope.alertMsg("用户名或密码不正确");
       }

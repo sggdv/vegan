@@ -17,6 +17,7 @@ gulp.task('js', function() {
   gulp.src([
         './public/bower_components/angular/angular.min.js',
         './public/bower_components/angular-route/angular-route.min.js',
+        './public/bower_components/angular-cookies/angular-cookies.min.js',
         // './public/bower_components/angular-bootstrap/ui-bootstrap.min.js',
         './src/javascripts/main.js'
       ])
@@ -24,6 +25,11 @@ gulp.task('js', function() {
       .pipe(uglify())
       .pipe(rename({ suffix: '.min'}))
       .pipe(gulp.dest('./public/javascripts'));
+
+  gulp.src([
+    '',
+    ''
+  ]);
 });
 
 gulp.task('html', function() {

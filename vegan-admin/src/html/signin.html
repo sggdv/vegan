@@ -1,28 +1,38 @@
-<div class="container" ng-controller="SignInCtrl">
-  <form class="form-signin" novalidate name="signin_form">
-    <h2 class="form-signin-heading text-center">登陆 Vegan</h2>
-    <div class="form-group" ng-class="{'has-error': signin_form.username.$invalid && !signin_form.username.$pristine}">
-      <div class="input-group">
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-user"></span>
-        </span>
-        <input type="text" class="form-control" autofocus placeholder="用户名"
-               name="username" ng-model="username" required>
-      </div>
+<!doctype html>
+<html lang="zh-CN" ng-app="vegan">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container" ng-controller="SignInCtrl">
+      <form class="form-signin" novalidate name="signin_form">
+        <h2 class="form-signin-heading text-center">登陆 Vegan</h2>
+        <div class="form-group" ng-class="{'has-error': signin_form.username.$invalid && !signin_form.username.$pristine}">
+          <div class="input-group">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-user"></span>
+            </span> 
+            <input type="text" class="form-control" autofocus placeholder="用户名" name="username" ng-model="username" required>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': signin_form.pwd.$invalid && !signin_form.pwd.$pristine}">
+          <div class="input-group">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-lock"></span>
+            </span> 
+            <input type="password" class="form-control" placeholder="密码" name="pwd" ng-model="pwd" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-lg btn-success btn-block" type="button" ng-click="signin()">
+            <span class="glyphicon glyphicon-ok"></span> 登陆
+          </button>
+        </div>
+      </form>
     </div>
-    <div class="form-group" ng-class="{'has-error': signin_form.pwd.$invalid && !signin_form.pwd.$pristine}">
-      <div class="input-group">
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-lock"></span>
-        </span>
-        <input type="password" class="form-control" placeholder="密码" 
-               name="pwd" ng-model="pwd" required>
-      </div>
-    </div>
-    <div class="form-group">
-      <button class="btn btn-lg btn-success btn-block" type="button" ng-click="signin()">
-        <span class="glyphicon glyphicon-ok"></span> 登陆
-      </button>
-    </div>
-  </form>
-</div>
+    <script src="javascripts/signin.min.js"></script>
+  </body>
+</html>
