@@ -24,3 +24,18 @@ layer）。"客户端"不能直接登录"服务提供商"，只能登录授权�
 
 # 可选技术
 * spring security oauth2
+
+## API
+
+Admin端
+
++ 创建 Template
++ 查询 Template
++ 创建 Instance
++ 查询 Instance
++ 处理 Instance
+
+Client端
+
++ 查询 Instance
++ 修改 Instance

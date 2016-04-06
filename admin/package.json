@@ -1,0 +1,15 @@
+{
+  "name": "admin",
+  "version": "1.0.0",
+  "description": "+ 创建 Template + 创建 Instance",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "request": "^2.69.0"
+  }
+}

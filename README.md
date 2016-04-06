@@ -5,9 +5,10 @@
 * 电商企业
 * 培训报名
 * 通行证签注
+* 虚拟产品(激活序列号)
 
 # 技术选型
-NodeJS、Express、MongoDB、AngularJS、Bootstarp
+NodeJS、Express、MongoDB、Bootstarp
 
 # 工作原理
 客户     --> 预览介绍 --> 填写资料
