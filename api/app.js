@@ -24,4 +24,8 @@ app.delete('/templates/:id', (req, res) => {
     res.json({});
 });
 
-app.listen(3000);
+app.get('/users', (req, res) => {
+    res.json({ uid: 'abc123' });
+});
+
+app.listen(3002);

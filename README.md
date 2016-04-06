@@ -38,3 +38,8 @@ admin  >> 后台管理
 client >> 客户网站
 
 api    >> 为admin、client提供api支持
+
+## 端口分配
+admin  3000
+client 3001
+api    3002 
