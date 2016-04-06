@@ -17,7 +17,7 @@ app.post('/signin', (req, res) => {
   var username = req.body.username;
   var pwd = req.body.pwd;
   // 查询User, 设置cookie。
-  request.({
+  request({
     method: 'GET',
     url: 'http://127.0.0.1:3002/users',
     json: true,

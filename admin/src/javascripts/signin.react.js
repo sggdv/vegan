@@ -1,8 +1,10 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var _ = require('underscore');
+var _ = {
+  isEmpty: function(value) {
+    return (!value && value == '');
+  }
+};
 
-var Login = React.createClass({
+var SignInBox = React.createClass({
   getInitialState: function() {
     return { 
       username: '', 
@@ -15,19 +17,18 @@ var Login = React.createClass({
       pwdValid: {
         isEmpty: true
       }
-    };
+    }
   },
   render: function() {
-    var UsernameErrorTips = '';
-    var UsernameSuccessTips = '';
-    var PwdErrorTips = '';
-    var PwdSuccessTips = '';
+    var UsernameErrorTips;
+    var UsernameSuccessTips;
+    var PwdErrorTips;
+    var PwdSuccessTips;
 
     var usernameDOMClz = 'form-group';
     var pwdDOMClz = 'form-group';
 
     if (this.state.validFlag) {
-
       if (this.state.usernameValid.isEmpty) {
         usernameDOMClz = 'form-group has-error has-feedback';
         UsernameErrorTips = (
@@ -61,13 +62,12 @@ var Login = React.createClass({
         pwdDOMClz = 'form-group has-success has-feedback';
         PwdSuccessTips = (<span className="glyphicon glyphicon-ok form-control-feedback"></span>);
       }
-
     }
 
     return (
       <form style={formSignin}>
         <div className="text-center">
-          <h2 style={formH2}>用户登陆</h2>
+          <h2 style={formH2}>{this.props.title}</h2>
         </div>
         <div className={usernameDOMClz}>
           <div className="input-group">
@@ -97,17 +97,28 @@ var Login = React.createClass({
         <div className="form-group">
           <button className="btn btn-lg btn-success btn-block" 
             type="button" 
-            onClick={this.login}>
+            onClick={this.signin}>
             <span className="glyphicon glyphicon-ok"></span> 登陆
           </button>
         </div>
       </form>
     );
   }, 
-  login: function() {
+  signin: function() {
     this.setState({ validFlag: true });
     if (this.state.usernameValid.isEmail && !this.state.pwdValid.isEmpty) {
-      alert('success');
+      jQuery.ajax({
+        type: 'POST',
+        url: 'http://127.0.0.1:3002/signin',
+        data: {
+          username: this.state.username,
+          pwd: this.state.pwd
+        },
+        dataType: 'json',
+        success: function(data) {
+          // TODO 实现
+        }      
+      });
     }
   },
   handleChangeUsername: function(event) {
@@ -137,7 +148,7 @@ var Login = React.createClass({
       }
     });
   }, 
-  validUsername: function (value) {
+  validUsername: function(value) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(value);
   }
@@ -155,6 +166,7 @@ var formH2 = {
   lineHeight: '90px'
 };
 
-define(function() {
-  return Login;
-});
+ReactDOM.render(
+  <SignInBox title="登陆Vegan" />,
+  document.getElementById('example')
+);
