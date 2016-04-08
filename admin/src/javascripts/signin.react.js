@@ -117,6 +117,7 @@ var SignInBox = React.createClass({
         dataType: 'json',
         success: function(data) {
           // TODO 实现
+          window.location.href = 'dashboard.html';
         }      
       });
     }

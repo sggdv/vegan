@@ -144,7 +144,19 @@ var SignInBox = React.createClass({
   signin: function () {
     this.setState({ validFlag: true });
     if (this.state.usernameValid.isEmail && !this.state.pwdValid.isEmpty) {
-      alert(this.state.username + '=' + this.state.pwd);
+      jQuery.ajax({
+        type: 'POST',
+        url: 'http://127.0.0.1:3002/signin',
+        data: {
+          username: this.state.username,
+          pwd: this.state.pwd
+        },
+        dataType: 'json',
+        success: function (data) {
+          // TODO 实现
+          window.location.href = 'dashboard.html';
+        }
+      });
     }
   },
   handleChangeUsername: function (event) {

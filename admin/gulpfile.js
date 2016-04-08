@@ -7,7 +7,7 @@ gulp.task('default', () => {
   gulp.src(['./node_modules/react/dist/react.min.js']).pipe(gulp.dest('./public/javascripts/'));
   gulp.src(['./node_modules/react-dom/dist/react-dom.min.js']).pipe(gulp.dest('./public/javascripts/'));
  
-  gulp.src('./src/javascripts/signin.react.js')
+  gulp.src(['./src/javascripts/*.react.js'])
     .pipe(babel({ presets: ['react'] }))
     .pipe(gulp.dest('./public/javascripts/'));
 });
