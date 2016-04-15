@@ -8,7 +8,7 @@
 * 虚拟产品(激活序列号)
 
 # 技术选型
-NodeJS、Express、MongoDB、Bootstarp
+NodeJS、Express、MongoDB、Bootstarp、React
 
 # 工作原理
 客户     --> 预览介绍 --> 填写资料
@@ -43,3 +43,14 @@ api    >> 为admin、client提供api支持
 admin  3000
 client 3001
 api    3002 
+
+## 盈利模式
+发布到淘宝服务市场。
+
+## 开发过程
+登陆跳转
+编辑表单
+对接淘宝
+填写资料
+处理归档
+
