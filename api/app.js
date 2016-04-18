@@ -8,24 +8,24 @@ app.use(bodyParser.json());
 var templates = [];
 
 app.post('/templates', (req, res) => {
-    templates.push(req.body);
-    res.status(201).json(req.body);
+	templates.push(req.body);
+	res.status(201).json(req.body);
 });
 
 app.get('/templates', (req, res) => {
-    res.json(templates);
+	res.json(templates);
 });
 
 app.get('/templates/:id', (req, res) => {
-    res.status(201).json({});
+	res.status(201).json({});
 });
 
 app.delete('/templates/:id', (req, res) => {
-    res.json({});
+	res.json({});
 });
 
 app.get('/users', (req, res) => {
-    res.json({ uid: 'abc123' });
+	res.json({ uid: 'abc123' });
 });
 
 app.listen(3002);

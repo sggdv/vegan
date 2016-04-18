@@ -15,8 +15,15 @@ var TemplateBox = React.createClass({
 						</div>
 						<ItemList items={this.state.items} callbackParent={this.handleItemsChange} />
 						<div className="form-group">
-							<div className="col-sm-offset-2 col-sm-10">
-								<button type="button" className="btn btn-primary" onClick={this.handleItemAdd}>添加</button>
+						  <div className="col-sm-2">
+								<button type="button" className="btn btn-default" onClick={this.handleItemAdd}>
+									<span className="glyphicon glyphicon-plus"></span>
+								</button>
+							</div>
+							<div className="col-sm-10">
+								<button type="button" className="btn btn-primary" onClick={this.handleCommit}>
+								  <span className="glyphicon glyphicon-ok"></span> 保存表单
+								</button>
 							</div>
 						</div>
 					</form>
@@ -43,6 +50,23 @@ var TemplateBox = React.createClass({
 		var items = this.state.items;
 		items.push({ name: '', type: 'text', options: ['', '', ''] });
 		this.setState({ items });
+	},
+	handleCommit: function() {
+		var template = this.state;
+		// TODO 提交表单
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/templates',
+			data: JSON.stringify(template),
+			dataType: 'json',
+			success: function(data) {
+				alert('ok');	
+			},
+			beforeSend: function() {
+			
+			}
+		});
 	}
 });
 

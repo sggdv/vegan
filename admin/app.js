@@ -4,6 +4,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var request = require('request');
+var templates = require('./router/templates');
 
 var app = express();
 
@@ -35,21 +36,6 @@ app.post('/signin', (req, res) => {
   });
 });
 
+app.use('/templates', templates);
+
 app.listen(3000);
-
-/*
-var request = require('request');
-
-request({
-  method: 'POST',
-  url: 'http://127.0.0.1:3002/templates',
-  json: true,
-  body: {
-    title: '表单名称'
-  }
-}, (err, res, body) => {
-  if (!err && res.statusCode == 201) {
-    console.log('success');
-  }
-});
-*/

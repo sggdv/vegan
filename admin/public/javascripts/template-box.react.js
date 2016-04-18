@@ -34,11 +34,21 @@ var TemplateBox = React.createClass({
 						{ className: 'form-group' },
 						React.createElement(
 							'div',
-							{ className: 'col-sm-offset-2 col-sm-10' },
+							{ className: 'col-sm-2' },
 							React.createElement(
 								'button',
-								{ type: 'button', className: 'btn btn-primary', onClick: this.handleItemAdd },
-								'添加'
+								{ type: 'button', className: 'btn btn-default', onClick: this.handleItemAdd },
+								React.createElement('span', { className: 'glyphicon glyphicon-plus' })
+							)
+						),
+						React.createElement(
+							'div',
+							{ className: 'col-sm-10' },
+							React.createElement(
+								'button',
+								{ type: 'button', className: 'btn btn-primary', onClick: this.handleCommit },
+								React.createElement('span', { className: 'glyphicon glyphicon-ok' }),
+								' 保存表单'
 							)
 						)
 					)
@@ -75,6 +85,21 @@ var TemplateBox = React.createClass({
 		var items = this.state.items;
 		items.push({ name: '', type: 'text', options: ['', '', ''] });
 		this.setState({ items });
+	},
+	handleCommit: function () {
+		var template = this.state;
+		// TODO 提交表单
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/templates',
+			data: JSON.stringify(template),
+			dataType: 'json',
+			success: function (data) {
+				alert('ok');
+			},
+			beforeSend: function () {}
+		});
 	}
 });
 
