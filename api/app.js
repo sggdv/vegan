@@ -1,9 +1,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var templates = require('./router/templates');
 
 var app = express();
 
 app.use(bodyParser.json());
+app.use('/templates', templates);
 
 var templates = [];
 
