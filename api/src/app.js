@@ -1,6 +1,4 @@
-'use strict';
-
-var express = require('express');
+var express =  require('express');
 var bodyParser = require('body-parser');
 //var templates = require('./router/templates');
 
@@ -11,24 +9,24 @@ app.use(bodyParser.json());
 
 var templates = [];
 
-app.post('/templates', function (req, res) {
+app.post('/templates', (req, res) => {
 	templates.push(req.body);
 	res.status(201).json(req.body);
 });
 
-app.get('/templates', function (req, res) {
+app.get('/templates', (req, res) => {
 	res.json(templates);
 });
 
-app.get('/templates/:id', function (req, res) {
+app.get('/templates/:id', (req, res) => {
 	res.status(201).json({});
 });
 
-app.delete('/templates/:id', function (req, res) {
+app.delete('/templates/:id', (req, res) => {
 	res.json({});
 });
 
-app.get('/users', function (req, res) {
+app.get('/users', (req, res) => {
 	res.json({ uid: 'abc123' });
 });
 
