@@ -1,17 +1,33 @@
-// template 的 RESTful API 实现
-var express = require('express');
-var request = require('request');
-var router = express.Router();
+'use strict';
 
-router.post('/', (req, res) => {
-  var template = req.body;
-	console.log(template);
-	request({
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
+var _request = require('request');
+
+var _request2 = _interopRequireDefault(_request);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// template 的 RESTful API 实现
+
+
+var router = _express2.default.Router();
+var API_BASE_URL = 'http://127.0.0.1:3002/templates';
+
+router.post('/', function (req, res) {
+	var template = req.body;
+	(0, _request2.default)({
 		method: 'POST',
-		url: 'http://127.0.0.1:3002/templates',
+		url: API_BASE_URL,
 		json: true,
 		body: template
-	}, (err, apiRes, body) => {
+	}, function (err, apiRes, body) {
 		if (!err && apiRes.statusCode == 201) {
 			res.status(201).json({});
 		} else {
@@ -20,4 +36,4 @@ router.post('/', (req, res) => {
 	});
 });
 
-module.exports = router;
+exports.default = router;

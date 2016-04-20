@@ -1,35 +1,22 @@
 'use strict';
 
-var express = require('express');
-var bodyParser = require('body-parser');
-//var templates = require('./router/templates');
+var _express = require('express');
 
-var app = express();
+var _express2 = _interopRequireDefault(_express);
 
-app.use(bodyParser.json());
-//app.use('/templates', templates);
+var _bodyParser = require('body-parser');
 
-var templates = [];
+var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-app.post('/templates', function (req, res) {
-	templates.push(req.body);
-	res.status(201).json(req.body);
-});
+var _templates = require('./router/templates');
 
-app.get('/templates', function (req, res) {
-	res.json(templates);
-});
+var _templates2 = _interopRequireDefault(_templates);
 
-app.get('/templates/:id', function (req, res) {
-	res.status(201).json({});
-});
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-app.delete('/templates/:id', function (req, res) {
-	res.json({});
-});
+var app = (0, _express2.default)();
+app.use(_bodyParser2.default.json());
 
-app.get('/users', function (req, res) {
-	res.json({ uid: 'abc123' });
-});
+app.use('/templates', _templates2.default);
 
 app.listen(3002);

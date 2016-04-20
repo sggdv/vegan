@@ -23,7 +23,9 @@ router.post('/', function (req, res) {
 });
 
 router.get('/', function (req, res) {
-	res.json(_db.templates.findAll());
+	_db.templates.findAll(function (err, docs) {
+		res.json(docs);
+	});
 });
 
 router.get('/:id', function (req, res) {

@@ -16,12 +16,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var pool = new _genericPool.Pool({
 	name: 'mongodb',
 	max: 10,
-	idleTimeoutMillis: 30000,
+	idleTimeoutMillis: 60000,
 	log: true,
 	create: function create(callback) {
-		_mongodb.MongoClient.connect('mongodb://localhost:27017/vegan', function (err, db) {
-			callback(err, db);
-		});
+		_mongodb.MongoClient.connect('mongodb://localhost:27017/vegan', callback);
 	},
 	destroy: function destroy(client) {
 		client.close();
@@ -51,6 +49,7 @@ var Dao = function () {
 						delete rs._id;
 					}
 					callback(err, rs);
+					pool.release(db);
 				});
 			});
 		}
@@ -61,13 +60,14 @@ var Dao = function () {
 
 			pool.acquire(function (err, db) {
 				if (err) return console.log(err);
-				var collection = db.collection(_this2.target);
-				collection.findOne({ _id: (0, _mongodb.ObjectID)(id) }, function (err, doc) {
+				var col = db.collection(_this2.target);
+				col.findOne({ _id: (0, _mongodb.ObjectID)(id) }, function (err, doc) {
 					if (doc._id) {
 						doc.id = doc._id.toString();
 						delete doc._id;
 					}
 					callback(err, doc);
+					pool.release(db);
 				});
 			});
 		}
@@ -78,9 +78,16 @@ var Dao = function () {
 
 			pool.acquire(function (err, db) {
 				if (err) return console.log(err);
-				var collection = db.collection(_this3.target);
-				collection.find().toArray(function (err, docs) {
-					callback(err, docs);
+				var col = db.collection(_this3.target);
+				col.find().toArray(function (err, docs) {
+					callback(err, docs.map(function (doc) {
+						if (doc._id) {
+							doc.id = doc._id.toString();
+							delete doc._id;
+						}
+						return doc;
+					}));
+					pool.release(db);
 				});
 			});
 		}
@@ -95,7 +102,12 @@ var Dao = function () {
 				col.findOneAndUpdate({ _id: (0, _mongodb.ObjectID)(id) }, { $set: update }, function (err, r) {
 					if (err) return console.log(err);
 					var rs = r.ok == 1 ? r.value : undefined;
+					if (rs._id) {
+						doc.id = doc._id.toString();
+						delete doc._id;
+					}
 					callback(err, rs);
+					pool.release(db);
 				});
 			});
 		}
@@ -110,7 +122,12 @@ var Dao = function () {
 				col.findOneAndDelete({ _id: (0, _mongodb.ObjectID)(id) }, function (err, r) {
 					if (err) return console.log(err);
 					var rs = r.ok == 1 ? r.value : undefined;
+					if (rs._id) {
+						doc.id = doc._id.toString();
+						delete doc._id;
+					}
 					callback(err, rs);
+					pool.release(db);
 				});
 			});
 		}

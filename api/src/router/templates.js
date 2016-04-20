@@ -15,13 +15,15 @@ router.post('/', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-	res.json(templates.findAll());
+	templates.findAll((err, docs) => {
+		res.json(docs);	
+	});
 });
 
 router.get('/:id', (req, res) => {
 	templates.findOne(req.params.id, (err, template) => {
 		if (!err) 
-			res.json({template});
+			res.json(template);
 		else
 			res.status(404).json({err});
 	});
@@ -30,7 +32,7 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
 	templates.updateOne(req.params.id, res.body, (err, template) => {
 		if (!err)
-			res.json({template});
+			res.json(template);
 		else
 			res.status(500).json({err});
 	});
@@ -39,7 +41,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
 	template.deleteOne(req.params.id, (err, template) => {
 		if (!err) 
-			res.json({template});
+			res.json(template);
 		else
 			res.status(500).json({err});
 	});
