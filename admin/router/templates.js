@@ -36,4 +36,17 @@ router.post('/', function (req, res) {
 	});
 });
 
+router.get('/', function (req, res) {
+	(0, _request2.default)({
+		method: 'GET',
+		url: API_BASE_URL,
+		json: true
+	}, function (err, apiRes, body) {
+		console.log(body);
+		console.log('===');
+		console.log(body[0].title);
+		res.json(body);
+	});
+});
+
 exports.default = router;

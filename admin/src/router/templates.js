@@ -21,4 +21,14 @@ router.post('/', (req, res) => {
 	});
 });
 
+router.get('/', (req, res) => {
+	request({
+		method: 'GET',
+		url: API_BASE_URL,
+		json: true
+	}, (err, apiRes, body) => {
+		res.json(body);
+	});
+});
+
 export default router;

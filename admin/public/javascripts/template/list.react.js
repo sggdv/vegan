@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // Template查询页面
 // 操作层：页面标题 + 添加按钮
@@ -6,115 +6,100 @@
 
 // 整个content
 var TemplateListPage = React.createClass({
-	displayName: "TemplateListPage",
+	displayName: 'TemplateListPage',
+	getInitialState: function getInitialState() {
+		var templates = [];
+		return { templates: templates };
+	},
+	componentDidMount: function componentDidMount() {
+		$.ajax({
+			type: 'GET',
+			url: '/templates',
+			dataType: 'json',
+			cache: false,
+			success: function (templates) {
+				this.setState({ templates: templates });
+			}.bind(this),
+			error: function (xhr, status, err) {
+				console.error('abc', status, err.toString());
+			}.bind(this)
+		});
+	},
 	render: function render() {
 		return React.createElement(
-			"div",
+			'div',
 			null,
 			React.createElement(TemplateListOpration, null),
-			React.createElement(TemplateList, null)
+			React.createElement(TemplateList, { templates: this.state.templates })
 		);
 	}
 });
 
 // 操作层
 var TemplateListOpration = React.createClass({
-	displayName: "TemplateListOpration",
+	displayName: 'TemplateListOpration',
 	render: function render() {
 		return React.createElement(
-			"div",
+			'div',
 			null,
 			React.createElement(
-				"div",
-				{ className: "page-header" },
+				'div',
+				{ className: 'page-header' },
 				React.createElement(
-					"h3",
+					'h3',
 					null,
-					"表单管理"
+					'表单管理'
 				)
 			),
 			React.createElement(
-				"button",
-				{ className: "btn btn-danger" },
-				React.createElement("span", { className: "glyphicon glyphicon-plus" }),
-				" 添加表单"
+				'button',
+				{ className: 'btn btn-danger' },
+				React.createElement('span', { className: 'glyphicon glyphicon-plus' }),
+				' 添加表单'
 			),
-			React.createElement("hr", null)
+			React.createElement('hr', null)
 		);
 	}
 });
 
 // 展示层
 var TemplateList = React.createClass({
-	displayName: "TemplateList",
+	displayName: 'TemplateList',
+	render: function render() {
+		var templates = this.props.templates.map(function (template) {
+			return React.createElement(Template, { template: template });
+		});
+		return React.createElement(
+			'div',
+			{ className: 'row' },
+			templates
+		);
+	}
+});
+
+// 单个表单展示
+var Template = React.createClass({
+	displayName: 'Template',
 	render: function render() {
 		return React.createElement(
-			"div",
-			{ className: "row" },
+			'div',
+			{ className: 'col-sm-4' },
 			React.createElement(
-				"div",
-				{ className: "col-sm-4" },
+				'div',
+				{ className: 'panel panel-default' },
 				React.createElement(
-					"div",
-					{ className: "panel panel-default" },
+					'div',
+					{ className: 'panel-heading' },
 					React.createElement(
-						"div",
-						{ className: "panel-heading" },
-						React.createElement(
-							"h3",
-							{ className: "panel-title" },
-							"表单标题"
-						)
-					),
-					React.createElement(
-						"div",
-						{ className: "panel-body" },
-						"表单内容"
+						'h3',
+						{ className: 'panel-title' },
+						this.props.template.title
 					)
-				)
-			),
-			React.createElement(
-				"div",
-				{ className: "col-sm-4" },
+				),
 				React.createElement(
-					"div",
-					{ className: "panel panel-default" },
-					React.createElement(
-						"div",
-						{ className: "panel-heading" },
-						React.createElement(
-							"h3",
-							{ className: "panel-title" },
-							"表单标题"
-						)
-					),
-					React.createElement(
-						"div",
-						{ className: "panel-body" },
-						"表单内容"
-					)
-				)
-			),
-			React.createElement(
-				"div",
-				{ className: "col-sm-4" },
-				React.createElement(
-					"div",
-					{ className: "panel panel-default" },
-					React.createElement(
-						"div",
-						{ className: "panel-heading" },
-						React.createElement(
-							"h3",
-							{ className: "panel-title" },
-							"表单标题"
-						)
-					),
-					React.createElement(
-						"div",
-						{ className: "panel-body" },
-						"表单内容"
-					)
+					'div',
+					{ className: 'panel-body' },
+					'表单内容'
 				)
 			)
 		);

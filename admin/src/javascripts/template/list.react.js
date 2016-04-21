@@ -4,11 +4,29 @@
 
 // 整个content
 var TemplateListPage = React.createClass({
+	getInitialState() {
+		var templates = [];
+		return {templates};
+	},
+	componentDidMount() {
+		$.ajax({
+			type: 'GET',
+			url: '/templates',
+			dataType: 'json',
+			cache: false,
+			success: function(templates) {
+				this.setState({templates});
+			}.bind(this),
+			error: function(xhr, status, err) {
+				console.error('abc', status, err.toString());
+			}.bind(this)
+		});
+	},
 	render() {
 		return (
 			<div>
 				<TemplateListOpration />
-				<TemplateList />
+				<TemplateList templates={this.state.templates} />
 			</div>
 		);
 	}
@@ -34,31 +52,25 @@ var TemplateListOpration = React.createClass({
 // 展示层
 var TemplateList = React.createClass({
 	render() {
+		var templates = this.props.templates.map((template) => {
+			return (<Template template={template} />);	
+		});
 		return (
-			<div className="row">
-				<div className="col-sm-4">
-					<div className="panel panel-default">
-						<div className="panel-heading">
-							<h3 className="panel-title">表单标题</h3>
-						</div>
-						<div className="panel-body">表单内容</div>
+			<div className="row">{templates}</div>
+		);
+	}
+});
+
+// 单个表单展示
+var Template = React.createClass({
+	render() {
+		return (
+			<div className="col-sm-4">
+				<div className="panel panel-default">
+					<div className="panel-heading">
+						<h3 className="panel-title">{this.props.template.title}</h3>
 					</div>
-				</div>
-				<div className="col-sm-4">
-					<div className="panel panel-default">
-						<div className="panel-heading">
-							<h3 className="panel-title">表单标题</h3>
-						</div>
-						<div className="panel-body">表单内容</div>
-					</div>
-				</div>
-				<div className="col-sm-4">
-					<div className="panel panel-default">
-						<div className="panel-heading">
-							<h3 className="panel-title">表单标题</h3>
-						</div>
-						<div className="panel-body">表单内容</div>
-					</div>
+					<div className="panel-body">表单内容</div>
 				</div>
 			</div>
 		);
