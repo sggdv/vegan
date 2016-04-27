@@ -69,5 +69,3 @@ var TemplateBox = React.createClass({
 		});
 	}
 });
-
-ReactDOM.render(<TemplateBox />, document.getElementById('content'));

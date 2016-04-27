@@ -1,6 +1,9 @@
-var ReviewItem = React.createClass({
-	render: function() {
-		var type = this.props.item.type;
+import React from 'react';
+
+// 单个资料项展示
+let Item = React.createClass({
+	render() {
+		let type = this.props.item.type;
 		if (type == 'text') {
 			return (
 				<div className="form-group">
@@ -9,8 +12,8 @@ var ReviewItem = React.createClass({
 				</div>
 			);
 		} else if (type == 'radio') {
-			var radioName = '__review_radio_' + this.props.index;
-			var options = this.props.item.options.map(function(option) {
+			let radioName = '__review_radio_' + this.props.index;
+			let options = this.props.item.options.map((option) => {
 				return (
 					<label className="btn btn-default">
 						<input type="radio" name={radioName} /> {option}
@@ -27,8 +30,8 @@ var ReviewItem = React.createClass({
 				</div>
 			);
 		} else if (type == 'checkbox') {
-			var checkboxName = '__review_checkbox_' + this.props.index;
-			var options = this.props.item.options.map(function(option) {
+			let checkboxName = '__review_checkbox_' + this.props.index;
+			let options = this.props.item.options.map((option) => {
 				return (
 					<label className="btn btn-default">
 						<input type="checkbox" name={checkboxName} /> {option}
@@ -45,14 +48,17 @@ var ReviewItem = React.createClass({
 				</div>
 			);
 		}
-	}
+	},
 });
 
-var ReviewItemList = React.createClass({
-	render: function() {
-		var items = this.props.items.map(function(item, index) {
-			return (<ReviewItem item={item} index={index} />);
+// 客户端展示组件
+let Client = React.createClass({
+	render() {
+		let items = this.props.items.map((item, index) => {
+			return (<Item item={item} index={index} />);
 		});
 		return (<div>{items}</div>);
-	}
+	},
 });
+
+export default Client;

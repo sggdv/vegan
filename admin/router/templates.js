@@ -42,9 +42,6 @@ router.get('/', function (req, res) {
 		url: API_BASE_URL,
 		json: true
 	}, function (err, apiRes, body) {
-		console.log(body);
-		console.log('===');
-		console.log(body[0].title);
 		res.json(body);
 	});
 });

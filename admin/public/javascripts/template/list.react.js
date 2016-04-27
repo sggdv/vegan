@@ -53,12 +53,15 @@ var TemplateListOpration = React.createClass({
 			),
 			React.createElement(
 				'button',
-				{ className: 'btn btn-danger' },
+				{ className: 'btn btn-danger', onClick: this.handleAdd },
 				React.createElement('span', { className: 'glyphicon glyphicon-plus' }),
 				' 添加表单'
 			),
 			React.createElement('hr', null)
 		);
+	},
+	handleAdd: function handleAdd() {
+		ReactDOM.render(React.createElement(TemplateBox, null), document.getElementById('content'));
 	}
 });
 
@@ -81,9 +84,51 @@ var TemplateList = React.createClass({
 var Template = React.createClass({
 	displayName: 'Template',
 	render: function render() {
+		var spanStyle = { marginRight: "15px" };
+		var items = this.props.template.items.map(function (item) {
+			var options = item.options.map(function (option) {
+				if (!option || option == '') return;
+				return React.createElement(
+					'span',
+					{ className: 'label label-default', style: spanStyle },
+					option
+				);
+			});
+
+			return React.createElement(
+				'tr',
+				null,
+				React.createElement(
+					'td',
+					null,
+					item.name
+				),
+				React.createElement(
+					'td',
+					null,
+					function () {
+						switch (item.type) {
+							case "text":
+								return "文本";
+							case "radio":
+								return "单选";
+							case "checkbox":
+								return "多选";
+							default:
+								return "";
+						}
+					}()
+				),
+				React.createElement(
+					'td',
+					null,
+					options
+				)
+			);
+		});
 		return React.createElement(
 			'div',
-			{ className: 'col-sm-4' },
+			{ className: 'col-sm-6' },
 			React.createElement(
 				'div',
 				{ className: 'panel panel-default' },
@@ -91,15 +136,53 @@ var Template = React.createClass({
 					'div',
 					{ className: 'panel-heading' },
 					React.createElement(
+						'button',
+						{ type: 'button', className: 'close' },
+						React.createElement(
+							'span',
+							null,
+							'×'
+						)
+					),
+					React.createElement(
 						'h3',
 						{ className: 'panel-title' },
-						this.props.template.title
+						this.props.template.title,
+						React.createElement(
+							'button',
+							{ type: 'button', className: 'btn btn-default btn-xs', style: { marginLeft: "10px" } },
+							React.createElement('span', { className: 'glyphicon glyphicon-pencil' })
+						)
 					)
 				),
 				React.createElement(
 					'div',
 					{ className: 'panel-body' },
-					'表单内容'
+					this.props.template.remark
+				),
+				React.createElement(
+					'table',
+					{ className: 'table table-hover' },
+					React.createElement(
+						'tr',
+						null,
+						React.createElement(
+							'th',
+							null,
+							'名称'
+						),
+						React.createElement(
+							'th',
+							null,
+							'类别'
+						),
+						React.createElement(
+							'th',
+							null,
+							'选项'
+						)
+					),
+					items
 				)
 			)
 		);

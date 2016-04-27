@@ -102,5 +102,3 @@ var TemplateBox = React.createClass({
 		});
 	}
 });
-
-ReactDOM.render(React.createElement(TemplateBox, null), document.getElementById('content'));
