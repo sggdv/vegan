@@ -39,10 +39,10 @@ var Dao = function () {
 			var _this = this;
 
 			pool.acquire(function (err, db) {
-				if (err) return console.log(err);
+				if (err) return callback(err);
 				var col = db.collection(_this.target);
 				col.insertOne(doc, function (err, r) {
-					if (err) console.log(err);
+					if (err) return callback(err);
 					var rs = r.result.ok == 1 && r.result.n == 1 ? r.ops[0] : undefined;
 					if (rs) {
 						rs.id = rs._id.toString();
@@ -59,7 +59,7 @@ var Dao = function () {
 			var _this2 = this;
 
 			pool.acquire(function (err, db) {
-				if (err) return console.log(err);
+				if (err) return callback(err);
 				var col = db.collection(_this2.target);
 				col.findOne({ _id: (0, _mongodb.ObjectID)(id) }, function (err, doc) {
 					if (doc._id) {
@@ -77,7 +77,7 @@ var Dao = function () {
 			var _this3 = this;
 
 			pool.acquire(function (err, db) {
-				if (err) return console.log(err);
+				if (err) return callback(err);
 				var col = db.collection(_this3.target);
 				col.find().toArray(function (err, docs) {
 					callback(err, docs.map(function (doc) {
@@ -96,15 +96,18 @@ var Dao = function () {
 		value: function updateOne(id, doc, callback) {
 			var _this4 = this;
 
+			console.log('updateOne');
+			console.log(id);
+			console.log(doc);
 			pool.acquire(function (err, db) {
-				if (err) return console.log(err);
+				if (err) return callback(err);
 				var col = db.collection(_this4.target);
-				col.findOneAndUpdate({ _id: (0, _mongodb.ObjectID)(id) }, { $set: update }, function (err, r) {
-					if (err) return console.log(err);
+				col.findOneAndUpdate({ _id: (0, _mongodb.ObjectID)(id) }, { $set: doc }, function (err, r) {
+					if (err) return callback(err);
 					var rs = r.ok == 1 ? r.value : undefined;
 					if (rs._id) {
-						doc.id = doc._id.toString();
-						delete doc._id;
+						rs.id = rs._id.toString();
+						delete rs._id;
 					}
 					callback(err, rs);
 					pool.release(db);
@@ -117,10 +120,10 @@ var Dao = function () {
 			var _this5 = this;
 
 			pool.acquire(function (err, db) {
-				if (err) return console.log(err);
+				if (err) return callback(err);
 				var col = db.collection(_this5.target);
 				col.findOneAndDelete({ _id: (0, _mongodb.ObjectID)(id) }, function (err, r) {
-					if (err) return console.log(err);
+					if (err) return callback(err);
 					var rs = r.ok == 1 ? r.value : undefined;
 					if (rs._id) {
 						doc.id = doc._id.toString();

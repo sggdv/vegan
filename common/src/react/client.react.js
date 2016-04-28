@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import React from 'react';
 
 // 单个资料项展示
@@ -8,7 +9,7 @@ let Item = React.createClass({
 			return (
 				<div className="form-group">
 					<label>{this.props.item.name}</label>
-					<input type="text" className="form-control" />
+					<input type="text" className="form-control" onChange={this.handleTextChange} />
 				</div>
 			);
 		} else if (type == 'radio') {
@@ -16,7 +17,7 @@ let Item = React.createClass({
 			let options = this.props.item.options.map((option) => {
 				return (
 					<label className="btn btn-default">
-						<input type="radio" name={radioName} /> {option}
+						<input type="radio" name={radioName} value={option} onClick={this.handleRadioChange} /> {option}
 					</label>
 				);
 			}, this);
@@ -49,29 +50,62 @@ let Item = React.createClass({
 			);
 		}
 	},
+	handleTextChange(event) {
+		let item = this.props.item;
+		item.value = event.target.value;
+		this.props.callbackParent(item, this.props.index);
+	},
+	handleRadioChange(event) {
+		let item = this.props.item;
+		item.value = event.target.value;
+		this.props.callbackParent(item, this.props.index);
+	},
 });
 
 // 客户端展示组件
 let Client = React.createClass({
+	getInitialState() {
+		return this.props.template;
+	},
 	render() {
-		let items = this.props.template.items.map((item, index) => {
-			return (<Item item={item} index={index} />);
-		});
+		let items = this.state.items.map((item, index) => {
+			return (<Item item={item} index={index} callbackParent={this.handleItemChange} />);
+		}, this);
 		return (
 			<div>
 				<div className="page-header">
-					<h3>{this.props.template.title}</h3>
+					<h3>{this.state.title}</h3>
 				</div>
 				<form>
 					{items}
 					<hr />
-					<button type="button" className="btn btn-success">
+					<button type="button" className="btn btn-success" onClick={this.handleSubmit}>
 						<span className="glyphicon glyphicon-ok"></span> 提交
 					</button>
 				</form>
 			</div>
 		);
 	},
+	handleSubmit() {
+		$.ajax({
+			type: 'POST',
+			url: '/update',
+			dataType: 'json',
+			data: this.state,
+			success(data, stat, req) {
+				
+			},
+			error(req, stat, err) {
+			
+			},
+		});
+	},
+	handleItemChange(item, index) {
+		let items = this.state.items;
+		items[index] = item;
+		this.setState({items});
+	},
 });
 
+// usage: <Client template={template} />
 export default Client;

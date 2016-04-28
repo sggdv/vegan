@@ -30,19 +30,20 @@ router.get('/', function (req, res) {
 
 router.get('/:id', function (req, res) {
 	_db.templates.findOne(req.params.id, function (err, template) {
-		if (!err) res.json({ template: template });else res.status(404).json({ err: err });
+		if (!err) res.json(template);else res.status(404).json({ err: err });
 	});
 });
 
 router.put('/:id', function (req, res) {
-	_db.templates.updateOne(req.params.id, res.body, function (err, template) {
-		if (!err) res.json({ template: template });else res.status(500).json({ err: err });
+	console.log('put');
+	_db.templates.updateOne(req.params.id, req.body, function (err, template) {
+		if (!err) res.json(template);else res.status(500).json({ err: err });
 	});
 });
 
 router.delete('/:id', function (req, res) {
 	template.deleteOne(req.params.id, function (err, template) {
-		if (!err) res.json({ template: template });else res.status(500).json({ err: err });
+		if (!err) res.json(template);else res.status(500).json({ err: err });
 	});
 });
 

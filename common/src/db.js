@@ -1,7 +1,7 @@
 import {MongoClient, ObjectID} from 'mongodb';
 import {Pool} from 'generic-pool';
 
-var pool = new Pool({
+let pool = new Pool({
 	name: 'mongodb',
 	max: 10,
 	idleTimeoutMillis: 60000,
@@ -16,13 +16,11 @@ class Dao {
 
 	insertOne(doc, callback) {
 		pool.acquire((err, db) => {
-			if (err) 
-				return console.log(err);
-			var col = db.collection(this.target);
+			if (err) return callback(err);
+			let col = db.collection(this.target);
 			col.insertOne(doc, (err, r) => {
-				if (err) 
-					console.log(err);
-				var rs = r.result.ok == 1 && r.result.n == 1 ? r.ops[0] : undefined;
+				if (err) return callback(err);
+				let rs = r.result.ok == 1 && r.result.n == 1 ? r.ops[0] : undefined;
 				if (rs) {
 					rs.id = rs._id.toString();
 					delete rs._id;
@@ -35,9 +33,8 @@ class Dao {
 
 	findOne(id, callback) {
 		pool.acquire((err, db) => {
-			if (err) 
-				return console.log(err);
-			var col = db.collection(this.target);
+			if (err) return callback(err);
+			let col = db.collection(this.target);
 			col.findOne({ _id: ObjectID(id) }, (err, doc) => {
 				if (doc._id) {
 					doc.id = doc._id.toString();
@@ -51,9 +48,8 @@ class Dao {
 
 	findAll(callback) {
 		pool.acquire((err, db) => {
-			if (err)
-				return console.log(err);
-			var col = db.collection(this.target);
+			if (err) return callback(err);
+			let col = db.collection(this.target);
 			col.find().toArray((err, docs) => {
 				callback(err, docs.map((doc) => {
 					if (doc._id) {
@@ -68,17 +64,18 @@ class Dao {
 	}
 
 	updateOne(id, doc, callback) {
+		console.log('updateOne');
+		console.log(id);
+		console.log(doc);
 		pool.acquire((err, db) => {
-			if (err) 
-				return console.log(err);
-			var col = db.collection(this.target);
-			col.findOneAndUpdate({ _id: ObjectID(id) }, { $set: update }, (err, r) => {
-				if (err)
-					return console.log(err);
-				var rs = r.ok == 1 ? r.value : undefined;
+			if (err) return callback(err);
+			let col = db.collection(this.target);
+			col.findOneAndUpdate({ _id: ObjectID(id) }, { $set: doc }, (err, r) => {
+				if (err) return callback(err);
+				let rs = r.ok == 1 ? r.value : undefined;
 				if (rs._id) {
-					doc.id = doc._id.toString();
-					delete doc._id;
+					rs.id = rs._id.toString();
+					delete rs._id;
 				}
 				callback(err, rs);
 				pool.release(db);
@@ -89,12 +86,12 @@ class Dao {
 	deleteOne(id, callback) {
 		pool.acquire((err, db) => {
 			if (err)
-				return console.log(err);
-			var col = db.collection(this.target);
+				return callback(err);
+			let col = db.collection(this.target);
 			col.findOneAndDelete({ _id: ObjectID(id) }, (err, r) => {
 				if (err)
-					return console.log(err);
-				var rs = r.ok == 1 ? r.value : undefined;
+					return callback(err);
+				let rs = r.ok == 1 ? r.value : undefined;
 				if (rs._id) {
 					doc.id = doc._id.toString();
 					delete doc._id;
@@ -107,6 +104,6 @@ class Dao {
 
 }
 
-var templates = new Dao('templates');
+let templates = new Dao('templates');
 
 export {templates};

@@ -30,7 +30,8 @@ router.get('/:id', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-	templates.updateOne(req.params.id, res.body, (err, template) => {
+	console.log('put');
+	templates.updateOne(req.params.id, req.body, (err, template) => {
 		if (!err)
 			res.json(template);
 		else

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "gulp && browserify tmp/all.react.js -o ./public/react/all.react.js && browserify tmp/client-all.react.js -o ./public/react/client-all.react.js &&  node app.js"
   },
   "author": "Kim <331599158@qq.com>",
   "license": "MIT",
@@ -15,9 +16,13 @@
     "express": "^4.13.4",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "jquery": "^2.2.3",
     "morgan": "^1.7.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "request": "^2.72.0"
+  },
+  "devDependencies": {
+    "gulp-browserify": "^0.5.1"
   }
 }
