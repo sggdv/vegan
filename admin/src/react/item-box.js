@@ -1,10 +1,13 @@
-var Item = React.createClass({
-	render: function() {
-		var optionBox;
+import React from 'react';
+import OptionBox from './option-box';
+
+let Item = React.createClass({
+	render() {
+		let optionBox;
 		if (this.props.item.type == 'radio' || this.props.item.type == 'checkbox') {
 			optionBox = (<OptionBox options={this.props.item.options} callbackParent={this.handleOptionsChange} />);
 		}
-		var radioName = '__type_radio_name_' + this.props.index;
+		let radioName = '__type_radio_name_' + this.props.index;
 		return (
 			<div className="item">
 		    	<hr />
@@ -37,33 +40,35 @@ var Item = React.createClass({
 			</div>
 		);
 	},
-	handleNameChange: function(event) {
-		var item = this.props.item;
+	handleNameChange(event) {
+		let item = this.props.item;
 		item.name = event.target.value;
 		this.props.callbackParent(item, this.props.index);
 	},
-	handleTypeChange: function(event) {
-		var item = this.props.item;
+	handleTypeChange(event) {
+		let item = this.props.item;
 		item.type = event.target.value;
 		this.props.callbackParent(item, this.props.index);
 	},
-	handleOptionsChange: function(options) {
-		var item = this.props.item;
+	handleOptionsChange(options) {
+		let item = this.props.item;
 		item.options = options;
 		this.props.callbackParent(item, this.props.index);
-	}
+	},
 });
 
-var ItemList = React.createClass({
-	render: function() {
-		var items = this.props.items.map(function(item, index) {
+let ItemBox = React.createClass({
+	render() {
+		let items = this.props.items.map((item, index) => {
 			return (<Item index={index} item={item} callbackParent={this.handleChange} />);
 		}, this);
 		return (<div>{items}</div>);
 	},
-	handleChange: function(item, index) {
-		var items = this.props.items;
+	handleChange(item, index) {
+		let items = this.props.items;
 		items[index] = item;
 		this.props.callbackParent(items);
-	}
+	},
 });
+
+export default ItemBox;

@@ -1,8 +1,13 @@
-var TemplateBox = React.createClass({
-	getInitialState: function() {
+import $ from 'jquery';
+import React from 'react';
+import ItemBox from './item-box';
+import ClientBox from './client-box';
+
+let TemplateBox = React.createClass({
+	getInitialState() {
 		return { title: '', items: [{ name: '', type: 'text', options: ['', '', ''] }] };
 	},
-	render: function() {
+	render() {
 		return (
 			<div>
 				<div className="col-sm-6">
@@ -13,7 +18,7 @@ var TemplateBox = React.createClass({
 								<input type="text" className="form-control" onChange={this.handleTitleChange} />
 							</div>
 						</div>
-						<ItemList items={this.state.items} callbackParent={this.handleItemsChange} />
+						<ItemBox items={this.state.items} callbackParent={this.handleItemsChange} />
 						<div className="form-group">
 						  <div className="col-sm-2">
 								<button type="button" className="btn btn-default" onClick={this.handleItemAdd}>
@@ -29,30 +34,26 @@ var TemplateBox = React.createClass({
 					</form>
 				</div>
 				<div className="col-sm-6">
-					<div className="page-header">
-						<h3>{this.state.title}</h3>
-					</div>
-					<form className="form-horizontal">
-						<ReviewItemList items={this.state.items} />
-					</form>	
+					<ClientBox template={this.state} />
 				</div>
 			</div>
 		);
 	},
-	handleTitleChange: function(event) {
-		this.setState({ title: event.target.value});
-		console.log(this.state);
+	handleTitleChange(event) {
+		let title = event.target.value;
+		console.log(title);
+		this.setState({title});
 	},
-	handleItemsChange: function(items) {
-		this.setState({ items });
+	handleItemsChange(items) {
+		this.setState({items});
 	},
-	handleItemAdd: function() {
-		var items = this.state.items;
+	handleItemAdd() {
+		let items = this.state.items;
 		items.push({ name: '', type: 'text', options: ['', '', ''] });
-		this.setState({ items });
+		this.setState({items});
 	},
-	handleCommit: function() {
-		var template = this.state;
+	handleCommit() {
+		let template = this.state;
 		// TODO 提交表单
 		$.ajax({
 			type: 'POST',
@@ -60,12 +61,13 @@ var TemplateBox = React.createClass({
 			url: '/templates',
 			data: JSON.stringify(template),
 			dataType: 'json',
-			success: function(data) {
+			success(data) {
 				alert('ok');	
 			},
-			beforeSend: function() {
-			
+			beforeSend() {
 			}
 		});
-	}
+	},
 });
+
+export default TemplateBox;

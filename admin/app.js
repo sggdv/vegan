@@ -59,4 +59,6 @@ app.post('/signin', function (req, res) {
 
 app.use('/templates', _templates2.default);
 
-app.listen(3000);
+app.listen(3000, function () {
+  console.log('done');
+});

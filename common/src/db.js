@@ -104,6 +104,7 @@ class Dao {
 
 }
 
-let templates = new Dao('templates');
+let templatesDao = new Dao('templates');
+let instancesDao = new Dao('instances');
 
-export {templates};
+export {templatesDao, instancesDao};

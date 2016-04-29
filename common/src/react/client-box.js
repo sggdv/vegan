@@ -74,7 +74,7 @@ let Client = React.createClass({
 		return (
 			<div>
 				<div className="page-header">
-					<h3>{this.state.title}</h3>
+					<h3>{this.props.template.title}</h3>
 				</div>
 				<form>
 					{items}
@@ -93,10 +93,8 @@ let Client = React.createClass({
 			dataType: 'json',
 			data: this.state,
 			success(data, stat, req) {
-				
 			},
 			error(req, stat, err) {
-			
 			},
 		});
 	},

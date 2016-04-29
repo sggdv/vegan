@@ -2,11 +2,11 @@
 import express from 'express';
 import request from 'request';
 
-var router = express.Router();
-var API_BASE_URL = 'http://127.0.0.1:3002/templates';
+let router = express.Router();
+let API_BASE_URL = 'http://127.0.0.1:3002/templates';
 
 router.post('/', (req, res) => {
-  var template = req.body;
+  let template = req.body;
 	request({
 		method: 'POST',
 		url: API_BASE_URL,

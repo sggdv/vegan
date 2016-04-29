@@ -35,4 +35,6 @@ app.post('/signin', (req, res) => {
 
 app.use('/templates', templates);
 
-app.listen(3000);
+app.listen(3000, () => {
+	console.log('done');
+});

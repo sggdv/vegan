@@ -1,5 +1,5 @@
 {
-  "name": "admin",
+  "name": "vegan-admin",
   "version": "1.0.0",
   "description": "+ 创建 Template + 创建 Instance",
   "scripts": {
@@ -9,14 +9,15 @@
   "author": "Kim<494168224@qq.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/sggdv/vegan"
   },
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "bootstrap": "^3.3.6",
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
-    "gulp-babel": "^6.1.2",
+    "jquery": "^2.2.3",
     "morgan": "^1.7.0",
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
@@ -25,6 +26,8 @@
   "devDependencies": {
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-react": "^6.5.0",
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-rename": "^1.2.2"
   }
 }

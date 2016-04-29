@@ -1,11 +1,14 @@
-var _ = {
-  isEmpty: function(value) {
+import React from 'react';
+import $ from 'jquery';
+
+let _ = {
+  isEmpty(value) {
     return (!value && value == '');
-  }
+  },
 };
 
-var SignInBox = React.createClass({
-  getInitialState: function() {
+let SignInBox = React.createClass({
+  getInitialState() {
     return { 
       username: '', 
       pwd: '', 
@@ -19,14 +22,14 @@ var SignInBox = React.createClass({
       }
     }
   },
-  render: function() {
-    var UsernameErrorTips;
-    var UsernameSuccessTips;
-    var PwdErrorTips;
-    var PwdSuccessTips;
+  render() {
+    let UsernameErrorTips;
+    let UsernameSuccessTips;
+    let PwdErrorTips;
+    let PwdSuccessTips;
 
-    var usernameDOMClz = 'form-group';
-    var pwdDOMClz = 'form-group';
+    let usernameDOMClz = 'form-group';
+    let pwdDOMClz = 'form-group';
 
     if (this.state.validFlag) {
       if (this.state.usernameValid.isEmpty) {
@@ -104,10 +107,10 @@ var SignInBox = React.createClass({
       </form>
     );
   }, 
-  signin: function() {
+  signin() {
     this.setState({ validFlag: true });
     if (this.state.usernameValid.isEmail && !this.state.pwdValid.isEmpty) {
-      jQuery.ajax({
+      $.ajax({
         type: 'POST',
         url: 'http://127.0.0.1:3002/signin',
         data: {
@@ -115,22 +118,22 @@ var SignInBox = React.createClass({
           pwd: this.state.pwd
         },
         dataType: 'json',
-        success: function(data) {
+        success(data) {
           // TODO 实现
           window.location.href = 'dashboard.html';
         }      
       });
     }
   },
-  handleChangeUsername: function(event) {
-    var value = event.target.value;
+  handleChangeUsername(event) {
+    let value = event.target.value;
     if (_.isEmpty(value)) {
       this.setState({
         username: '',
         usernameValid: { isEmpty: true }
       });
     } else {
-      var isEmail = this.validUsername(value);
+      let isEmail = this.validUsername(value);
       this.setState({
         username: value,
         usernameValid: {
@@ -140,8 +143,8 @@ var SignInBox = React.createClass({
       });
     }
   },
-  handleChangePwd: function(event) {
-    var value = event.target.value;
+  handleChangePwd(event) {
+    let value = event.target.value;
     this.setState({
       pwd: value, 
       pwdValid: {
@@ -149,13 +152,13 @@ var SignInBox = React.createClass({
       }
     });
   }, 
-  validUsername: function(value) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  validUsername(value) {
+    let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(value);
-  }
+  },
 });
 
-var formSignin = {
+let formSignin = {
   maxWidth: '330px',
   padding: '15px',
   margin: '0 auto',
@@ -163,11 +166,8 @@ var formSignin = {
   backgroundColor: '#fff',
   border: '1px solid #dedede'
 };
-var formH2 = {
+let formH2 = {
   lineHeight: '90px'
 };
 
-ReactDOM.render(
-  <SignInBox title="登陆Vegan" />,
-  document.getElementById('example')
-);
+export default SignInBox;

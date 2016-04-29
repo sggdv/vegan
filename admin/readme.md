@@ -8,7 +8,8 @@
 
 ## 数据结构
 
-```
+表单模版Template
+```json
 {
   title: '',     // 表单标题
   items: [{      // 表单资料项
@@ -20,12 +21,21 @@
 }
 ```
 
+已填表单Instance
+```json
+{
+	verification: { // 验证信息
+		vid: '',
+		vpass: ''
+	},
+	createTime: '', // 提交时间
+	template: {} // 表单
+}
+```
+
 ## TODO 
 定义导航
 实现RESTful API
 对接淘宝
 
 优先目标: 完成基础框架，再做优化。
-
-## 当前TODO
-编写Templates列表页面

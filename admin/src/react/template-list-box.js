@@ -1,11 +1,17 @@
+import $ from 'jquery';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import TemplateBox from './template-box';
+
 // Template查询页面
 // 操作层：页面标题 + 添加按钮
 // 展示层：数据展示
 
 // 整个content
-var TemplateListPage = React.createClass({
+let TemplateListBox = React.createClass({
 	getInitialState() {
-		var templates = [];
+		let templates = [];
 		return {templates};
 	},
 	componentDidMount() {
@@ -29,11 +35,11 @@ var TemplateListPage = React.createClass({
 				<TemplateList templates={this.state.templates} />
 			</div>
 		);
-	}
+	},
 });
 
 // 操作层
-var TemplateListOpration = React.createClass({
+let TemplateListOpration = React.createClass({
 	render() {
 		return (
 			<div>
@@ -52,32 +58,36 @@ var TemplateListOpration = React.createClass({
 			<TemplateBox />,
 			document.getElementById('content')
 		);
-	}
+	},
 });
 
 // 展示层
-var TemplateList = React.createClass({
+let TemplateList = React.createClass({
 	render() {
-		var templates = this.props.templates.map((template) => {
+		let templates = this.props.templates.map((template) => {
 			return (<Template template={template} />);	
 		});
-		return (
-			<div className="row">{templates}</div>
-		);
-	}
+		let puttyDom = new Array;
+		templates.forEach((template, index, arr) => {
+			if (index % 2 == 0) { // 偶数元素
+				if (index == arr.length) 
+					puttyDom.push((<div className="row">{arr[index]}</div>))
+				else
+					puttyDom.push((<div className="row">{arr[index]}{arr[index + 1]}</div>))
+			}
+		});
+		return (<div>{puttyDom}</div>);
+	},
 });
 
 // 单个表单展示
-var Template = React.createClass({
+let Template = React.createClass({
 	render() {
-		var spanStyle = { marginRight: "15px" };
-		var items = this.props.template.items.map((item) => {
-			var options = item.options.map((option) => {
-				if (!option || option == '') 
-					return;
-				return (
-					<span className="label label-default" style={spanStyle}>{option}</span>
-				);
+		let spanStyle = { marginRight: "15px" };
+		let items = this.props.template.items.map((item) => {
+			let options = item.options.map((option) => {
+				if (!option || option == '') return;
+				return (<span className="label label-default" style={spanStyle}>{option}</span>);
 			});
 
 			return (
@@ -99,15 +109,15 @@ var Template = React.createClass({
 		});
 		return (
 			<div className="col-sm-6">
-				<div className="panel panel-default">
+				<div className="panel panel-info">
 					<div className="panel-heading">
 						<button type="button" className="close">
 							<span>&times;</span>
 						</button>
 						<h3 className="panel-title">{this.props.template.title}
-						<button type="button" className="btn btn-default btn-xs" style={{marginLeft: "10px"}}>
-							<span className="glyphicon glyphicon-pencil"></span>
-						</button>
+							<button type="button" className="btn btn-default btn-xs" style={{marginLeft: "10px"}} onClick={}>
+								<span className="glyphicon glyphicon-link"></span>
+							</button>
 						</h3>
 					</div>
 					<div className="panel-body">
@@ -127,9 +137,4 @@ var Template = React.createClass({
 	}
 });
 
-ReactDOM.render(
-	<TemplateListPage />,
-	document.getElementById('content')
-);
-
-
+export default TemplateListBox;
