@@ -23,6 +23,7 @@ var Item = _react2.default.createClass({
 		var _this = this;
 
 		var type = this.props.item.type;
+		var value = this.props.item.value;
 		if (type == 'text') {
 			return _react2.default.createElement(
 				'div',
@@ -32,7 +33,7 @@ var Item = _react2.default.createClass({
 					null,
 					this.props.item.name
 				),
-				_react2.default.createElement('input', { type: 'text', className: 'form-control', onChange: this.handleTextChange })
+				_react2.default.createElement('input', { type: 'text', className: 'form-control', onChange: this.handleTextChange, value: value })
 			);
 		} else if (type == 'radio') {
 			var _ret = function () {
@@ -41,7 +42,7 @@ var Item = _react2.default.createClass({
 					return _react2.default.createElement(
 						'label',
 						{ className: 'btn btn-default' },
-						_react2.default.createElement('input', { type: 'radio', name: radioName, value: option, onClick: _this.handleRadioChange }),
+						_react2.default.createElement('input', { type: 'radio', name: radioName, value: option, onClick: _this.handleRadioChange, checked: option == value }),
 						' ',
 						option
 					);
@@ -151,14 +152,7 @@ var Client = _react2.default.createClass({
 		);
 	},
 	handleSubmit: function handleSubmit() {
-		_jquery2.default.ajax({
-			type: 'POST',
-			url: '/update',
-			dataType: 'json',
-			data: this.state,
-			success: function success(data, stat, req) {},
-			error: function error(req, stat, err) {}
-		});
+		this.props.callbackParent(this.state);
 	},
 	handleItemChange: function handleItemChange(item, index) {
 		var items = this.state.items;

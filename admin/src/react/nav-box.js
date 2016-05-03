@@ -1,4 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import TemplateListBox from './template-list-box';
+import InstanceListBox from './instance-list-box';
 
 let Nav = React.createClass({
 	render() {
@@ -10,17 +13,49 @@ let Nav = React.createClass({
 		);
 	},
 	handleChange() {
+		let nav = this.props.nav;
+		console.log(nav);
 		this.props.callbackParent(this.props.index);
+		if (nav.click) nav.click();
 	},
 });
 
 let NavBox = React.createClass({
 	getInitialState() {
-		return { navs: [
-			{ name: '资料', url: '#' }, 
-			{ name: '表单', url: '#' },
-			{ name: '偏好设置', url: '#' }
-		], activeNav: 0 };
+		let domId = this.props.domId;
+		return { 
+			navs: [
+				{ 
+					name: '资料', 
+					url: '#',
+					click() {
+						console.log('资料');
+						ReactDOM.render(
+							<InstanceListBox />,
+							document.getElementById(domId)
+						);
+					},
+				}, 
+				{ 
+					name: '表单', 
+					url: '#', 
+					click() {
+						ReactDOM.render(
+							<TemplateListBox />,
+							document.getElementById(domId)
+						);
+					},
+				},
+				{ 
+					name: '偏好设置', 
+					url: '#', 
+					click() {
+						console.log('偏好设置');
+					},
+				}
+			], 
+			activeNav: 0, 
+		};
 	},
 	render() {
 		let navs = this.state.navs.map((nav, index) => {

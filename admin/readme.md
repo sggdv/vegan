@@ -26,7 +26,8 @@
 {
 	vid: '', // 验证信息
 	createTime: '', // 提交时间
-	template: {} // 表单
+	template: {}, // 表单
+	flag: '', // 旗帜，可以代表处理状态
 }
 ```
 

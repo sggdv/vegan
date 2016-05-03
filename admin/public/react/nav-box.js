@@ -8,6 +8,18 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _templateListBox = require('./template-list-box');
+
+var _templateListBox2 = _interopRequireDefault(_templateListBox);
+
+var _instanceListBox = require('./instance-list-box');
+
+var _instanceListBox2 = _interopRequireDefault(_instanceListBox);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Nav = _react2.default.createClass({
@@ -25,14 +37,40 @@ var Nav = _react2.default.createClass({
 		);
 	},
 	handleChange: function handleChange() {
+		var nav = this.props.nav;
+		console.log(nav);
 		this.props.callbackParent(this.props.index);
+		if (nav.click) nav.click();
 	}
 });
 
 var NavBox = _react2.default.createClass({
 	displayName: 'NavBox',
 	getInitialState: function getInitialState() {
-		return { navs: [{ name: '资料', url: '#' }, { name: '表单', url: '#' }, { name: '偏好设置', url: '#' }], activeNav: 0 };
+		var domId = this.props.domId;
+		return {
+			navs: [{
+				name: '资料',
+				url: '#',
+				click: function click() {
+					console.log('资料');
+					_reactDom2.default.render(_react2.default.createElement(_instanceListBox2.default, null), document.getElementById(domId));
+				}
+			}, {
+				name: '表单',
+				url: '#',
+				click: function click() {
+					_reactDom2.default.render(_react2.default.createElement(_templateListBox2.default, null), document.getElementById(domId));
+				}
+			}, {
+				name: '偏好设置',
+				url: '#',
+				click: function click() {
+					console.log('偏好设置');
+				}
+			}],
+			activeNav: 0
+		};
 	},
 	render: function render() {
 		var _this = this;
