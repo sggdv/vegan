@@ -29117,6 +29117,8 @@ module.exports = require('./lib/React');
 
 var _jquery = require('jquery');
 
+var _jquery2 = _interopRequireDefault(_jquery);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -29125,14 +29127,33 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _client = require('./client.react');
+var _clientBox = require('./client-box');
 
-var _client2 = _interopRequireDefault(_client);
+var _clientBox2 = _interopRequireDefault(_clientBox);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(_client2.default, { template: template }), document.getElementById('content'));
-},{"./client.react":167,"jquery":1,"react":165,"react-dom":2}],167:[function(require,module,exports){
+var updateInstance = function updateInstance(template) {
+	var data = instance;
+	data.template = template;
+	console.log('data');
+	console.log(data);
+	_jquery2.default.ajax({
+		type: 'POST',
+		url: '/update',
+		data: data,
+		dataType: 'json',
+		success: function success(data) {
+			console.log(data);
+		},
+		error: function error(xhr, stat, err) {
+			console.log(err);
+		}
+	});
+};
+
+_reactDom2.default.render(_react2.default.createElement(_clientBox2.default, { template: instance.template, callbackParent: updateInstance }), document.getElementById('content'));
+},{"./client-box":167,"jquery":1,"react":165,"react-dom":2}],167:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29158,6 +29179,7 @@ var Item = _react2.default.createClass({
 		var _this = this;
 
 		var type = this.props.item.type;
+		var value = this.props.item.value;
 		if (type == 'text') {
 			return _react2.default.createElement(
 				'div',
@@ -29167,7 +29189,7 @@ var Item = _react2.default.createClass({
 					null,
 					this.props.item.name
 				),
-				_react2.default.createElement('input', { type: 'text', className: 'form-control', onChange: this.handleTextChange })
+				_react2.default.createElement('input', { type: 'text', className: 'form-control', onChange: this.handleTextChange, value: value })
 			);
 		} else if (type == 'radio') {
 			var _ret = function () {
@@ -29176,7 +29198,7 @@ var Item = _react2.default.createClass({
 					return _react2.default.createElement(
 						'label',
 						{ className: 'btn btn-default' },
-						_react2.default.createElement('input', { type: 'radio', name: radioName, value: option, onClick: _this.handleRadioChange }),
+						_react2.default.createElement('input', { type: 'radio', name: radioName, value: option, onClick: _this.handleRadioChange, checked: option == value }),
 						' ',
 						option
 					);
@@ -29268,7 +29290,7 @@ var Client = _react2.default.createClass({
 				_react2.default.createElement(
 					'h3',
 					null,
-					this.state.title
+					this.props.template.title
 				)
 			),
 			_react2.default.createElement(
@@ -29286,14 +29308,7 @@ var Client = _react2.default.createClass({
 		);
 	},
 	handleSubmit: function handleSubmit() {
-		_jquery2.default.ajax({
-			type: 'POST',
-			url: '/update',
-			dataType: 'json',
-			data: this.state,
-			success: function success(data, stat, req) {},
-			error: function error(req, stat, err) {}
-		});
+		this.props.callbackParent(this.state);
 	},
 	handleItemChange: function handleItemChange(item, index) {
 		var items = this.state.items;

@@ -15,16 +15,16 @@ var _request2 = _interopRequireDefault(_request);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = _express2.default.Router();
-var API_BASE_URL = 'http://127.0.0.1:3002/templates';
+var API_BASE_URL = 'http://127.0.0.1:3002/instances';
 
 router.post('/', function (req, res) {
-	var template = req.body;
-	template.userid = req.cookies.userid;
+	var instance = req.body;
+	instance.userid = req.cookies.userid;
 	(0, _request2.default)({
 		method: 'POST',
 		url: API_BASE_URL,
 		json: true,
-		body: template
+		body: instance
 	}, function (err, apiRes, body) {
 		if (!err && apiRes.statusCode == 201) res.status(201).json(body);else res.status(500).json({ err: err, statusCode: apiRes.statusCode });
 	});

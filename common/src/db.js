@@ -71,9 +71,12 @@ class Dao {
 			if (err) return callback(err);
 			let col = db.collection(this.target);
 			col.findOneAndUpdate({ _id: ObjectID(id) }, { $set: doc }, (err, r) => {
+				console.log(err);
+				console.log('==========');
+				console.log(r);
 				if (err) return callback(err);
 				let rs = r.ok == 1 ? r.value : undefined;
-				if (rs._id) {
+				if (rs && rs._id) {
 					rs.id = rs._id.toString();
 					delete rs._id;
 				}

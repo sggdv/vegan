@@ -4,6 +4,7 @@
   "description": "采用RESTful架构。",
   "main": "app.js",
   "scripts": {
+		"start": "gulp && node app.js",
     "test": "mocha"
   },
   "author": "",

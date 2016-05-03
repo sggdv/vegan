@@ -18,4 +18,10 @@ app.use(_bodyParser2.default.json());
 app.use('/templates', _router.templatesRouter);
 app.use('/instances', _router.instancesRouter);
 
-app.listen(3002);
+app.get('/users', function (req, res) {
+	res.send('ok');
+});
+
+app.listen(3002, function () {
+	return console.log('done');
+});

@@ -1,6 +1,15 @@
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+	Button, 
+	Modal, 
+	Form,
+	FormGroup,
+	FormControl,
+	ControlLabel,
+	Col,
+} from 'react-bootstrap';
 
 import TemplateBox from './template-box';
 
@@ -82,6 +91,36 @@ let TemplateList = React.createClass({
 
 // 单个表单展示
 let Template = React.createClass({
+	getInitialState() {
+		return { showModal: false, vid: '' };
+	},
+	close() {
+		this.setState({ showModal: false });
+	},
+	open() {
+		this.setState({ showModal: true });
+	},
+	handleVidChange(event) {
+		let vid = event.target.value;
+		this.setState({vid});
+	},
+	handleSubmit() {
+		let template = this.props.template;
+		let vid = this.state.vid;
+		let instance = {template, vid};
+		$.ajax({
+			type: 'POST',
+			url: '/instances',
+			data: instance,
+			dataType: 'json',
+			success(data) {
+				console.log(data);
+			},
+			error(xhr, status, err) {
+				console.log(err);
+			},
+		});
+	},
 	render() {
 		let spanStyle = { marginRight: "15px" };
 		let items = this.props.template.items.map((item) => {
@@ -89,7 +128,6 @@ let Template = React.createClass({
 				if (!option || option == '') return;
 				return (<span className="label label-default" style={spanStyle}>{option}</span>);
 			});
-
 			return (
 				<tr>
 					<td>{item.name}</td>
@@ -115,9 +153,28 @@ let Template = React.createClass({
 							<span>&times;</span>
 						</button>
 						<h3 className="panel-title">{this.props.template.title}
-							<button type="button" className="btn btn-default btn-xs" style={{marginLeft: "10px"}} onClick={}>
+							<Button bsStyle="default" bsSize="xs" style={{marginLeft: "10px"}} onClick={this.open}>
 								<span className="glyphicon glyphicon-link"></span>
-							</button>
+							</Button>
+							<Modal show={this.state.showModal} onHide={this.close}>
+								<Modal.Header closeBUtton>
+									<Modal.Title>生成链接</Modal.Title>
+								</Modal.Header>
+								<Modal.Body>
+									<Form horizontal>
+										<FormGroup>
+											<Col componentClass={ControlLabel} sm={3}>淘宝订单号</Col>
+											<Col sm={9}>
+												<FormControl type="text" placeholder="淘宝订单号" onChange={this.handleVidChange} />
+											</Col>
+										</FormGroup>
+									</Form>
+								</Modal.Body>
+								<Modal.Footer>
+									<Button bsStyle="success" onClick={this.handleSubmit}>提交</Button>
+									<Button onClick={this.close}>Close</Button>
+								</Modal.Footer>
+							</Modal>
 						</h3>
 					</div>
 					<div className="panel-body">

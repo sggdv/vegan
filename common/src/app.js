@@ -8,4 +8,8 @@ app.use(bodyParser.json());
 app.use('/templates', templatesRouter);
 app.use('/instances', instancesRouter);
 
-app.listen(3002);
+app.get('/users', (req, res) => {
+	res.send('ok');
+});
+
+app.listen(3002, () => console.log('done'));

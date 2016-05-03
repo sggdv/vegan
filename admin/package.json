@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "+ 创建 Template + 创建 Instance",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "test": "",
+    "start": "gulp && browserify public/javascripts/signin.all.tmp.js -o public/javascripts/signin.all.js && browserify public/javascripts/dashboard.all.tmp.js -o public/javascripts/dashboard.all.js  && node app.js"
   },
   "author": "Kim<494168224@qq.com>",
   "repository": {
@@ -20,6 +20,7 @@
     "jquery": "^2.2.3",
     "morgan": "^1.7.0",
     "react": "^0.14.8",
+    "react-bootstrap": "^0.29.3",
     "react-dom": "^0.14.8",
     "request": "^2.69.0"
   },

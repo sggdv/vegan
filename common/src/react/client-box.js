@@ -5,11 +5,12 @@ import React from 'react';
 let Item = React.createClass({
 	render() {
 		let type = this.props.item.type;
+		let value = this.props.item.value;
 		if (type == 'text') {
 			return (
 				<div className="form-group">
 					<label>{this.props.item.name}</label>
-					<input type="text" className="form-control" onChange={this.handleTextChange} />
+					<input type="text" className="form-control" onChange={this.handleTextChange} value={value} />
 				</div>
 			);
 		} else if (type == 'radio') {
@@ -17,7 +18,7 @@ let Item = React.createClass({
 			let options = this.props.item.options.map((option) => {
 				return (
 					<label className="btn btn-default">
-						<input type="radio" name={radioName} value={option} onClick={this.handleRadioChange} /> {option}
+						<input type="radio" name={radioName} value={option} onClick={this.handleRadioChange} checked={option == value} /> {option}
 					</label>
 				);
 			}, this);
@@ -87,16 +88,7 @@ let Client = React.createClass({
 		);
 	},
 	handleSubmit() {
-		$.ajax({
-			type: 'POST',
-			url: '/update',
-			dataType: 'json',
-			data: this.state,
-			success(data, stat, req) {
-			},
-			error(req, stat, err) {
-			},
-		});
+		this.props.callbackParent(this.state);
 	},
 	handleItemChange(item, index) {
 		let items = this.state.items;

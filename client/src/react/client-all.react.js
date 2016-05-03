@@ -1,9 +1,28 @@
-import {jquery, $} from 'jquery';
+import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Client from './client.react';
+import ClientBox from './client-box';
+
+let updateInstance = (template) => {
+	let data = instance;
+	data.template = template;
+	console.log('data');
+	console.log(data);
+	$.ajax({
+		type: 'POST',
+		url: '/update',
+		data: data,
+		dataType: 'json',
+		success(data) {
+			console.log(data);
+		},
+		error(xhr, stat, err) {
+			console.log(err);
+		},
+	});
+};
 
 ReactDOM.render(
-	<Client template={template} />,
+	<ClientBox template={instance.template} callbackParent={updateInstance} />,
 	document.getElementById('content')
 );

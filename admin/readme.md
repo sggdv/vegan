@@ -24,10 +24,7 @@
 已填表单Instance
 ```json
 {
-	verification: { // 验证信息
-		vid: '',
-		vpass: ''
-	},
+	vid: '', // 验证信息
 	createTime: '', // 提交时间
 	template: {} // 表单
 }

@@ -103,9 +103,12 @@ var Dao = function () {
 				if (err) return callback(err);
 				var col = db.collection(_this4.target);
 				col.findOneAndUpdate({ _id: (0, _mongodb.ObjectID)(id) }, { $set: doc }, function (err, r) {
+					console.log(err);
+					console.log('==========');
+					console.log(r);
 					if (err) return callback(err);
 					var rs = r.ok == 1 ? r.value : undefined;
-					if (rs._id) {
+					if (rs && rs._id) {
 						rs.id = rs._id.toString();
 						delete rs._id;
 					}

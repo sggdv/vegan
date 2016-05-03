@@ -16,6 +16,8 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _reactBootstrap = require('react-bootstrap');
+
 var _templateBox = require('./template-box');
 
 var _templateBox2 = _interopRequireDefault(_templateBox);
@@ -121,6 +123,36 @@ var TemplateList = _react2.default.createClass({
 // 单个表单展示
 var Template = _react2.default.createClass({
 	displayName: 'Template',
+	getInitialState: function getInitialState() {
+		return { showModal: false, vid: '' };
+	},
+	close: function close() {
+		this.setState({ showModal: false });
+	},
+	open: function open() {
+		this.setState({ showModal: true });
+	},
+	handleVidChange: function handleVidChange(event) {
+		var vid = event.target.value;
+		this.setState({ vid: vid });
+	},
+	handleSubmit: function handleSubmit() {
+		var template = this.props.template;
+		var vid = this.state.vid;
+		var instance = { template: template, vid: vid };
+		_jquery2.default.ajax({
+			type: 'POST',
+			url: '/instances',
+			data: instance,
+			dataType: 'json',
+			success: function success(data) {
+				console.log(data);
+			},
+			error: function error(xhr, status, err) {
+				console.log(err);
+			}
+		});
+	},
 	render: function render() {
 		var spanStyle = { marginRight: "15px" };
 		var items = this.props.template.items.map(function (item) {
@@ -132,7 +164,6 @@ var Template = _react2.default.createClass({
 					option
 				);
 			});
-
 			return _react2.default.createElement(
 				'tr',
 				null,
@@ -187,9 +218,58 @@ var Template = _react2.default.createClass({
 						{ className: 'panel-title' },
 						this.props.template.title,
 						_react2.default.createElement(
-							'button',
-							{ type: 'button', className: 'btn btn-default btn-xs', style: { marginLeft: "10px" } },
+							_reactBootstrap.Button,
+							{ bsStyle: 'default', bsSize: 'xs', style: { marginLeft: "10px" }, onClick: this.open },
 							_react2.default.createElement('span', { className: 'glyphicon glyphicon-link' })
+						),
+						_react2.default.createElement(
+							_reactBootstrap.Modal,
+							{ show: this.state.showModal, onHide: this.close },
+							_react2.default.createElement(
+								_reactBootstrap.Modal.Header,
+								{ closeBUtton: true },
+								_react2.default.createElement(
+									_reactBootstrap.Modal.Title,
+									null,
+									'生成链接'
+								)
+							),
+							_react2.default.createElement(
+								_reactBootstrap.Modal.Body,
+								null,
+								_react2.default.createElement(
+									_reactBootstrap.Form,
+									{ horizontal: true },
+									_react2.default.createElement(
+										_reactBootstrap.FormGroup,
+										null,
+										_react2.default.createElement(
+											_reactBootstrap.Col,
+											{ componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+											'淘宝订单号'
+										),
+										_react2.default.createElement(
+											_reactBootstrap.Col,
+											{ sm: 9 },
+											_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '淘宝订单号', onChange: this.handleVidChange })
+										)
+									)
+								)
+							),
+							_react2.default.createElement(
+								_reactBootstrap.Modal.Footer,
+								null,
+								_react2.default.createElement(
+									_reactBootstrap.Button,
+									{ bsStyle: 'success', onClick: this.handleSubmit },
+									'提交'
+								),
+								_react2.default.createElement(
+									_reactBootstrap.Button,
+									{ onClick: this.close },
+									'Close'
+								)
+							)
 						)
 					)
 				),

@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -19,6 +23,7 @@ var Item = _react2.default.createClass({
 		var _this = this;
 
 		var type = this.props.item.type;
+		var value = this.props.item.value;
 		if (type == 'text') {
 			return _react2.default.createElement(
 				'div',
@@ -28,7 +33,7 @@ var Item = _react2.default.createClass({
 					null,
 					this.props.item.name
 				),
-				_react2.default.createElement('input', { type: 'text', className: 'form-control' })
+				_react2.default.createElement('input', { type: 'text', className: 'form-control', onChange: this.handleTextChange, value: value })
 			);
 		} else if (type == 'radio') {
 			var _ret = function () {
@@ -37,7 +42,7 @@ var Item = _react2.default.createClass({
 					return _react2.default.createElement(
 						'label',
 						{ className: 'btn btn-default' },
-						_react2.default.createElement('input', { type: 'radio', name: radioName }),
+						_react2.default.createElement('input', { type: 'radio', name: radioName, value: option, onClick: _this.handleRadioChange, checked: option == value }),
 						' ',
 						option
 					);
@@ -95,6 +100,16 @@ var Item = _react2.default.createClass({
 
 			if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
 		}
+	},
+	handleTextChange: function handleTextChange(event) {
+		var item = this.props.item;
+		item.value = event.target.value;
+		this.props.callbackParent(item, this.props.index);
+	},
+	handleRadioChange: function handleRadioChange(event) {
+		var item = this.props.item;
+		item.value = event.target.value;
+		this.props.callbackParent(item, this.props.index);
 	}
 });
 
@@ -105,9 +120,11 @@ var Client = _react2.default.createClass({
 		return this.props.template;
 	},
 	render: function render() {
-		var items = this.props.template.items.map(function (item, index) {
-			return _react2.default.createElement(Item, { item: item, index: index });
-		});
+		var _this2 = this;
+
+		var items = this.state.items.map(function (item, index) {
+			return _react2.default.createElement(Item, { item: item, index: index, callbackParent: _this2.handleItemChange });
+		}, this);
 		return _react2.default.createElement(
 			'div',
 			null,
@@ -135,7 +152,12 @@ var Client = _react2.default.createClass({
 		);
 	},
 	handleSubmit: function handleSubmit() {
-		alert(this.state.title);
+		this.props.callbackParent(this.state);
+	},
+	handleItemChange: function handleItemChange(item, index) {
+		var items = this.state.items;
+		items[index] = item;
+		this.setState({ items: items });
 	}
 });
 

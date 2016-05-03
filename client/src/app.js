@@ -5,7 +5,7 @@ import request from 'request';
 
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import Client from './public/react/client.react';
+import Client from './public/react/client-box';
 
 let client = React.createFactory(Client);
 
@@ -27,7 +27,7 @@ function fullHtml(data) {
 		<div class="container">
 			<div id="content"></div>
 		</div>
-		<script>var template = ${data};</script>
+		<script>var instance = ${data};</script>
 		<script src="/react/client-all.react.js"></script>
 	</body>
 </html>`;
@@ -36,7 +36,7 @@ function fullHtml(data) {
 app.get('/:id', (req, res) => {
 	request({
 		method: 'GET',
-		url: 'http://127.0.0.1:3002/templates/571702445e055f6e1c47d2c1',
+		url: 'http://127.0.0.1:3002/instances/5728284b54b3ac461774eef1',
 		json: true
 	}, (err, apiRes, body) => {
 		if (err) return res.status(500).send(err);
@@ -46,20 +46,20 @@ app.get('/:id', (req, res) => {
 });
 
 app.post('/update', (req, res) => {
-	let template = req.body;
-	let id = template.id;
-	delete template.id;
+	let instance = req.body;
+	let id = instance.id;
+	delete instance.id;
 	console.log(id);
-	console.log(template);
+	console.log(instance);
 	request({
 		method: 'put',
-		url: 'http://127.0.0.1:3002/templates/' + id,
+		url: 'http://127.0.0.1:3002/instances/' + id,
 		json: true,
-		body: template,
+		body: instance,
 	}, (err, apiRes, body) => {
 		console.log(err);
-		res.send('ok');
+		res.json({});
 	});
 });
 
-app.listen(3001, () => { console.log ('done') });
+app.listen(3001, () => console.log ('done'));

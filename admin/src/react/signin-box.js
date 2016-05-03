@@ -112,7 +112,7 @@ let SignInBox = React.createClass({
     if (this.state.usernameValid.isEmail && !this.state.pwdValid.isEmpty) {
       $.ajax({
         type: 'POST',
-        url: 'http://127.0.0.1:3002/signin',
+        url: '/signin',
         data: {
           username: this.state.username,
           pwd: this.state.pwd
@@ -121,7 +121,10 @@ let SignInBox = React.createClass({
         success(data) {
           // TODO 实现
           window.location.href = 'dashboard.html';
-        }      
+        },
+				error(req, textStatus, err) {
+					console.log(err);
+				}
       });
     }
   },

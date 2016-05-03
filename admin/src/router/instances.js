@@ -2,16 +2,16 @@ import express from 'express';
 import request from 'request';
 
 let router = express.Router();
-let API_BASE_URL = 'http://127.0.0.1:3002/templates';
+let API_BASE_URL = 'http://127.0.0.1:3002/instances';
 
 router.post('/', (req, res) => {
-  let template = req.body;
-	template.userid = req.cookies.userid;
+  let instance = req.body;
+	instance.userid = req.cookies.userid;
 	request({
 		method: 'POST',
 		url: API_BASE_URL,
 		json: true,
-		body: template
+		body: instance
 	}, (err, apiRes, body) => {
 		if (!err && apiRes.statusCode == 201)
 			res.status(201).json(body);

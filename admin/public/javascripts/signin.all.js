@@ -28802,7 +28802,7 @@ var _signinBox2 = _interopRequireDefault(_signinBox);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(_signinBox2.default, null), document.getElementById('content'));
+_reactDom2.default.render(_react2.default.createElement(_signinBox2.default, { title: '登陆' }), document.getElementById('content'));
 },{"../react/signin-box":160,"react":158,"react-dom":2}],160:[function(require,module,exports){
 'use strict';
 
@@ -28967,7 +28967,7 @@ var SignInBox = _react2.default.createClass({
     if (this.state.usernameValid.isEmail && !this.state.pwdValid.isEmpty) {
       _jquery2.default.ajax({
         type: 'POST',
-        url: 'http://127.0.0.1:3002/signin',
+        url: '/signin',
         data: {
           username: this.state.username,
           pwd: this.state.pwd
@@ -28976,6 +28976,9 @@ var SignInBox = _react2.default.createClass({
         success: function success(data) {
           // TODO 实现
           window.location.href = 'dashboard.html';
+        },
+        error: function error(req, textStatus, err) {
+          console.log(err);
         }
       });
     }
