@@ -20,6 +20,8 @@ var _clientBox = require('./client-box');
 
 var _clientBox2 = _interopRequireDefault(_clientBox);
 
+var _reactBootstrap = require('react-bootstrap');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var TemplateBox = _react2.default.createClass({
@@ -29,58 +31,66 @@ var TemplateBox = _react2.default.createClass({
 	},
 	render: function render() {
 		return _react2.default.createElement(
-			'div',
+			_reactBootstrap.Row,
 			null,
 			_react2.default.createElement(
-				'div',
-				{ className: 'col-sm-6' },
+				_reactBootstrap.Col,
+				{ sm: 6 },
 				_react2.default.createElement(
-					'form',
-					{ className: 'form-horizontal' },
+					_reactBootstrap.Well,
+					null,
 					_react2.default.createElement(
-						'div',
-						{ className: 'form-group' },
+						_reactBootstrap.Form,
+						{ horizontal: true },
 						_react2.default.createElement(
-							'label',
-							{ className: 'col-sm-2 control-label' },
-							'标题'
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'col-sm-10' },
-							_react2.default.createElement('input', { type: 'text', className: 'form-control', onChange: this.handleTitleChange })
-						)
-					),
-					_react2.default.createElement(_itemBox2.default, { items: this.state.items, callbackParent: this.handleItemsChange }),
-					_react2.default.createElement(
-						'div',
-						{ className: 'form-group' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'col-sm-2' },
+							_reactBootstrap.FormGroup,
+							null,
 							_react2.default.createElement(
-								'button',
-								{ type: 'button', className: 'btn btn-default', onClick: this.handleItemAdd },
-								_react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' })
+								_reactBootstrap.Col,
+								{ componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+								'标题'
+							),
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ sm: 10 },
+								_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', onChange: this.handleTitleChange })
 							)
 						),
+						_react2.default.createElement(_itemBox2.default, { items: this.state.items, callbackParent: this.handleItemsChange }),
 						_react2.default.createElement(
-							'div',
-							{ className: 'col-sm-10' },
+							_reactBootstrap.FormGroup,
+							null,
 							_react2.default.createElement(
-								'button',
-								{ type: 'button', className: 'btn btn-primary', onClick: this.handleCommit },
-								_react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' }),
-								' 保存表单'
+								_reactBootstrap.Col,
+								{ sm: 2 },
+								_react2.default.createElement(
+									_reactBootstrap.Button,
+									{ onClick: this.handleItemAdd },
+									_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'plus' })
+								)
+							),
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ sm: 10 },
+								_react2.default.createElement(
+									_reactBootstrap.Button,
+									{ bsStyle: 'primary', onClick: this.handleCommit },
+									_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'ok' }),
+									' 保存表单'
+								)
 							)
 						)
 					)
 				)
 			),
 			_react2.default.createElement(
-				'div',
-				{ className: 'col-sm-6' },
-				_react2.default.createElement(_clientBox2.default, { template: this.state })
+				_reactBootstrap.Col,
+				{ sm: 6 },
+				_react2.default.createElement(
+					_reactBootstrap.Well,
+					null,
+					_react2.default.createElement(_clientBox2.default, { template: this.state })
+				)
 			)
 		);
 	},

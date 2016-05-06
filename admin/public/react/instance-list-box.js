@@ -14,6 +14,10 @@ var _jquery2 = _interopRequireDefault(_jquery);
 
 var _reactBootstrap = require('react-bootstrap');
 
+var _flagGroupBox = require('./flag-group-box');
+
+var _flagGroupBox2 = _interopRequireDefault(_flagGroupBox);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var InstanceListBox = _react2.default.createClass({
@@ -60,7 +64,7 @@ var InstanceListOpration = _react2.default.createClass({
 			_react2.default.createElement(
 				_reactBootstrap.Button,
 				{ bsStyle: 'danger' },
-				_react2.default.createElement('span', { className: 'glyphicon glyphicon-search' }),
+				_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' }),
 				' 搜索'
 			),
 			_react2.default.createElement('hr', null)
@@ -105,36 +109,14 @@ var Instance = _react2.default.createClass({
 		var template = _props$instance.template;
 		var createTime = _props$instance.createTime;
 
-		var flags = _react2.default.createElement(
-			_reactBootstrap.Popover,
-			{ title: '标旗帜' },
-			_react2.default.createElement(
-				_reactBootstrap.Button,
-				{ bsStyle: 'link', bsSize: 'sm' },
-				_react2.default.createElement('span', { className: 'glyphicon glyphicon-flag', style: { color: 'red' }, alt: 'red' })
-			),
-			_react2.default.createElement(
-				_reactBootstrap.Button,
-				{ bsStyle: 'link', bsSize: 'sm' },
-				_react2.default.createElement('span', { className: 'glyphicon glyphicon-flag' })
-			),
-			_react2.default.createElement(
-				_reactBootstrap.Button,
-				{ bsStyle: 'link', bsSize: 'sm' },
-				_react2.default.createElement('span', { className: 'glyphicon glyphicon-flag' })
-			)
-		);
 		var title = _react2.default.createElement(
 			'div',
 			null,
+			_react2.default.createElement(_flagGroupBox2.default, null),
 			_react2.default.createElement(
-				_reactBootstrap.OverlayTrigger,
-				{ trigger: 'click', rootClose: true, placement: 'top', overlay: flags },
-				_react2.default.createElement(
-					_reactBootstrap.Button,
-					{ bsStyle: 'link', bsSize: 'sm' },
-					_react2.default.createElement('span', { className: 'glyphicon glyphicon-flag' })
-				)
+				_reactBootstrap.Button,
+				{ bsStyle: 'link', bsSize: 'sm' },
+				_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'cog' })
 			),
 			' # ',
 			vid
@@ -170,14 +152,14 @@ var Instance = _react2.default.createClass({
 					_react2.default.createElement(
 						_reactBootstrap.Col,
 						{ sm: 6 },
-						_react2.default.createElement('span', { className: 'glyphicon glyphicon-list-alt' }),
+						_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'list-alt' }),
 						' ',
 						template.title
 					),
 					_react2.default.createElement(
 						_reactBootstrap.Col,
 						{ sm: 6 },
-						_react2.default.createElement('span', { className: 'glyphicon glyphicon-time' }),
+						_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'time' }),
 						' ',
 						createTime
 					)

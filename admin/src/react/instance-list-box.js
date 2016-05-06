@@ -10,7 +10,9 @@ import {
 	ButtonToolbar,
 	OverlayTrigger,
 	Popover,
+	Glyphicon,
 } from 'react-bootstrap';
+import FlagGroupBox from './flag-group-box';
 
 let InstanceListBox = React.createClass({
 	getInitialState() {
@@ -47,7 +49,7 @@ let InstanceListOpration = React.createClass({
 			<div>
 				<PageHeader>资料管理</PageHeader>
 				<Button bsStyle="danger">
-					<span className="glyphicon glyphicon-search"></span> 搜索
+					<Glyphicon glyph="search" /> 搜索
 				</Button>
 				<hr />
 			</div>
@@ -76,20 +78,12 @@ let InstanceList = React.createClass({
 let Instance = React.createClass({
 	render() {
 		let {vid, template, createTime} = this.props.instance;
-		let flags = (
-			<Popover title="标旗帜">
-				<Button bsStyle="link" bsSize="sm"><span className="glyphicon glyphicon-flag" style={{color: 'red'}} alt="red"></span></Button>
-				<Button bsStyle="link" bsSize="sm"><span className="glyphicon glyphicon-flag"></span></Button>
-				<Button bsStyle="link" bsSize="sm"><span className="glyphicon glyphicon-flag"></span></Button>
-			</Popover>
-		);
 		let title = (
 			<div>
-				<OverlayTrigger trigger="click" rootClose placement="top" overlay={flags}>
-					<Button bsStyle="link" bsSize="sm">
-						<span className="glyphicon glyphicon-flag"></span> 
-					</Button>
-				</OverlayTrigger>
+				<FlagGroupBox />
+				<Button bsStyle="link" bsSize="sm">
+					<Glyphicon glyph="cog" />
+				</Button>
 				&nbsp;# {vid}
 			</div>
 		);
@@ -107,10 +101,10 @@ let Instance = React.createClass({
 				<Panel header={title} bsStyle="info">
 					<Row>
 						<Col sm={6}>
-							<span className="glyphicon glyphicon-list-alt"></span> {template.title}	
+							<Glyphicon glyph="list-alt" /> {template.title}	
 						</Col>
 						<Col sm={6}>
-							<span className="glyphicon glyphicon-time"></span> {createTime}
+							<Glyphicon glyph="time" /> {createTime}
 						</Col>
 					</Row>
 					<Table hover fill>
