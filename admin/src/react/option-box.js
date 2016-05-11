@@ -5,15 +5,22 @@ import {
 	Row,
 	FormGroup,
 	ControlLabel,
+	InputGroup,
+	Glyphicon,
 } from 'react-bootstrap';
 
 // 选项值
 let Option = React.createClass({
 	render() {
 		return (
-			<Col sm={4}>
+			<Col sm={6}>
 				<Col sm={10}>
-					<FormControl type="text" placeholder={this.props.placeholder} onChange={this.handleChange} value={this.props.value} />
+					<InputGroup>
+						<InputGroup.Addon>
+							<Glyphicon glyph="move" />
+						</InputGroup.Addon>
+						<FormControl type="text" placeholder={this.props.placeholder} onChange={this.handleChange} value={this.props.value} />
+					</InputGroup>
 				</Col>
 			</Col>
 		);
@@ -32,7 +39,7 @@ let OptionList = React.createClass({
 		return (<Row>{optionList}</Row>);
 	}, 
 	handleOptionChange(option, index) {
-		let options = this.props.options;
+		let { options } = this.props;
 		options[index] = option;
 		this.props.callbackParent(options);
 	},
@@ -44,7 +51,7 @@ let OptionBox = React.createClass({
 			<FormGroup>
 				<Col sm={2} componentClass={ControlLabel}>选项</Col>
 				<Col sm={10}>
-  					<OptionList options={this.props.options} callbackParent={this.props.callbackParent} />
+					<OptionList options={this.props.options} callbackParent={this.props.callbackParent} />
 				</Col>
 			</FormGroup>
 		);

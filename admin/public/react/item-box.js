@@ -4,9 +4,15 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _item = require('./item');
+
+var _item2 = _interopRequireDefault(_item);
 
 var _optionBox = require('./option-box');
 
@@ -14,112 +20,49 @@ var _optionBox2 = _interopRequireDefault(_optionBox);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Item = _react2.default.createClass({
-	displayName: 'Item',
-	render: function render() {
-		var optionBox = void 0;
-		if (this.props.item.type == 'radio' || this.props.item.type == 'checkbox') {
-			optionBox = _react2.default.createElement(_optionBox2.default, { options: this.props.item.options, callbackParent: this.handleOptionsChange });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ItemBox = function (_Component) {
+	_inherits(ItemBox, _Component);
+
+	function ItemBox(props) {
+		_classCallCheck(this, ItemBox);
+
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ItemBox).call(this, props));
+
+		_this.handleChange = _this.handleChange.bind(_this);
+		return _this;
+	}
+
+	_createClass(ItemBox, [{
+		key: 'render',
+		value: function render() {
+			var _this2 = this;
+
+			var items = this.props.items.map(function (item, index) {
+				return _react2.default.createElement(_item2.default, { index: index, item: item, callbackParent: _this2.handleChange });
+			}, this);
+			return _react2.default.createElement(
+				'div',
+				null,
+				items
+			);
 		}
-		var radioName = '__type_radio_name_' + this.props.index;
-		return _react2.default.createElement(
-			'div',
-			{ className: 'item' },
-			_react2.default.createElement('hr', null),
-			_react2.default.createElement(
-				'div',
-				{ className: 'form-group' },
-				_react2.default.createElement(
-					'label',
-					{ className: 'col-sm-2 control-label' },
-					'名称'
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'col-sm-10' },
-					_react2.default.createElement('input', { type: 'text', className: 'form-control', onChange: this.handleNameChange })
-				)
-			),
-			_react2.default.createElement(
-				'div',
-				{ className: 'form-group' },
-				_react2.default.createElement(
-					'label',
-					{ className: 'col-sm-2 control-label' },
-					'类型'
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'col-sm-10' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'btn-group' },
-						_react2.default.createElement(
-							'label',
-							{ className: 'btn btn-default' },
-							_react2.default.createElement('input', { type: 'radio', name: radioName, value: 'text', checked: this.props.item.type == 'text', onChange: this.handleTypeChange }),
-							' 文本'
-						),
-						_react2.default.createElement(
-							'label',
-							{ className: 'btn btn-default' },
-							_react2.default.createElement('input', { type: 'radio', name: radioName, value: 'radio', onChange: this.handleTypeChange }),
-							' 单选'
-						),
-						_react2.default.createElement(
-							'label',
-							{ className: 'btn btn-default' },
-							_react2.default.createElement('input', { type: 'radio', name: radioName, value: 'checkbox', onChange: this.handleTypeChange }),
-							' 多选'
-						),
-						_react2.default.createElement(
-							'label',
-							{ className: 'btn btn-default' },
-							_react2.default.createElement('input', { type: 'radio', name: radioName, value: 'file', onChange: this.handleTypeChange }),
-							' 文件上传'
-						)
-					)
-				)
-			),
-			optionBox
-		);
-	},
-	handleNameChange: function handleNameChange(event) {
-		var item = this.props.item;
-		item.name = event.target.value;
-		this.props.callbackParent(item, this.props.index);
-	},
-	handleTypeChange: function handleTypeChange(event) {
-		var item = this.props.item;
-		item.type = event.target.value;
-		this.props.callbackParent(item, this.props.index);
-	},
-	handleOptionsChange: function handleOptionsChange(options) {
-		var item = this.props.item;
-		item.options = options;
-		this.props.callbackParent(item, this.props.index);
-	}
-});
+	}, {
+		key: 'handleChange',
+		value: function handleChange(item, index) {
+			var items = this.props.items;
 
-var ItemBox = _react2.default.createClass({
-	displayName: 'ItemBox',
-	render: function render() {
-		var _this = this;
+			items[index] = item;
+			this.props.callbackParent(items);
+		}
+	}]);
 
-		var items = this.props.items.map(function (item, index) {
-			return _react2.default.createElement(Item, { index: index, item: item, callbackParent: _this.handleChange });
-		}, this);
-		return _react2.default.createElement(
-			'div',
-			null,
-			items
-		);
-	},
-	handleChange: function handleChange(item, index) {
-		var items = this.props.items;
-		items[index] = item;
-		this.props.callbackParent(items);
-	}
-});
+	return ItemBox;
+}(_react.Component);
 
 exports.default = ItemBox;

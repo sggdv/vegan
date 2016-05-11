@@ -18,11 +18,20 @@ var Option = _react2.default.createClass({
 	render: function render() {
 		return _react2.default.createElement(
 			_reactBootstrap.Col,
-			{ sm: 4 },
+			{ sm: 6 },
 			_react2.default.createElement(
 				_reactBootstrap.Col,
 				{ sm: 10 },
-				_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: this.props.placeholder, onChange: this.handleChange, value: this.props.value })
+				_react2.default.createElement(
+					_reactBootstrap.InputGroup,
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.InputGroup.Addon,
+						null,
+						_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'move' })
+					),
+					_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: this.props.placeholder, onChange: this.handleChange, value: this.props.value })
+				)
 			)
 		);
 	},
@@ -48,6 +57,7 @@ var OptionList = _react2.default.createClass({
 	},
 	handleOptionChange: function handleOptionChange(option, index) {
 		var options = this.props.options;
+
 		options[index] = option;
 		this.props.callbackParent(options);
 	}
