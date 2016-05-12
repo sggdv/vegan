@@ -10,35 +10,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = require('react-bootstrap');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _option = require('./option');
 
-// 选项值
-var Option = _react2.default.createClass({
-	displayName: 'Option',
-	render: function render() {
-		return _react2.default.createElement(
-			_reactBootstrap.Col,
-			{ sm: 6 },
-			_react2.default.createElement(
-				_reactBootstrap.Col,
-				{ sm: 10 },
-				_react2.default.createElement(
-					_reactBootstrap.InputGroup,
-					null,
-					_react2.default.createElement(
-						_reactBootstrap.InputGroup.Addon,
-						null,
-						_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'move' })
-					),
-					_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: this.props.placeholder, onChange: this.handleChange, value: this.props.value })
-				)
-			)
-		);
-	},
-	handleChange: function handleChange(event) {
-		this.props.callbackParent(event.target.value, this.props.index);
-	}
-});
+var _option2 = _interopRequireDefault(_option);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var OptionList = _react2.default.createClass({
 	displayName: 'OptionList',
@@ -47,25 +23,56 @@ var OptionList = _react2.default.createClass({
 
 		var optionList = this.props.options.map(function (opt, index) {
 			var placeholder = '选项' + (index + 1);
-			return _react2.default.createElement(Option, { placeholder: placeholder, index: index, value: opt, callbackParent: _this.handleOptionChange });
+			return _react2.default.createElement(_option2.default, {
+				key: index,
+				placeholder: placeholder,
+				index: index,
+				value: opt,
+				callbackParent: _this.handleOptionChange,
+				removeOption: _this.handleOptionRemove,
+				move: _this.handleMove });
 		}, this);
 		return _react2.default.createElement(
-			_reactBootstrap.Row,
+			'div',
 			null,
 			optionList
 		);
 	},
 	handleOptionChange: function handleOptionChange(option, index) {
-		var options = this.props.options;
+		var _props = this.props;
+		var options = _props.options;
+		var callbackParent = _props.callbackParent;
 
 		options[index] = option;
-		this.props.callbackParent(options);
+		callbackParent(options);
+	},
+	handleOptionRemove: function handleOptionRemove(index) {
+		var _props2 = this.props;
+		var options = _props2.options;
+		var callbackParent = _props2.callbackParent;
+
+		options.splice(index, 1);
+		callbackParent(options);
+	},
+	handleMove: function handleMove(dragIndex, hoverIndex) {
+		var _props3 = this.props;
+		var options = _props3.options;
+		var callbackParent = _props3.callbackParent;
+
+		var dragOption = options[dragIndex];
+		options.splice(dragIndex, 1);
+		options.splice(hoverIndex, 0, dragOption);
+		callbackParent(options);
 	}
 });
 
 var OptionBox = _react2.default.createClass({
 	displayName: 'OptionBox',
 	render: function render() {
+		var _props4 = this.props;
+		var options = _props4.options;
+		var callbackParent = _props4.callbackParent;
+
 		return _react2.default.createElement(
 			_reactBootstrap.FormGroup,
 			null,
@@ -77,7 +84,7 @@ var OptionBox = _react2.default.createClass({
 			_react2.default.createElement(
 				_reactBootstrap.Col,
 				{ sm: 10 },
-				_react2.default.createElement(OptionList, { options: this.props.options, callbackParent: this.props.callbackParent })
+				_react2.default.createElement(OptionList, { options: options, callbackParent: callbackParent })
 			)
 		);
 	}

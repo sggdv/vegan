@@ -35,6 +35,8 @@ var ItemBox = function (_Component) {
 		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ItemBox).call(this, props));
 
 		_this.handleChange = _this.handleChange.bind(_this);
+		_this.handleRemove = _this.handleRemove.bind(_this);
+		_this.handleMove = _this.handleMove.bind(_this);
 		return _this;
 	}
 
@@ -44,7 +46,7 @@ var ItemBox = function (_Component) {
 			var _this2 = this;
 
 			var items = this.props.items.map(function (item, index) {
-				return _react2.default.createElement(_item2.default, { index: index, item: item, callbackParent: _this2.handleChange });
+				return _react2.default.createElement(_item2.default, { key: item.__react_key, index: index, item: item, callbackParent: _this2.handleChange, removeItem: _this2.handleRemove, move: _this2.handleMove });
 			}, this);
 			return _react2.default.createElement(
 				'div',
@@ -55,10 +57,34 @@ var ItemBox = function (_Component) {
 	}, {
 		key: 'handleChange',
 		value: function handleChange(item, index) {
-			var items = this.props.items;
+			var _props = this.props;
+			var items = _props.items;
+			var callbackParent = _props.callbackParent;
 
 			items[index] = item;
-			this.props.callbackParent(items);
+			callbackParent(items);
+		}
+	}, {
+		key: 'handleMove',
+		value: function handleMove(dragIndex, hoverIndex) {
+			var _props2 = this.props;
+			var items = _props2.items;
+			var callbackParent = _props2.callbackParent;
+
+			var dragItem = items[dragIndex];
+			items.splice(dragIndex, 1);
+			items.splice(hoverIndex, 0, dragItem);
+			callbackParent(items);
+		}
+	}, {
+		key: 'handleRemove',
+		value: function handleRemove(index) {
+			var _props3 = this.props;
+			var items = _props3.items;
+			var callbackParent = _props3.callbackParent;
+
+			items.splice(index, 1);
+			callbackParent(items);
 		}
 	}]);
 

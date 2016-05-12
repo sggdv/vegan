@@ -22,6 +22,14 @@ var _clientBox = require('./client-box');
 
 var _clientBox2 = _interopRequireDefault(_clientBox);
 
+var _optionGenerator = require('./option-generator');
+
+var _optionGenerator2 = _interopRequireDefault(_optionGenerator);
+
+var _trash = require('./trash');
+
+var _trash2 = _interopRequireDefault(_trash);
+
 var _reactBootstrap = require('react-bootstrap');
 
 var _reactDnd = require('react-dnd');
@@ -37,6 +45,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var __item_react_key = 0;
 
 var TemplateBox = function (_Component) {
 	_inherits(TemplateBox, _Component);
@@ -54,7 +64,7 @@ var TemplateBox = function (_Component) {
 		_this.handleFileItemAdd = _this.handleFileItemAdd.bind(_this);
 		_this.handleCommit = _this.handleCommit.bind(_this);
 
-		_this.state = { title: '', items: [{ name: '', type: 'text', options: ['', '', ''] }] };
+		_this.state = { title: '', items: [] };
 		return _this;
 	}
 
@@ -108,15 +118,8 @@ var TemplateBox = function (_Component) {
 							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'file' })
 						)
 					),
-					_react2.default.createElement(
-						'div',
-						{ style: { marginTop: '50px' } },
-						_react2.default.createElement(
-							_reactBootstrap.Button,
-							{ bsSize: 'lg' },
-							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'trash' })
-						)
-					)
+					_react2.default.createElement(_optionGenerator2.default, null),
+					_react2.default.createElement(_trash2.default, null)
 				),
 				_react2.default.createElement(
 					_reactBootstrap.Col,
@@ -192,7 +195,13 @@ var TemplateBox = function (_Component) {
 		value: function handleTextItemAdd() {
 			var items = this.state.items;
 
-			items.push({ name: '', type: 'text' });
+			__item_react_key++;
+			var item = {
+				name: '',
+				type: 'text',
+				__react_key: __item_react_key
+			};
+			items.push(item);
 			this.setState({ items: items });
 		}
 	}, {
@@ -200,7 +209,14 @@ var TemplateBox = function (_Component) {
 		value: function handleRadioItemAdd() {
 			var items = this.state.items;
 
-			items.push({ name: '', type: 'radio', options: [''] });
+			__item_react_key++;
+			var item = {
+				name: '',
+				type: 'radio',
+				__react_key: __item_react_key,
+				options: ['']
+			};
+			items.push(item);
 			this.setState({ items: items });
 		}
 	}, {
@@ -208,7 +224,14 @@ var TemplateBox = function (_Component) {
 		value: function handleCheckBoxItemAdd() {
 			var items = this.state.items;
 
-			items.push({ name: '', type: 'checkbox', options: [''] });
+			__item_react_key++;
+			var item = {
+				name: '',
+				type: 'checkbox',
+				__react_key: __item_react_key,
+				options: ['']
+			};
+			items.push(item);
 			this.setState({ items: items });
 		}
 	}, {
@@ -216,7 +239,13 @@ var TemplateBox = function (_Component) {
 		value: function handleFileItemAdd() {
 			var items = this.state.items;
 
-			items.push({ name: '', type: 'file' });
+			__item_react_key++;
+			var item = {
+				name: '',
+				type: 'file',
+				__react_key: __item_react_key
+			};
+			items.push(item);
 			this.setState({ items: items });
 		}
 	}, {

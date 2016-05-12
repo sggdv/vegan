@@ -10,9 +10,13 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
 var _reactBootstrap = require('react-bootstrap');
 
 var _reactDnd = require('react-dnd');
+
+var _constants = require('./constants');
 
 var _optionBox = require('./option-box');
 
@@ -42,7 +46,9 @@ var Item = function (_Component) {
 	_createClass(Item, [{
 		key: 'render',
 		value: function render() {
-			var _props$item = this.props.item;
+			var _props = this.props;
+			var index = _props.index;
+			var _props$item = _props.item;
 			var type = _props$item.type;
 			var options = _props$item.options;
 
@@ -50,7 +56,7 @@ var Item = function (_Component) {
 			if (type == 'radio' || type == 'checkbox') {
 				optionBox = _react2.default.createElement(_optionBox2.default, { options: options, callbackParent: this.handleOptionsChange });
 			}
-			var radioName = '__type_radio_name_' + this.props.index;
+			var radioName = '__type_radio_name_' + index;
 			var icon = null;
 			if (type == 'text') {
 				icon = 'font';
@@ -60,51 +66,60 @@ var Item = function (_Component) {
 				icon = 'check';
 			}
 
-			var _props = this.props;
-			var connectDragSource = _props.connectDragSource;
-			var isDragging = _props.isDragging;
+			var _props2 = this.props;
+			var connectDragSource = _props2.connectDragSource;
+			var connectDragPreview = _props2.connectDragPreview;
+			var isDragging = _props2.isDragging;
+			var connectDropTarget = _props2.connectDropTarget;
+			var connectOptionDropTarget = _props2.connectOptionDropTarget;
 
 			var opacity = isDragging ? 0 : 1;
-			return connectDragSource(_react2.default.createElement(
+			return connectOptionDropTarget(connectDropTarget(connectDragPreview(_react2.default.createElement(
 				'div',
-				{ style: { opacity: opacity, cursor: 'move' } },
+				{ style: { opacity: opacity } },
 				_react2.default.createElement(
 					_reactBootstrap.Well,
 					null,
 					_react2.default.createElement(
-						'div',
-						{ className: 'form-group' },
-						_react2.default.createElement(
+						_reactBootstrap.FormGroup,
+						null,
+						connectDragSource(_react2.default.createElement(
 							'label',
-							{ className: 'col-sm-2 control-label' },
+							{ className: 'col-sm-2 control-label', style: { cursor: 'move' } },
 							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: icon }),
 							' 名称'
-						),
+						)),
 						_react2.default.createElement(
 							'div',
 							{ className: 'col-sm-10' },
-							_react2.default.createElement('input', { type: 'text', className: 'form-control', onChange: this.handleNameChange })
+							_react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleNameChange })
 						)
 					),
 					optionBox
 				)
-			));
+			))));
 		}
 	}, {
 		key: 'handleNameChange',
 		value: function handleNameChange(event) {
-			var item = this.props.item;
+			var _props3 = this.props;
+			var item = _props3.item;
+			var index = _props3.index;
+			var callbackParent = _props3.callbackParent;
 
 			item.name = event.target.value;
-			this.props.callbackParent(item, this.props.index);
+			callbackParent(item, index);
 		}
 	}, {
 		key: 'handleOptionsChange',
 		value: function handleOptionsChange(options) {
-			var item = this.props.item;
+			var _props4 = this.props;
+			var item = _props4.item;
+			var index = _props4.index;
+			var callbackParent = _props4.callbackParent;
 
 			item.options = options;
-			this.props.callbackParent(item, this.props.index);
+			callbackParent(item, index);
 		}
 	}]);
 
@@ -113,13 +128,64 @@ var Item = function (_Component) {
 
 var itemSource = {
 	beginDrag: function beginDrag(props) {
-		return {};
+		return {
+			index: props.index,
+			removeItem: props.removeItem
+		};
 	}
 };
 
-exports.default = (0, _reactDnd.DragSource)('a', itemSource, function (connect, monitor) {
+var Src = (0, _reactDnd.DragSource)(_constants.ItemTypes.Trash, itemSource, function (connect, monitor) {
 	return {
 		connectDragSource: connect.dragSource(),
+		connectDragPreview: connect.dragPreview(),
 		isDragging: monitor.isDragging()
 	};
 })(Item);
+
+var target = {
+	hover: function hover(props, monitor, component) {
+		var dragIndex = monitor.getItem().index;
+		var hoverIndex = props.index;
+		if (dragIndex === hoverIndex) {
+			return;
+		}
+		var hoverBoundingRect = (0, _reactDom.findDOMNode)(component).getBoundingClientRect();
+		var hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+		var clientOffset = monitor.getClientOffset();
+		var hoverClientY = clientOffset.y - hoverBoundingRect.top;
+		if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+			return;
+		}
+		if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+			return;
+		}
+		props.move(dragIndex, hoverIndex);
+		monitor.getItem().index = hoverIndex;
+	}
+};
+
+var TargetSrc = (0, _reactDnd.DropTarget)(_constants.ItemTypes.Trash, target, function (connect, monitor) {
+	return {
+		connectDropTarget: connect.dropTarget()
+	};
+})(Src);
+
+var optionTarget = {
+	drop: function drop(props, monitor, component) {
+		var item = props.item;
+		var index = props.index;
+		var callbackParent = props.callbackParent;
+
+		item.options.push('');
+		callbackParent(item, index);
+	}
+};
+
+var OptionTarget = (0, _reactDnd.DropTarget)(_constants.ItemTypes.ADD_OPTION, optionTarget, function (connect, monitor) {
+	return {
+		connectOptionDropTarget: connect.dropTarget()
+	};
+})(TargetSrc);
+
+exports.default = OptionTarget;

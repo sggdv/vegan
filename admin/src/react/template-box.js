@@ -2,6 +2,8 @@ import $ from 'jquery';
 import React, { Component } from 'react';
 import ItemBox from './item-box';
 import ClientBox from './client-box';
+import OptionGenerator from './option-generator';
+import Trash from './trash';
 import {
 	Col,
 	Form,
@@ -17,6 +19,8 @@ import {
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
+let __item_react_key = 0;
+
 class TemplateBox extends Component {
 
 	constructor(props) {
@@ -30,7 +34,7 @@ class TemplateBox extends Component {
 		this.handleFileItemAdd = this.handleFileItemAdd.bind(this);
 		this.handleCommit = this.handleCommit.bind(this);
 
-		this.state = { title: '', items: [{ name: '', type: 'text', options: ['', '', ''] }] };
+		this.state = { title: '', items: [] };
 	}
 
 	render() {
@@ -60,11 +64,8 @@ class TemplateBox extends Component {
 							<Glyphicon glyph="file" />
 						</Button>
 					</div>
-					<div style={{ marginTop: '50px' }}>
-						<Button bsSize="lg">
-							<Glyphicon glyph="trash" />
-						</Button>
-					</div>
+					<OptionGenerator />
+					<Trash />
 				</Col>
 				<Col sm={6}>
 					<PageHeader>编辑区</PageHeader>
@@ -106,25 +107,51 @@ class TemplateBox extends Component {
 
 	handleTextItemAdd() {
 		let { items } = this.state;
-		items.push({ name: '', type: 'text' });
+		__item_react_key++;
+		let item = {
+			name: '',
+			type: 'text',
+			__react_key: __item_react_key,
+		};
+		items.push(item);
 		this.setState({items});
 	}
 
 	handleRadioItemAdd() {
 		let { items } = this.state;
-		items.push({ name: '', type: 'radio', options: [''] });
+		__item_react_key++;
+		let item = {
+			name: '',
+			type: 'radio',
+			__react_key: __item_react_key,
+			options: [''],
+		};
+		items.push(item);
 		this.setState({items});
 	}
 
 	handleCheckBoxItemAdd() {
 		let { items } = this.state;
-		items.push({ name: '', type: 'checkbox', options: [''] });
+		__item_react_key++;
+		let item = {
+			name: '',
+			type: 'checkbox',
+			__react_key: __item_react_key,
+			options: [''],
+		};
+		items.push(item);
 		this.setState({items});
 	}
 
 	handleFileItemAdd() {
 		let { items } = this.state;
-		items.push({ name: '', type: 'file' });
+		__item_react_key++;
+		let item = {
+			name: '',
+			type: 'file',
+			__react_key: __item_react_key,
+		};
+		items.push(item);
 		this.setState({items});
 	}
 
