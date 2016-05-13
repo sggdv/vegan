@@ -20,7 +20,10 @@ gulp.task('default', () => {
 		.pipe(gulp.dest('./public/javascripts/'));
 
 	gulp.src(['./src/react/*.js'])
-		.pipe(babel({ presets: ['react', 'es2015'] }))
+		.pipe(babel({ 
+			presets: ['react', 'es2015'], 
+			plugins: ['babel-plugin-transform-decorators-legacy'],
+		}))
 		.pipe(gulp.dest('./public/react/'));
 
 	gulp.src(['../common/src/react/client-box.js'])

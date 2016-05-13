@@ -3,8 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _class;
 
 var _jquery = require('jquery');
 
@@ -48,7 +51,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var __item_react_key = 0;
 
-var TemplateBox = function (_Component) {
+var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default), _dec(_class = function (_Component) {
 	_inherits(TemplateBox, _Component);
 
 	function TemplateBox(props) {
@@ -268,6 +271,5 @@ var TemplateBox = function (_Component) {
 	}]);
 
 	return TemplateBox;
-}(_react.Component);
-
-exports.default = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default)(TemplateBox);
+}(_react.Component)) || _class);
+exports.default = TemplateBox;

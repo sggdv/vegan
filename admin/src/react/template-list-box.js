@@ -1,14 +1,20 @@
 import $ from 'jquery';
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {
+	PageHeader,
+	Glyphicon,
 	Button, 
 	Modal, 
 	Form,
 	FormGroup,
 	FormControl,
 	ControlLabel,
+	Row,
 	Col,
+	Table,
+	Panel,
+	Label,
 } from 'react-bootstrap';
 
 import TemplateBox from './template-box';
@@ -18,11 +24,14 @@ import TemplateBox from './template-box';
 // 展示层：数据展示
 
 // 整个content
-let TemplateListBox = React.createClass({
-	getInitialState() {
-		let templates = [];
-		return {templates};
-	},
+export default class TemplateListBox extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = { templates: [] };
+		this.componentDidMount = this.componentDidMount.bind(this);
+	}
+
 	componentDidMount() {
 		$.ajax({
 			type: 'GET',
@@ -36,7 +45,8 @@ let TemplateListBox = React.createClass({
 				console.error('abc', status, err.toString());
 			}.bind(this)
 		});
-	},
+	}
+
 	render() {
 		return (
 			<div>
@@ -44,66 +54,85 @@ let TemplateListBox = React.createClass({
 				<TemplateList templates={this.state.templates} />
 			</div>
 		);
-	},
-});
+	}
+
+}
 
 // 操作层
-let TemplateListOpration = React.createClass({
+class TemplateListOpration extends Component {
+
+	constructor(props) {
+		super(props);
+		this.handleAdd = this.handleAdd.bind(this);
+	}
+
 	render() {
 		return (
 			<div>
-				<div className="page-header">
-					<h3>表单管理</h3>
-				</div>
-				<button className="btn btn-danger" onClick={this.handleAdd}>
-					<span className="glyphicon glyphicon-plus"></span> 添加表单
-				</button>
+				<PageHeader>表单管理</PageHeader>
+				<Button bsStyle="danger" onClick={this.handleAdd}>
+					<Glyphicon glyph="plus" /> 添加表单
+				</Button>
 				<hr />
 			</div>
 		);	
-	},
+	}
+
 	handleAdd() {
 		ReactDOM.render(
 			<TemplateBox />,
 			document.getElementById('content')
 		);
-	},
-});
+	}
+
+}
 
 // 展示层
-let TemplateList = React.createClass({
+class TemplateList extends Component {
+
 	render() {
-		let templates = this.props.templates.map((template) => {
+		const templates = this.props.templates.map((template) => {
 			return (<Template template={template} />);	
 		});
 		let puttyDom = new Array;
 		templates.forEach((template, index, arr) => {
 			if (index % 2 == 0) { // 偶数元素
 				if (index == arr.length) 
-					puttyDom.push((<div className="row">{arr[index]}</div>))
+					puttyDom.push((<Row>{arr[index]}</Row>))
 				else
-					puttyDom.push((<div className="row">{arr[index]}{arr[index + 1]}</div>))
+					puttyDom.push((<Row>{arr[index]}{arr[index + 1]}</Row>))
 			}
 		});
 		return (<div>{puttyDom}</div>);
-	},
-});
+	}
+
+}
 
 // 单个表单展示
-let Template = React.createClass({
-	getInitialState() {
-		return { showModal: false, vid: '' };
-	},
+class Template extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = { showModal: false, vid: '' };
+		this.close = this.close.bind(this);
+		this.open = this.open.bind(this);
+		this.handleVidChange = this.handleVidChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
 	close() {
 		this.setState({ showModal: false });
-	},
+	}
+
 	open() {
 		this.setState({ showModal: true });
-	},
+	}
+
 	handleVidChange(event) {
 		let vid = event.target.value;
 		this.setState({vid});
-	},
+	}
+
 	handleSubmit() {
 		let template = this.props.template;
 		let vid = this.state.vid;
@@ -120,13 +149,14 @@ let Template = React.createClass({
 				console.log(err);
 			},
 		});
-	},
+	}
+
 	render() {
-		let spanStyle = { marginRight: "15px" };
+		const spanStyle = { marginRight: "15px" };
 		let items = this.props.template.items.map((item) => {
 			let options = item.options.map((option) => {
 				if (!option || option == '') return;
-				return (<span className="label label-default" style={spanStyle}>{option}</span>);
+				return (<Label style={spanStyle}>{option}</Label>);
 			});
 			return (
 				<tr>
@@ -146,15 +176,15 @@ let Template = React.createClass({
 			);
 		});
 		return (
-			<div className="col-sm-6">
+			<Col sm={6}>
 				<div className="panel panel-info">
 					<div className="panel-heading">
-						<button type="button" className="close">
+						<Button className="close">
 							<span>&times;</span>
-						</button>
+						</Button>
 						<h3 className="panel-title">{this.props.template.title}
-							<Button bsStyle="default" bsSize="xs" style={{marginLeft: "10px"}} onClick={this.open}>
-								<span className="glyphicon glyphicon-link"></span>
+							<Button bsSize="xs" style={{marginLeft: "10px"}} onClick={this.open}>
+								<Glyphicon glyph="link" />
 							</Button>
 							<Modal show={this.state.showModal} onHide={this.close}>
 								<Modal.Header closeBUtton>
@@ -165,7 +195,7 @@ let Template = React.createClass({
 										<FormGroup>
 											<Col componentClass={ControlLabel} sm={3}>淘宝订单号</Col>
 											<Col sm={9}>
-												<FormControl type="text" placeholder="淘宝订单号" onChange={this.handleVidChange} />
+												<FormControl placeholder="淘宝订单号" onChange={this.handleVidChange} />
 											</Col>
 										</FormGroup>
 									</Form>
@@ -180,18 +210,17 @@ let Template = React.createClass({
 					<div className="panel-body">
 						{this.props.template.remark}	
 					</div>
-					<table className="table table-hover">
+					<Table hover>
 						<tr>
 							<th>名称</th>
 							<th>类别</th>
 							<th>选项</th>
 						</tr>
 						{items}
-					</table>
+					</Table>
 				</div>
-			</div>
+			</Col>
 		);
 	}
-});
 
-export default TemplateListBox;
+}

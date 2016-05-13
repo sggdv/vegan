@@ -1,29 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import TemplateListBox from './template-list-box';
 import InstanceListBox from './instance-list-box';
+import TemplateListBox from './template-list-box';
 
-let Nav = React.createClass({
+class Nav extends Component {
+
+	constructor(props) {
+		super(props);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
 	render() {
-		let clzName = this.props.active ? 'active' : '';
+		const { 
+			active, 
+			nav: { url, name },
+		} = this.props;
+		const clzName = active ? 'active' : '';
 		return (
 			<li className={clzName}>
-				<a href={this.props.nav.url} onClick={this.handleChange}>{this.props.nav.name}</a>
+				<a href={url} onClick={this.handleChange}>{name}</a>
 			</li>
 		);
-	},
-	handleChange() {
-		let nav = this.props.nav;
-		console.log(nav);
-		this.props.callbackParent(this.props.index);
-		if (nav.click) nav.click();
-	},
-});
+	}
 
-let NavBox = React.createClass({
-	getInitialState() {
-		let domId = this.props.domId;
-		return { 
+	handleChange() {
+		const { nav, callbackParent, index } = this.props;
+		callbackParent(index);
+		if (nav.click) { 
+			nav.click();
+		}
+	}
+
+}
+
+export default class NavBox extends Component {
+
+	constructor(props) {
+		super(props);
+		const { domId } = this.props;
+		this.state = { 
 			navs: [
 				{ 
 					name: '资料', 
@@ -56,7 +71,10 @@ let NavBox = React.createClass({
 			], 
 			activeNav: 0, 
 		};
-	},
+
+		this.handleNavChange = this.handleNavChange.bind(this);
+	}
+
 	render() {
 		let navs = this.state.navs.map((nav, index) => {
 			var active = index == this.state.activeNav;
@@ -81,10 +99,10 @@ let NavBox = React.createClass({
 				</div>
 			</nav>
 		);
-	},
+	}
+
 	handleNavChange(index) {
 		this.setState({ activeNav: index });
-	},
-});
+	}
 
-export default NavBox;
+}

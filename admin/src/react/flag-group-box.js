@@ -1,48 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
 	Glyphicon,
 	Button,
 	Popover,
 	OverlayTrigger,
 } from 'react-bootstrap';
+import Flag from './flag';
 
-let Flag = React.createClass({
-	render() {
-		return (
-			<Button bsStyle="link" bsSize="sm" onClick={this.handleClick}>
-				<Glyphicon glyph="flag" style={{ color: this.props.color }} />
-			</Button>
-		);
-	},
-	handleClick() {
-		this.props.callbackParent(this.props.color);
-	},
-});
+class FlagGroupBox extends Component {
 
-let FlagGroupBox = React.createClass({
-	getInitialState() {
-		let current = this.props.current || '#FD7D7F';
-		return { 
+	constructor(props) {
+		super(props);
+		let current = props.current || '#FD7D7F';
+		this.state = { 
 			current,
 			colors: ['#FD7D7F', '#FDBD43', '#F4E447', '#B5DF3A', '#83C9FD', '#E3A7FD', '#C8C8C8'],
 		};
-	},
+		this.handleClickFlag = this.handleClickFlag.bind(this);
+	}
+
 	render() {
-		let flags = this.state.colors.map(color => {
+		const { colors, current } = this.state;
+		let flags = colors.map(color => {
 			return (<Flag color={color} callbackParent={this.handleClickFlag} />);	
 		}, this);
 		let overlay = (<Popover title="标旗帜">{flags}</Popover>);
 		return (
 			<OverlayTrigger trigger="click" rootClose placement="top" overlay={overlay}>
 				<Button bsStyle="link" bsSize="sm">
-					<Glyphicon glyph="flag" style={{ color: this.state.current }}  />
+					<Glyphicon glyph="flag" style={{ color: current }}  />
 				</Button>
 			</OverlayTrigger>
 		);
-	},
+	}
+
 	handleClickFlag(color) {
-		this.props.callbackParent(color, () => { this.setState({ current: color }); });
-	},
-});
+		const { callbackParent } = this.props;
+		callbackParent(color, () => { 
+			this.setState({ current: color }); 
+		});
+	}
+
+}
 
 export default FlagGroupBox;

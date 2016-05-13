@@ -21,7 +21,8 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 let __item_react_key = 0;
 
-class TemplateBox extends Component {
+@DragDropContext(HTML5Backend)
+export default class TemplateBox extends Component {
 
 	constructor(props) {
 		super(props);
@@ -97,7 +98,7 @@ class TemplateBox extends Component {
 	}
 
 	handleTitleChange(event) {
-		let title = event.target.value;
+		const title = event.target.value;
 		this.setState({title});
 	}
 
@@ -108,7 +109,7 @@ class TemplateBox extends Component {
 	handleTextItemAdd() {
 		let { items } = this.state;
 		__item_react_key++;
-		let item = {
+		const item = {
 			name: '',
 			type: 'text',
 			__react_key: __item_react_key,
@@ -120,7 +121,7 @@ class TemplateBox extends Component {
 	handleRadioItemAdd() {
 		let { items } = this.state;
 		__item_react_key++;
-		let item = {
+		const item = {
 			name: '',
 			type: 'radio',
 			__react_key: __item_react_key,
@@ -133,7 +134,7 @@ class TemplateBox extends Component {
 	handleCheckBoxItemAdd() {
 		let { items } = this.state;
 		__item_react_key++;
-		let item = {
+		const item = {
 			name: '',
 			type: 'checkbox',
 			__react_key: __item_react_key,
@@ -146,7 +147,7 @@ class TemplateBox extends Component {
 	handleFileItemAdd() {
 		let { items } = this.state;
 		__item_react_key++;
-		let item = {
+		const item = {
 			name: '',
 			type: 'file',
 			__react_key: __item_react_key,
@@ -173,5 +174,3 @@ class TemplateBox extends Component {
 	}
 
 }
-
-export default DragDropContext(HTML5Backend)(TemplateBox);

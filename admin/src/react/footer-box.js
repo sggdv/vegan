@@ -1,9 +1,10 @@
-import React from 'react';
-import {Row} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Row } from 'react-bootstrap';
 
-let Footer = React.createClass({
+export default class Footer extends Component {
+
 	render() {
-		let year = new Date().getYear() + 1900;
+		const year = new Date().getYear() + 1900;
 		return (
 			<Row>
 				<footer className="footer">
@@ -12,7 +13,6 @@ let Footer = React.createClass({
 				</footer>
 			</Row>
 		);
-	},
-});
+	}
 
-export default Footer;
+}

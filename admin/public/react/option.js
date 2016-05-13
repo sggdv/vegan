@@ -3,8 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _dec2, _class;
 
 var _react = require('react');
 
@@ -26,7 +29,47 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Option = function (_Component) {
+var source = {
+	beginDrag: function beginDrag(props) {
+		var index = props.index;
+		var removeOption = props.removeOption;
+
+		return { index: index, removeOption: removeOption };
+	}
+};
+
+var target = {
+	hover: function hover(props, monitor, component) {
+		var dragIndex = monitor.getItem().index;
+		var hoverIndex = props.index;
+		if (dragIndex === hoverIndex) {
+			return;
+		}
+		var hoverBoundingRect = (0, _reactDom.findDOMNode)(component).getBoundingClientRect();
+		var hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+		var clientOffset = monitor.getClientOffset();
+		var hoverClientY = clientOffset.y - hoverBoundingRect.top;
+		if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+			return;
+		}
+		if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+			return;
+		}
+		props.move(dragIndex, hoverIndex);
+		monitor.getItem().index = hoverIndex;
+	}
+};
+
+var Option = (_dec = (0, _reactDnd.DropTarget)(_constants.ItemTypes.OPTION, target, function (connect, monitor) {
+	return {
+		connectDropTarget: connect.dropTarget()
+	};
+}), _dec2 = (0, _reactDnd.DragSource)(_constants.ItemTypes.OPTION, source, function (connect, monitor) {
+	return {
+		connectDragSource: connect.dragSource(),
+		isDragging: monitor.isDragging()
+	};
+}), _dec(_class = _dec2(_class = function (_Component) {
 	_inherits(Option, _Component);
 
 	function Option(props) {
@@ -60,7 +103,7 @@ var Option = function (_Component) {
 						{ style: { cursor: 'move' } },
 						_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'move' })
 					),
-					_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: placeholder, onChange: this.handleChange, value: value })
+					_react2.default.createElement(_reactBootstrap.FormControl, { placeholder: placeholder, onChange: this.handleChange, value: value })
 				)
 			)));
 		}
@@ -76,49 +119,5 @@ var Option = function (_Component) {
 	}]);
 
 	return Option;
-}(_react.Component);
-
-var source = {
-	beginDrag: function beginDrag(props) {
-		return {
-			index: props.index,
-			removeOption: props.removeOption
-		};
-	}
-};
-
-var Src = (0, _reactDnd.DragSource)(_constants.ItemTypes.OPTION, source, function (connect, monitor) {
-	return {
-		connectDragSource: connect.dragSource(),
-		isDragging: monitor.isDragging()
-	};
-})(Option);
-
-var target = {
-	hover: function hover(props, monitor, component) {
-		var dragIndex = monitor.getItem().index;
-		var hoverIndex = props.index;
-		if (dragIndex === hoverIndex) {
-			return;
-		}
-		var hoverBoundingRect = (0, _reactDom.findDOMNode)(component).getBoundingClientRect();
-		var hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-		var clientOffset = monitor.getClientOffset();
-		var hoverClientY = clientOffset.y - hoverBoundingRect.top;
-		if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-			return;
-		}
-		if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-			return;
-		}
-		props.move(dragIndex, hoverIndex);
-		monitor.getItem().index = hoverIndex;
-		monitor.getItem().key = hoverIndex;
-	}
-};
-
-exports.default = (0, _reactDnd.DropTarget)(_constants.ItemTypes.OPTION, target, function (connect, monitor) {
-	return {
-		connectDropTarget: connect.dropTarget()
-	};
-})(Src);
+}(_react.Component)) || _class) || _class);
+exports.default = Option;

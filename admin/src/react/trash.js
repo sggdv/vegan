@@ -6,7 +6,29 @@ import {
 	Glyphicon,
 } from 'react-bootstrap';
 
-class Trash extends Component {
+const target = {
+	drop(props, monitor, component) {
+		let { index, removeItem } = monitor.getItem();
+		removeItem(index);
+	}
+};
+
+const optionTarget = {
+	drop(props, monitor, component) {
+		let { index, removeOption } = monitor.getItem();
+		removeOption(index);
+	}
+};
+
+@DropTarget(ItemTypes.Trash, target, (connect, monitor) => ({
+	connectDropTarget: connect.dropTarget(),
+	isOver: monitor.isOver()
+}))
+@DropTarget(ItemTypes.OPTION, optionTarget, (connect, monitor) => ({
+	connectOptionDropTarget: connect.dropTarget(),
+	isOptionOver: monitor.isOver(),
+}))
+export default class Trash extends Component {
 
 	constructor(props) {
 		super(props);
@@ -24,27 +46,3 @@ class Trash extends Component {
 	}
 
 }
-
-const target = {
-	drop(props, monitor, component) {
-		let { index, removeItem } = monitor.getItem();
-		removeItem(index);
-	}
-};
-
-let Target = DropTarget(ItemTypes.Trash, target, (connect, monitor) => ({
-	connectDropTarget: connect.dropTarget(),
-	isOver: monitor.isOver()
-}))(Trash);
-
-const optionTarget = {
-	drop(props, monitor, component) {
-		let { index, removeOption } = monitor.getItem();
-		removeOption(index);
-	}
-};
-
-export default DropTarget(ItemTypes.OPTION, optionTarget, (connect, monitor) => ({
-	connectOptionDropTarget: connect.dropTarget(),
-	isOptionOver: monitor.isOver(),
-}))(Target);
