@@ -1,25 +1,36 @@
 import $ from 'jquery';
-import React from 'react';
+import React, { Component } from 'react';
 import {
 	FormGroup,
+	FormControl,
+	PageHeader,
+	Button,
+	Glyphicon,
 } from 'react-bootstrap';
 
 // 单个资料项展示
-let Item = React.createClass({
+class Item extends Component {
+
+	constructor(props) {
+		super(props);
+		this.handleTextChange = this.handleTextChange.bind(this);
+		this.handleRadioChange = this.handleRadioChange.bind(this);
+	}
+
 	render() {
 		const { index, item: { name, type, value, options } } = this.props;
 		if (type == 'text') {
 			return (
-				<div className="form-group">
+				<FormGroup>
 					<label>{name}</label>
-					<input type="text" className="form-control" onChange={this.handleTextChange} value={value} />
-				</div>
+					<FormControl onChange={this.handleTextChange} value={value} />
+				</FormGroup>
 			);
 		} else if (type == 'radio') {
-			const radioName = '__review_radio_' + index;
+			const radioName = `__review_radio_${index}`;
 
 			return (
-				<div className="form-group">
+				<FormGroup>
 					<label>{name}</label>
 					<br />
 					<div className="btn-group">
@@ -31,13 +42,13 @@ let Item = React.createClass({
 							); 
 						}, this)}
 					</div>
-				</div>
+				</FormGroup>
 			);
 		} else if (type == 'checkbox') {
-			const checkboxName = '__review_checkbox_' + index;
+			const checkboxName = `__review_checkbox_${index}`;
 
 			return (
-				<div className="form-group">
+				<FormGroup>
 					<label>{name}</label>
 					<br />
 					<div className="btn-group">
@@ -49,7 +60,7 @@ let Item = React.createClass({
 							);
 						}, this)}
 					</div>
-				</div>
+				</FormGroup>
 			);
 		} else if (type == 'file') {
 			return (
@@ -60,52 +71,63 @@ let Item = React.createClass({
 				</FormGroup>
 			);
 		}
-	},
+	}
+
 	handleTextChange(event) {
 		let { item, callbackParent, index } = this.props;
 		item.value = event.target.value;
 		callbackParent(item, index);
-	},
+	}
+
 	handleRadioChange(event) {
 		let { item, callbackParent, index } = this.props;
 		item.value = event.target.value;
 		callbackParent(item, index);
-	},
-});
+	}
+
+}
 
 // 客户端展示组件
-let Client = React.createClass({
-	getInitialState() {
-		return this.props.template;
-	},
+export default class Client extends Component {
+	
+	constructor(props) {
+		super(props);
+		this.state = props.template;
+
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleItemChange = this.handleItemChange.bind(this);
+	}
+
 	render() {
-		let items = this.state.items.map((item, index) => {
-			return (<Item item={item} index={index} callbackParent={this.handleItemChange} />);
-		}, this);
+		const { items } = this.state;
+		const { template: { title } } = this.props;
+
 		return (
 			<div>
-				<div className="page-header">
-					<h3>{this.props.template.title}</h3>
-				</div>
+				<PageHeader>{title}</PageHeader>
 				<form>
-					{items}
+					{items.map((item, index) => {
+						return (<Item item={item} index={index} callbackParent={this.handleItemChange} />);
+					}, this)}
 					<hr />
-					<button type="button" className="btn btn-success" onClick={this.handleSubmit}>
-						<span className="glyphicon glyphicon-ok"></span> 提交
-					</button>
+					<Button bsStyle="success" onClick={this.handleSubmit}>
+						<Glyphicon glyph="ok" /> 提交
+					</Button>
 				</form>
 			</div>
 		);
-	},
+	}
+
 	handleSubmit() {
-		this.props.callbackParent(this.state);
-	},
+		const { callbackParent } = this.props;
+		callbackParent(this.state);
+	}
+
 	handleItemChange(item, index) {
-		let items = this.state.items;
+		let { items } = this.state;
 		items[index] = item;
 		this.setState({items});
-	},
-});
+	}
 
-// usage: <Client template={template} />
-export default Client;
+}
+
