@@ -17,9 +17,9 @@ var _reactDom = require('react-dom');
 
 var _reactBootstrap = require('react-bootstrap');
 
-var _constants = require('./constants');
-
 var _reactDnd = require('react-dnd');
+
+var _constants = require('./constants');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -60,11 +60,11 @@ var target = {
 	}
 };
 
-var Option = (_dec = (0, _reactDnd.DropTarget)(_constants.ItemTypes.OPTION, target, function (connect, monitor) {
+var Option = (_dec = (0, _reactDnd.DropTarget)(_constants.DNDTypes.OPTION, target, function (connect, monitor) {
 	return {
 		connectDropTarget: connect.dropTarget()
 	};
-}), _dec2 = (0, _reactDnd.DragSource)(_constants.ItemTypes.OPTION, source, function (connect, monitor) {
+}), _dec2 = (0, _reactDnd.DragSource)(_constants.DNDTypes.OPTION, source, function (connect, monitor) {
 	return {
 		connectDragSource: connect.dragSource(),
 		isDragging: monitor.isDragging()
@@ -92,6 +92,7 @@ var Option = (_dec = (0, _reactDnd.DropTarget)(_constants.ItemTypes.OPTION, targ
 			var connectDropTarget = _props.connectDropTarget;
 
 			var opacity = isDragging ? 0 : 1;
+
 			return connectDropTarget(connectDragSource(_react2.default.createElement(
 				'div',
 				{ style: { opacity: opacity } },

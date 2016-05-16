@@ -37,6 +37,8 @@ var _reactBootstrap = require('react-bootstrap');
 
 var _reactDnd = require('react-dnd');
 
+var _constants = require('./constants');
+
 var _reactDndHtml5Backend = require('react-dnd-html5-backend');
 
 var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
@@ -149,7 +151,7 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 								_react2.default.createElement(
 									_reactBootstrap.Col,
 									{ sm: 10 },
-									_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', onChange: this.handleTitleChange })
+									_react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleTitleChange })
 								)
 							)
 						),
@@ -198,12 +200,7 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 		value: function handleTextItemAdd() {
 			var items = this.state.items;
 
-			__item_react_key++;
-			var item = {
-				name: '',
-				type: 'text',
-				__react_key: __item_react_key
-			};
+			var item = generatorItem(items);
 			items.push(item);
 			this.setState({ items: items });
 		}
@@ -212,13 +209,7 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 		value: function handleRadioItemAdd() {
 			var items = this.state.items;
 
-			__item_react_key++;
-			var item = {
-				name: '',
-				type: 'radio',
-				__react_key: __item_react_key,
-				options: ['']
-			};
+			var item = generatorItem(items, _constants.ItemTypes.RADIO);
 			items.push(item);
 			this.setState({ items: items });
 		}
@@ -227,13 +218,7 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 		value: function handleCheckBoxItemAdd() {
 			var items = this.state.items;
 
-			__item_react_key++;
-			var item = {
-				name: '',
-				type: 'checkbox',
-				__react_key: __item_react_key,
-				options: ['']
-			};
+			var item = generatorItem(items, _constants.ItemTypes.CHECKBOX);
 			items.push(item);
 			this.setState({ items: items });
 		}
@@ -242,12 +227,7 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 		value: function handleFileItemAdd() {
 			var items = this.state.items;
 
-			__item_react_key++;
-			var item = {
-				name: '',
-				type: 'file',
-				__react_key: __item_react_key
-			};
+			var item = generatorItem(items, _constants.ItemTypes.FILE);
 			items.push(item);
 			this.setState({ items: items });
 		}
@@ -273,3 +253,17 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 	return TemplateBox;
 }(_react.Component)) || _class);
 exports.default = TemplateBox;
+
+
+function generatorItem(items) {
+	var type = arguments.length <= 1 || arguments[1] === undefined ? _constants.ItemTypes.TEXT : arguments[1];
+
+	var name = '';
+	var __react_key = __item_react_key++;
+	var options = [];
+	if (type == _constants.ItemTypes.RADIO || type == _constants.ItemTypes.CHECKBOX) {
+		options.push({ key: 1, value: '' });
+	}
+
+	return { name: name, type: type, __react_key: __react_key, options: options };
+}

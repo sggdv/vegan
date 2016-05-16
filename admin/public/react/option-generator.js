@@ -45,7 +45,7 @@ var source = {
 	}
 };
 
-var OptionGenerator = (_dec = (0, _reactDnd.DragSource)(_constants.ItemTypes.ADD_OPTION, source, function (connect, monitor) {
+var OptionGenerator = (_dec = (0, _reactDnd.DragSource)(_constants.DNDTypes.ADD_OPTION, source, function (connect, monitor) {
 	return {
 		connectDragSource: connect.dragSource()
 	};

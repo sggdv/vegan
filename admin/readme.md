@@ -15,9 +15,13 @@
   items: [{      // 表单资料项
     name: '',    // 资料项名称
     type: '',    // 资料的类型，text或radio等等
-    options: [], // 资料值的可选项 
+    options: [{  // 资料值的可选项 
+			key: '',
+			value: ''
+		}],          
     value: ''    // 最终值
-  }]
+  }],
+	createTime: '',// 创建时间
 }
 ```
 

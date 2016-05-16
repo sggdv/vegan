@@ -17,6 +17,7 @@ import {
 	PageHeader,
 } from 'react-bootstrap';
 import { DragDropContext } from 'react-dnd';
+import { ItemTypes } from './constants';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 let __item_react_key = 0;
@@ -75,7 +76,7 @@ export default class TemplateBox extends Component {
 							<FormGroup>
 								<Col componentClass={ControlLabel} sm={2}>标题</Col>
 								<Col sm={10}>
-									<FormControl type="text" onChange={this.handleTitleChange} />
+									<FormControl onChange={this.handleTitleChange} />
 								</Col>
 							</FormGroup>
 						</Well>
@@ -108,50 +109,28 @@ export default class TemplateBox extends Component {
 
 	handleTextItemAdd() {
 		let { items } = this.state;
-		__item_react_key++;
-		const item = {
-			name: '',
-			type: 'text',
-			__react_key: __item_react_key,
-		};
+		const item = generatorItem(items);
 		items.push(item);
 		this.setState({items});
 	}
 
 	handleRadioItemAdd() {
 		let { items } = this.state;
-		__item_react_key++;
-		const item = {
-			name: '',
-			type: 'radio',
-			__react_key: __item_react_key,
-			options: [''],
-		};
+		const item = generatorItem(items, ItemTypes.RADIO);
 		items.push(item);
 		this.setState({items});
 	}
 
 	handleCheckBoxItemAdd() {
 		let { items } = this.state;
-		__item_react_key++;
-		const item = {
-			name: '',
-			type: 'checkbox',
-			__react_key: __item_react_key,
-			options: [''],
-		};
+		const item = generatorItem(items, ItemTypes.CHECKBOX);
 		items.push(item);
 		this.setState({items});
 	}
 
 	handleFileItemAdd() {
 		let { items } = this.state;
-		__item_react_key++;
-		const item = {
-			name: '',
-			type: 'file',
-			__react_key: __item_react_key,
-		};
+		const item = generatorItem(items, ItemTypes.FILE); 
 		items.push(item);
 		this.setState({items});
 	}
@@ -173,4 +152,15 @@ export default class TemplateBox extends Component {
 		});
 	}
 
+}
+
+function generatorItem(items, type = ItemTypes.TEXT) {
+	const name = '';
+	const __react_key = __item_react_key++;
+	let options = [];
+	if (type == ItemTypes.RADIO || type == ItemTypes.CHECKBOX) {
+		options.push({ key: 1, value: '' });
+	}
+
+	return { name, type, __react_key, options };
 }

@@ -17,23 +17,27 @@ class OptionList extends Component {
 	}
 
 	render() {
-		let optionList = this.props.options.map((opt, index) => {
-			let placeholder = '选项' + (index + 1);
+		const { options } = this.props;
+
+		const optionList = options.map((opt, index) => {
+			const { key, value } = opt;
+			const placeholder = '选项' + (index + 1);
 			return (<Option 
-				key={index}
+				key={key}
 				placeholder={placeholder} 
 				index={index} 
-				value={opt} 
+				value={value} 
 				callbackParent={this.handleOptionChange} 
 				removeOption={this.handleOptionRemove} 
 				move={this.handleMove} />);
 		}, this);
+
 		return (<div>{optionList}</div>);
 	}
 
-	handleOptionChange(option, index) {
+	handleOptionChange(value, index) {
 		const { options, callbackParent } = this.props;
-		options[index] = option;
+		options[index].value = value;
 		callbackParent(options);
 	}
 
@@ -57,6 +61,7 @@ export default class OptionBox extends Component {
 
 	render() {
 		const { options, callbackParent } = this.props;
+
 		return (
 			<FormGroup>
 				<Col sm={2} componentClass={ControlLabel}>选项</Col>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Glyphicon } from 'react-bootstrap';
 import { DragSource } from 'react-dnd';
-import { ItemTypes } from './constants';
+import { DNDTypes } from './constants';
 
 const style = {
 	marginTop: "50px",
@@ -21,7 +21,7 @@ const source = {
 	}
 };
 
-@DragSource(ItemTypes.ADD_OPTION, source, (connect, monitor) => ({
+@DragSource(DNDTypes.ADD_OPTION, source, (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
 }))
 export default class OptionGenerator extends Component {

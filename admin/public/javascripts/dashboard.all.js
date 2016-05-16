@@ -54144,6 +54144,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactBootstrap = require('react-bootstrap');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 单个资料项展示
@@ -54152,8 +54154,14 @@ var Item = _react2.default.createClass({
 	render: function render() {
 		var _this = this;
 
-		var type = this.props.item.type;
-		var value = this.props.item.value;
+		var _props = this.props;
+		var index = _props.index;
+		var _props$item = _props.item;
+		var name = _props$item.name;
+		var type = _props$item.type;
+		var value = _props$item.value;
+		var options = _props$item.options;
+
 		if (type == 'text') {
 			return _react2.default.createElement(
 				'div',
@@ -54161,22 +54169,14 @@ var Item = _react2.default.createClass({
 				_react2.default.createElement(
 					'label',
 					null,
-					this.props.item.name
+					name
 				),
 				_react2.default.createElement('input', { type: 'text', className: 'form-control', onChange: this.handleTextChange, value: value })
 			);
 		} else if (type == 'radio') {
 			var _ret = function () {
-				var radioName = '__review_radio_' + _this.props.index;
-				var options = _this.props.item.options.map(function (option) {
-					return _react2.default.createElement(
-						'label',
-						{ className: 'btn btn-default' },
-						_react2.default.createElement('input', { type: 'radio', name: radioName, value: option, onClick: _this.handleRadioChange, checked: option == value }),
-						' ',
-						option
-					);
-				}, _this);
+				var radioName = '__review_radio_' + index;
+
 				return {
 					v: _react2.default.createElement(
 						'div',
@@ -54184,13 +54184,21 @@ var Item = _react2.default.createClass({
 						_react2.default.createElement(
 							'label',
 							null,
-							_this.props.item.name
+							name
 						),
 						_react2.default.createElement('br', null),
 						_react2.default.createElement(
 							'div',
 							{ className: 'btn-group' },
-							options
+							options.map(function (opt) {
+								return _react2.default.createElement(
+									'label',
+									{ className: 'btn btn-default' },
+									_react2.default.createElement('input', { type: 'radio', name: radioName, value: opt.value, onClick: _this.handleRadioChange, checked: opt.value == value }),
+									' ',
+									opt.value
+								);
+							}, _this)
 						)
 					)
 				};
@@ -54199,16 +54207,8 @@ var Item = _react2.default.createClass({
 			if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 		} else if (type == 'checkbox') {
 			var _ret2 = function () {
-				var checkboxName = '__review_checkbox_' + _this.props.index;
-				var options = _this.props.item.options.map(function (option) {
-					return _react2.default.createElement(
-						'label',
-						{ className: 'btn btn-default' },
-						_react2.default.createElement('input', { type: 'checkbox', name: checkboxName }),
-						' ',
-						option
-					);
-				}, _this);
+				var checkboxName = '__review_checkbox_' + index;
+
 				return {
 					v: _react2.default.createElement(
 						'div',
@@ -54216,30 +54216,58 @@ var Item = _react2.default.createClass({
 						_react2.default.createElement(
 							'label',
 							null,
-							_this.props.item.name
+							name
 						),
 						_react2.default.createElement('br', null),
 						_react2.default.createElement(
 							'div',
 							{ className: 'btn-group' },
-							options
+							options.map(function (opt) {
+								return _react2.default.createElement(
+									'label',
+									{ className: 'btn btn-default' },
+									_react2.default.createElement('input', { type: 'checkbox', name: checkboxName }),
+									' ',
+									opt.value
+								);
+							}, _this)
 						)
 					)
 				};
 			}();
 
 			if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+		} else if (type == 'file') {
+			return _react2.default.createElement(
+				_reactBootstrap.FormGroup,
+				null,
+				_react2.default.createElement(
+					'label',
+					null,
+					name
+				),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement('input', { type: 'file' })
+			);
 		}
 	},
 	handleTextChange: function handleTextChange(event) {
-		var item = this.props.item;
+		var _props2 = this.props;
+		var item = _props2.item;
+		var callbackParent = _props2.callbackParent;
+		var index = _props2.index;
+
 		item.value = event.target.value;
-		this.props.callbackParent(item, this.props.index);
+		callbackParent(item, index);
 	},
 	handleRadioChange: function handleRadioChange(event) {
-		var item = this.props.item;
+		var _props3 = this.props;
+		var item = _props3.item;
+		var callbackParent = _props3.callbackParent;
+		var index = _props3.index;
+
 		item.value = event.target.value;
-		this.props.callbackParent(item, this.props.index);
+		callbackParent(item, index);
 	}
 });
 
@@ -54293,16 +54321,23 @@ var Client = _react2.default.createClass({
 
 // usage: <Client template={template} />
 exports.default = Client;
-},{"jquery":89,"react":566}],576:[function(require,module,exports){
+},{"jquery":89,"react":566,"react-bootstrap":343}],576:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-var ItemTypes = exports.ItemTypes = {
+var DNDTypes = exports.DNDTypes = {
 	Trash: 'trash',
 	ADD_OPTION: 'add_option',
 	OPTION: 'option'
+};
+
+var ItemTypes = exports.ItemTypes = {
+	TEXT: 'text',
+	RADIO: 'radio',
+	CHECKBOX: 'checkbox',
+	FILE: 'file'
 };
 },{}],577:[function(require,module,exports){
 'use strict';
@@ -54889,20 +54924,27 @@ var optionTarget = {
 		var index = props.index;
 		var callbackParent = props.callbackParent;
 
-		item.options.push('');
+		var maxKey = 0;
+		item.options.forEach(function (opt) {
+			if (opt.key > maxKey) {
+				maxKey = opt.key;
+			}
+		});
+		maxKey++;
+		item.options.push({ key: maxKey, value: '' });
 		callbackParent(item, index);
 	}
 };
 
-var Item = (_dec = (0, _reactDnd.DropTarget)(_constants.ItemTypes.ADD_OPTION, optionTarget, function (connect, monitor) {
+var Item = (_dec = (0, _reactDnd.DropTarget)(_constants.DNDTypes.ADD_OPTION, optionTarget, function (connect, monitor) {
 	return {
 		connectOptionDropTarget: connect.dropTarget()
 	};
-}), _dec2 = (0, _reactDnd.DropTarget)(_constants.ItemTypes.Trash, target, function (connect, monitor) {
+}), _dec2 = (0, _reactDnd.DropTarget)(_constants.DNDTypes.Trash, target, function (connect, monitor) {
 	return {
 		connectDropTarget: connect.dropTarget()
 	};
-}), _dec3 = (0, _reactDnd.DragSource)(_constants.ItemTypes.Trash, itemSource, function (connect, monitor) {
+}), _dec3 = (0, _reactDnd.DragSource)(_constants.DNDTypes.Trash, itemSource, function (connect, monitor) {
 	return {
 		connectDragSource: connect.dragSource(),
 		connectDragPreview: connect.dragPreview(),
@@ -54943,14 +54985,17 @@ var Item = (_dec = (0, _reactDnd.DropTarget)(_constants.ItemTypes.ADD_OPTION, op
 
 			var icon = null;
 			switch (type) {
-				case 'text':
+				case _constants.ItemTypes.TEXT:
 					icon = 'font';
 					break;
-				case 'radio':
+				case _constants.ItemTypes.RADIO:
 					icon = 'record';
 					break;
-				case 'checkbox':
+				case _constants.ItemTypes.CHECKBOX:
 					icon = 'check';
+					break;
+				case _constants.ItemTypes.FILE:
+					icon = 'file';
 					break;
 				default:
 					icon = 'font';
@@ -55232,17 +55277,24 @@ var OptionList = function (_Component) {
 		value: function render() {
 			var _this2 = this;
 
-			var optionList = this.props.options.map(function (opt, index) {
+			var options = this.props.options;
+
+
+			var optionList = options.map(function (opt, index) {
+				var key = opt.key;
+				var value = opt.value;
+
 				var placeholder = '选项' + (index + 1);
 				return _react2.default.createElement(_option2.default, {
-					key: index,
+					key: key,
 					placeholder: placeholder,
 					index: index,
-					value: opt,
+					value: value,
 					callbackParent: _this2.handleOptionChange,
 					removeOption: _this2.handleOptionRemove,
 					move: _this2.handleMove });
 			}, this);
+
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -55251,12 +55303,12 @@ var OptionList = function (_Component) {
 		}
 	}, {
 		key: 'handleOptionChange',
-		value: function handleOptionChange(option, index) {
+		value: function handleOptionChange(value, index) {
 			var _props = this.props;
 			var options = _props.options;
 			var callbackParent = _props.callbackParent;
 
-			options[index] = option;
+			options[index].value = value;
 			callbackParent(options);
 		}
 	}, {
@@ -55301,6 +55353,7 @@ var OptionBox = function (_Component2) {
 			var _props4 = this.props;
 			var options = _props4.options;
 			var callbackParent = _props4.callbackParent;
+
 
 			return _react2.default.createElement(
 				_reactBootstrap.FormGroup,
@@ -55371,7 +55424,7 @@ var source = {
 	}
 };
 
-var OptionGenerator = (_dec = (0, _reactDnd.DragSource)(_constants.ItemTypes.ADD_OPTION, source, function (connect, monitor) {
+var OptionGenerator = (_dec = (0, _reactDnd.DragSource)(_constants.DNDTypes.ADD_OPTION, source, function (connect, monitor) {
 	return {
 		connectDragSource: connect.dragSource()
 	};
@@ -55420,9 +55473,9 @@ var _reactDom = require('react-dom');
 
 var _reactBootstrap = require('react-bootstrap');
 
-var _constants = require('./constants');
-
 var _reactDnd = require('react-dnd');
+
+var _constants = require('./constants');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55463,11 +55516,11 @@ var target = {
 	}
 };
 
-var Option = (_dec = (0, _reactDnd.DropTarget)(_constants.ItemTypes.OPTION, target, function (connect, monitor) {
+var Option = (_dec = (0, _reactDnd.DropTarget)(_constants.DNDTypes.OPTION, target, function (connect, monitor) {
 	return {
 		connectDropTarget: connect.dropTarget()
 	};
-}), _dec2 = (0, _reactDnd.DragSource)(_constants.ItemTypes.OPTION, source, function (connect, monitor) {
+}), _dec2 = (0, _reactDnd.DragSource)(_constants.DNDTypes.OPTION, source, function (connect, monitor) {
 	return {
 		connectDragSource: connect.dragSource(),
 		isDragging: monitor.isDragging()
@@ -55495,6 +55548,7 @@ var Option = (_dec = (0, _reactDnd.DropTarget)(_constants.ItemTypes.OPTION, targ
 			var connectDropTarget = _props.connectDropTarget;
 
 			var opacity = isDragging ? 0 : 1;
+
 			return connectDropTarget(connectDragSource(_react2.default.createElement(
 				'div',
 				{ style: { opacity: opacity } },
@@ -55563,6 +55617,8 @@ var _trash2 = _interopRequireDefault(_trash);
 var _reactBootstrap = require('react-bootstrap');
 
 var _reactDnd = require('react-dnd');
+
+var _constants = require('./constants');
 
 var _reactDndHtml5Backend = require('react-dnd-html5-backend');
 
@@ -55676,7 +55732,7 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 								_react2.default.createElement(
 									_reactBootstrap.Col,
 									{ sm: 10 },
-									_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', onChange: this.handleTitleChange })
+									_react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleTitleChange })
 								)
 							)
 						),
@@ -55725,12 +55781,7 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 		value: function handleTextItemAdd() {
 			var items = this.state.items;
 
-			__item_react_key++;
-			var item = {
-				name: '',
-				type: 'text',
-				__react_key: __item_react_key
-			};
+			var item = generatorItem(items);
 			items.push(item);
 			this.setState({ items: items });
 		}
@@ -55739,13 +55790,7 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 		value: function handleRadioItemAdd() {
 			var items = this.state.items;
 
-			__item_react_key++;
-			var item = {
-				name: '',
-				type: 'radio',
-				__react_key: __item_react_key,
-				options: ['']
-			};
+			var item = generatorItem(items, _constants.ItemTypes.RADIO);
 			items.push(item);
 			this.setState({ items: items });
 		}
@@ -55754,13 +55799,7 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 		value: function handleCheckBoxItemAdd() {
 			var items = this.state.items;
 
-			__item_react_key++;
-			var item = {
-				name: '',
-				type: 'checkbox',
-				__react_key: __item_react_key,
-				options: ['']
-			};
+			var item = generatorItem(items, _constants.ItemTypes.CHECKBOX);
 			items.push(item);
 			this.setState({ items: items });
 		}
@@ -55769,12 +55808,7 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 		value: function handleFileItemAdd() {
 			var items = this.state.items;
 
-			__item_react_key++;
-			var item = {
-				name: '',
-				type: 'file',
-				__react_key: __item_react_key
-			};
+			var item = generatorItem(items, _constants.ItemTypes.FILE);
 			items.push(item);
 			this.setState({ items: items });
 		}
@@ -55800,7 +55834,21 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 	return TemplateBox;
 }(_react.Component)) || _class);
 exports.default = TemplateBox;
-},{"./client-box":575,"./item-box":581,"./option-generator":585,"./trash":589,"jquery":89,"react":566,"react-bootstrap":343,"react-dnd":377,"react-dnd-html5-backend":363}],588:[function(require,module,exports){
+
+
+function generatorItem(items) {
+	var type = arguments.length <= 1 || arguments[1] === undefined ? _constants.ItemTypes.TEXT : arguments[1];
+
+	var name = '';
+	var __react_key = __item_react_key++;
+	var options = [];
+	if (type == _constants.ItemTypes.RADIO || type == _constants.ItemTypes.CHECKBOX) {
+		options.push({ key: 1, value: '' });
+	}
+
+	return { name: name, type: type, __react_key: __react_key, options: options };
+}
+},{"./client-box":575,"./constants":576,"./item-box":581,"./option-generator":585,"./trash":589,"jquery":89,"react":566,"react-bootstrap":343,"react-dnd":377,"react-dnd-html5-backend":363}],588:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -56242,12 +56290,12 @@ var optionTarget = {
 	}
 };
 
-var Trash = (_dec = (0, _reactDnd.DropTarget)(_constants.ItemTypes.Trash, target, function (connect, monitor) {
+var Trash = (_dec = (0, _reactDnd.DropTarget)(_constants.DNDTypes.Trash, target, function (connect, monitor) {
 	return {
 		connectDropTarget: connect.dropTarget(),
 		isOver: monitor.isOver()
 	};
-}), _dec2 = (0, _reactDnd.DropTarget)(_constants.ItemTypes.OPTION, optionTarget, function (connect, monitor) {
+}), _dec2 = (0, _reactDnd.DropTarget)(_constants.DNDTypes.OPTION, optionTarget, function (connect, monitor) {
 	return {
 		connectOptionDropTarget: connect.dropTarget(),
 		isOptionOver: monitor.isOver()

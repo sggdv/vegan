@@ -49,12 +49,12 @@ var optionTarget = {
 	}
 };
 
-var Trash = (_dec = (0, _reactDnd.DropTarget)(_constants.ItemTypes.Trash, target, function (connect, monitor) {
+var Trash = (_dec = (0, _reactDnd.DropTarget)(_constants.DNDTypes.Trash, target, function (connect, monitor) {
 	return {
 		connectDropTarget: connect.dropTarget(),
 		isOver: monitor.isOver()
 	};
-}), _dec2 = (0, _reactDnd.DropTarget)(_constants.ItemTypes.OPTION, optionTarget, function (connect, monitor) {
+}), _dec2 = (0, _reactDnd.DropTarget)(_constants.DNDTypes.OPTION, optionTarget, function (connect, monitor) {
 	return {
 		connectOptionDropTarget: connect.dropTarget(),
 		isOptionOver: monitor.isOver()

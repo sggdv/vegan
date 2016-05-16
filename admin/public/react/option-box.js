@@ -44,17 +44,24 @@ var OptionList = function (_Component) {
 		value: function render() {
 			var _this2 = this;
 
-			var optionList = this.props.options.map(function (opt, index) {
+			var options = this.props.options;
+
+
+			var optionList = options.map(function (opt, index) {
+				var key = opt.key;
+				var value = opt.value;
+
 				var placeholder = '选项' + (index + 1);
 				return _react2.default.createElement(_option2.default, {
-					key: index,
+					key: key,
 					placeholder: placeholder,
 					index: index,
-					value: opt,
+					value: value,
 					callbackParent: _this2.handleOptionChange,
 					removeOption: _this2.handleOptionRemove,
 					move: _this2.handleMove });
 			}, this);
+
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -63,12 +70,12 @@ var OptionList = function (_Component) {
 		}
 	}, {
 		key: 'handleOptionChange',
-		value: function handleOptionChange(option, index) {
+		value: function handleOptionChange(value, index) {
 			var _props = this.props;
 			var options = _props.options;
 			var callbackParent = _props.callbackParent;
 
-			options[index] = option;
+			options[index].value = value;
 			callbackParent(options);
 		}
 	}, {
@@ -113,6 +120,7 @@ var OptionBox = function (_Component2) {
 			var _props4 = this.props;
 			var options = _props4.options;
 			var callbackParent = _props4.callbackParent;
+
 
 			return _react2.default.createElement(
 				_reactBootstrap.FormGroup,

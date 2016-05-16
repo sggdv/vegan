@@ -5,8 +5,8 @@ import {
 	Glyphicon,
 	FormControl,
 } from 'react-bootstrap';
-import { ItemTypes } from './constants';
 import { DragSource, DropTarget } from 'react-dnd';
+import { DNDTypes } from './constants';
 
 const source = {
 	beginDrag(props) {
@@ -37,10 +37,10 @@ const target = {
 	}
 };
 
-@DropTarget(ItemTypes.OPTION, target, (connect, monitor) => ({
+@DropTarget(DNDTypes.OPTION, target, (connect, monitor) => ({
 	connectDropTarget: connect.dropTarget(),
 }))
-@DragSource(ItemTypes.OPTION, source, (connect, monitor) => ({
+@DragSource(DNDTypes.OPTION, source, (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
 	isDragging: monitor.isDragging(),
 }))
@@ -54,6 +54,7 @@ export default class Option extends Component {
 	render() {
 		const { placeholder, value, connectDragSource, isDragging, connectDropTarget } = this.props;
 		const opacity = isDragging ? 0 : 1;
+
 		return connectDropTarget(connectDragSource(
 			<div style={{ opacity }}>
 				<InputGroup>

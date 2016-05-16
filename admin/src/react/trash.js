@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
-import { ItemTypes } from './constants';
+import { DNDTypes } from './constants';
 import { 
 	Button,
 	Glyphicon,
@@ -20,11 +20,11 @@ const optionTarget = {
 	}
 };
 
-@DropTarget(ItemTypes.Trash, target, (connect, monitor) => ({
+@DropTarget(DNDTypes.Trash, target, (connect, monitor) => ({
 	connectDropTarget: connect.dropTarget(),
 	isOver: monitor.isOver()
 }))
-@DropTarget(ItemTypes.OPTION, optionTarget, (connect, monitor) => ({
+@DropTarget(DNDTypes.OPTION, optionTarget, (connect, monitor) => ({
 	connectOptionDropTarget: connect.dropTarget(),
 	isOptionOver: monitor.isOver(),
 }))

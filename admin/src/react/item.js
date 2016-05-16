@@ -8,7 +8,7 @@ import {
 	Col,
 } from 'react-bootstrap';
 import { DragSource, DropTarget } from 'react-dnd';
-import { ItemTypes } from './constants';
+import { DNDTypes, ItemTypes } from './constants';
 import OptionBox from './option-box';
 
 const itemSource = {
@@ -43,18 +43,25 @@ const target = {
 const optionTarget = {
 	drop(props, monitor, component) {
 		let { item, index, callbackParent } = props;
-		item.options.push('');
+		let maxKey = 0;
+		item.options.forEach((opt) => {
+			if (opt.key > maxKey) {
+				maxKey = opt.key;
+			}
+		});
+		maxKey++;
+		item.options.push({ key: maxKey, value: '' });
 		callbackParent(item, index);
 	}
 };
 
-@DropTarget(ItemTypes.ADD_OPTION, optionTarget, (connect, monitor) => ({
+@DropTarget(DNDTypes.ADD_OPTION, optionTarget, (connect, monitor) => ({
 	connectOptionDropTarget: connect.dropTarget(),
 }))
-@DropTarget(ItemTypes.Trash, target, (connect, monitor) => ({
+@DropTarget(DNDTypes.Trash, target, (connect, monitor) => ({
 	connectDropTarget: connect.dropTarget(),
 }))
-@DragSource(ItemTypes.Trash, itemSource, (connect, monitor) => ({
+@DragSource(DNDTypes.Trash, itemSource, (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
 	connectDragPreview: connect.dragPreview(),
 	isDragging: monitor.isDragging(),
@@ -85,14 +92,17 @@ export default class Item extends Component {
 
 		let icon = null;
 		switch(type) {
-			case 'text':
+			case ItemTypes.TEXT:
 				icon = 'font';
 				break;
-			case 'radio':
+			case ItemTypes.RADIO:
 				icon = 'record';
 				break;
-			case 'checkbox':
+			case ItemTypes.CHECKBOX:
 				icon = 'check';
+				break;
+			case ItemTypes.FILE:
+				icon = 'file';
 				break;
 			default:
 				icon = 'font';

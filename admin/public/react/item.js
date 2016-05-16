@@ -70,20 +70,27 @@ var optionTarget = {
 		var index = props.index;
 		var callbackParent = props.callbackParent;
 
-		item.options.push('');
+		var maxKey = 0;
+		item.options.forEach(function (opt) {
+			if (opt.key > maxKey) {
+				maxKey = opt.key;
+			}
+		});
+		maxKey++;
+		item.options.push({ key: maxKey, value: '' });
 		callbackParent(item, index);
 	}
 };
 
-var Item = (_dec = (0, _reactDnd.DropTarget)(_constants.ItemTypes.ADD_OPTION, optionTarget, function (connect, monitor) {
+var Item = (_dec = (0, _reactDnd.DropTarget)(_constants.DNDTypes.ADD_OPTION, optionTarget, function (connect, monitor) {
 	return {
 		connectOptionDropTarget: connect.dropTarget()
 	};
-}), _dec2 = (0, _reactDnd.DropTarget)(_constants.ItemTypes.Trash, target, function (connect, monitor) {
+}), _dec2 = (0, _reactDnd.DropTarget)(_constants.DNDTypes.Trash, target, function (connect, monitor) {
 	return {
 		connectDropTarget: connect.dropTarget()
 	};
-}), _dec3 = (0, _reactDnd.DragSource)(_constants.ItemTypes.Trash, itemSource, function (connect, monitor) {
+}), _dec3 = (0, _reactDnd.DragSource)(_constants.DNDTypes.Trash, itemSource, function (connect, monitor) {
 	return {
 		connectDragSource: connect.dragSource(),
 		connectDragPreview: connect.dragPreview(),
@@ -124,14 +131,17 @@ var Item = (_dec = (0, _reactDnd.DropTarget)(_constants.ItemTypes.ADD_OPTION, op
 
 			var icon = null;
 			switch (type) {
-				case 'text':
+				case _constants.ItemTypes.TEXT:
 					icon = 'font';
 					break;
-				case 'radio':
+				case _constants.ItemTypes.RADIO:
 					icon = 'record';
 					break;
-				case 'checkbox':
+				case _constants.ItemTypes.CHECKBOX:
 					icon = 'check';
+					break;
+				case _constants.ItemTypes.FILE:
+					icon = 'file';
 					break;
 				default:
 					icon = 'font';

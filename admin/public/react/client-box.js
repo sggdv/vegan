@@ -14,6 +14,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactBootstrap = require('react-bootstrap');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 单个资料项展示
@@ -22,8 +24,14 @@ var Item = _react2.default.createClass({
 	render: function render() {
 		var _this = this;
 
-		var type = this.props.item.type;
-		var value = this.props.item.value;
+		var _props = this.props;
+		var index = _props.index;
+		var _props$item = _props.item;
+		var name = _props$item.name;
+		var type = _props$item.type;
+		var value = _props$item.value;
+		var options = _props$item.options;
+
 		if (type == 'text') {
 			return _react2.default.createElement(
 				'div',
@@ -31,22 +39,14 @@ var Item = _react2.default.createClass({
 				_react2.default.createElement(
 					'label',
 					null,
-					this.props.item.name
+					name
 				),
 				_react2.default.createElement('input', { type: 'text', className: 'form-control', onChange: this.handleTextChange, value: value })
 			);
 		} else if (type == 'radio') {
 			var _ret = function () {
-				var radioName = '__review_radio_' + _this.props.index;
-				var options = _this.props.item.options.map(function (option) {
-					return _react2.default.createElement(
-						'label',
-						{ className: 'btn btn-default' },
-						_react2.default.createElement('input', { type: 'radio', name: radioName, value: option, onClick: _this.handleRadioChange, checked: option == value }),
-						' ',
-						option
-					);
-				}, _this);
+				var radioName = '__review_radio_' + index;
+
 				return {
 					v: _react2.default.createElement(
 						'div',
@@ -54,13 +54,21 @@ var Item = _react2.default.createClass({
 						_react2.default.createElement(
 							'label',
 							null,
-							_this.props.item.name
+							name
 						),
 						_react2.default.createElement('br', null),
 						_react2.default.createElement(
 							'div',
 							{ className: 'btn-group' },
-							options
+							options.map(function (opt) {
+								return _react2.default.createElement(
+									'label',
+									{ className: 'btn btn-default' },
+									_react2.default.createElement('input', { type: 'radio', name: radioName, value: opt.value, onClick: _this.handleRadioChange, checked: opt.value == value }),
+									' ',
+									opt.value
+								);
+							}, _this)
 						)
 					)
 				};
@@ -69,16 +77,8 @@ var Item = _react2.default.createClass({
 			if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 		} else if (type == 'checkbox') {
 			var _ret2 = function () {
-				var checkboxName = '__review_checkbox_' + _this.props.index;
-				var options = _this.props.item.options.map(function (option) {
-					return _react2.default.createElement(
-						'label',
-						{ className: 'btn btn-default' },
-						_react2.default.createElement('input', { type: 'checkbox', name: checkboxName }),
-						' ',
-						option
-					);
-				}, _this);
+				var checkboxName = '__review_checkbox_' + index;
+
 				return {
 					v: _react2.default.createElement(
 						'div',
@@ -86,30 +86,58 @@ var Item = _react2.default.createClass({
 						_react2.default.createElement(
 							'label',
 							null,
-							_this.props.item.name
+							name
 						),
 						_react2.default.createElement('br', null),
 						_react2.default.createElement(
 							'div',
 							{ className: 'btn-group' },
-							options
+							options.map(function (opt) {
+								return _react2.default.createElement(
+									'label',
+									{ className: 'btn btn-default' },
+									_react2.default.createElement('input', { type: 'checkbox', name: checkboxName }),
+									' ',
+									opt.value
+								);
+							}, _this)
 						)
 					)
 				};
 			}();
 
 			if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
+		} else if (type == 'file') {
+			return _react2.default.createElement(
+				_reactBootstrap.FormGroup,
+				null,
+				_react2.default.createElement(
+					'label',
+					null,
+					name
+				),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement('input', { type: 'file' })
+			);
 		}
 	},
 	handleTextChange: function handleTextChange(event) {
-		var item = this.props.item;
+		var _props2 = this.props;
+		var item = _props2.item;
+		var callbackParent = _props2.callbackParent;
+		var index = _props2.index;
+
 		item.value = event.target.value;
-		this.props.callbackParent(item, this.props.index);
+		callbackParent(item, index);
 	},
 	handleRadioChange: function handleRadioChange(event) {
-		var item = this.props.item;
+		var _props3 = this.props;
+		var item = _props3.item;
+		var callbackParent = _props3.callbackParent;
+		var index = _props3.index;
+
 		item.value = event.target.value;
-		this.props.callbackParent(item, this.props.index);
+		callbackParent(item, index);
 	}
 });
 
