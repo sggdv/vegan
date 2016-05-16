@@ -21,6 +21,8 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactBootstrap = require('react-bootstrap');
 
+var _senders = require('./senders');
+
 var _templateBox = require('./template-box');
 
 var _templateBox2 = _interopRequireDefault(_templateBox);
@@ -148,7 +150,7 @@ var TemplateList = function (_Component3) {
 			var templates = this.props.templates.map(function (template) {
 				return _react2.default.createElement(Template, { template: template });
 			});
-			var puttyDom = new Array();
+			var puttyDom = [];
 			templates.forEach(function (template, index, arr) {
 				if (index % 2 == 0) {
 					// 偶数元素
@@ -234,12 +236,12 @@ var Template = function (_Component4) {
 		value: function render() {
 			var spanStyle = { marginRight: "15px" };
 			var items = this.props.template.items.map(function (item) {
-				var options = item.options.map(function (option) {
-					if (!option || option == '') return;
+				var options = item.options.map(function (opt) {
+					if (!opt || opt.value == '') return;
 					return _react2.default.createElement(
 						_reactBootstrap.Label,
 						{ style: spanStyle },
-						option
+						opt.value
 					);
 				});
 				return _react2.default.createElement(
@@ -302,7 +304,7 @@ var Template = function (_Component4) {
 							),
 							_react2.default.createElement(
 								_reactBootstrap.Modal,
-								{ show: this.state.showModal, onHide: this.close },
+								{ show: this.state.showModal, onHide: this.close, bsSize: 'lg' },
 								_react2.default.createElement(
 									_reactBootstrap.Modal.Header,
 									{ closeBUtton: true },
@@ -316,22 +318,32 @@ var Template = function (_Component4) {
 									_reactBootstrap.Modal.Body,
 									null,
 									_react2.default.createElement(
-										_reactBootstrap.Form,
-										{ horizontal: true },
+										'div',
+										{ style: { paddingBottom: '15px' } },
 										_react2.default.createElement(
-											_reactBootstrap.FormGroup,
-											null,
+											_reactBootstrap.Nav,
+											{ bsStyle: 'tabs', justified: true, activeKey: 1 },
 											_react2.default.createElement(
-												_reactBootstrap.Col,
-												{ componentClass: _reactBootstrap.ControlLabel, sm: 3 },
-												'淘宝订单号'
+												_reactBootstrap.NavItem,
+												{ eventKey: 1 },
+												'Email'
 											),
 											_react2.default.createElement(
-												_reactBootstrap.Col,
-												{ sm: 9 },
-												_react2.default.createElement(_reactBootstrap.FormControl, { placeholder: '淘宝订单号', onChange: this.handleVidChange })
+												_reactBootstrap.NavItem,
+												{ eventKey: 2 },
+												'微信'
+											),
+											_react2.default.createElement(
+												_reactBootstrap.NavItem,
+												{ eventKey: 3 },
+												'手机号码'
 											)
 										)
+									),
+									_react2.default.createElement(
+										'div',
+										null,
+										_react2.default.createElement(_senders.EmailSender, null)
 									)
 								),
 								_react2.default.createElement(

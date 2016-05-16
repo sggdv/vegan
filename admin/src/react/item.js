@@ -77,7 +77,7 @@ export default class Item extends Component {
 	render() {
 		let { 
 			index, 
-			item: { type, options },
+			item: { name, type, options },
 			connectDragSource, 
 			connectDragPreview, 
 			isDragging, 
@@ -120,7 +120,7 @@ export default class Item extends Component {
 						</div>
 						)}
 						<Col sm={10}>
-							<FormControl onChange={this.handleNameChange} />
+							<FormControl onChange={this.handleNameChange} value={name} />
 						</Col>
 					</FormGroup>
 					{optionBox}

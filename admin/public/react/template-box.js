@@ -43,6 +43,10 @@ var _reactDndHtml5Backend = require('react-dnd-html5-backend');
 
 var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
 
+var _sweetalert = require('sweetalert');
+
+var _sweetalert2 = _interopRequireDefault(_sweetalert);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -235,17 +239,35 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 		key: 'handleCommit',
 		value: function handleCommit() {
 			var template = this.state;
-			// TODO 提交表单
-			_jquery2.default.ajax({
-				type: 'POST',
-				contentType: 'application/json',
-				url: '/templates',
-				data: JSON.stringify(template),
-				dataType: 'json',
-				success: function success(data) {
-					alert('ok');
-				},
-				beforeSend: function beforeSend() {}
+
+			(0, _sweetalert2.default)({
+				title: '输入备注',
+				text: '输入友好的备注，帮助伙伴们快速理解表单的作用！',
+				type: 'input',
+				showCancelButton: true,
+				closeOnConfirm: false,
+				animation: 'slide-from-top',
+				inputPlaceholder: '输入备注',
+				showLoaderOnConfirm: true
+			}, function (inputValue) {
+				if (inputValue === false) return false;
+				if (inputValue === '') {
+					_sweetalert2.default.showInputError('还没有输入备注哦！');
+					return false;
+				}
+
+				template.remark = inputValue;
+
+				_jquery2.default.ajax({
+					type: 'POST',
+					contentType: 'application/json',
+					url: '/templates',
+					data: JSON.stringify(template),
+					dataType: 'json',
+					success: function success(data) {
+						(0, _sweetalert2.default)('Nice', 'submit now', 'success');
+					}
+				});
 			});
 		}
 	}]);

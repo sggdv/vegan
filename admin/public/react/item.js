@@ -115,6 +115,7 @@ var Item = (_dec = (0, _reactDnd.DropTarget)(_constants.DNDTypes.ADD_OPTION, opt
 			var _props = this.props;
 			var index = _props.index;
 			var _props$item = _props.item;
+			var name = _props$item.name;
 			var type = _props$item.type;
 			var options = _props$item.options;
 			var connectDragSource = _props.connectDragSource;
@@ -166,7 +167,7 @@ var Item = (_dec = (0, _reactDnd.DropTarget)(_constants.DNDTypes.ADD_OPTION, opt
 						_react2.default.createElement(
 							_reactBootstrap.Col,
 							{ sm: 10 },
-							_react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleNameChange })
+							_react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleNameChange, value: name })
 						)
 					),
 					optionBox

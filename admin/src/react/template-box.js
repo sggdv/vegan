@@ -19,6 +19,7 @@ import {
 import { DragDropContext } from 'react-dnd';
 import { ItemTypes } from './constants';
 import HTML5Backend from 'react-dnd-html5-backend';
+import swal from 'sweetalert';
 
 let __item_react_key = 0;
 
@@ -137,19 +138,37 @@ export default class TemplateBox extends Component {
 
 	handleCommit() {
 		let template = this.state;
-		// TODO 提交表单
-		$.ajax({
-			type: 'POST',
-			contentType: 'application/json',
-			url: '/templates',
-			data: JSON.stringify(template),
-			dataType: 'json',
-			success(data) {
-				alert('ok');	
-			},
-			beforeSend() {
+		
+		swal({
+			title: '输入备注',
+			text: '输入友好的备注，帮助伙伴们快速理解表单的作用！',
+			type: 'input',
+			showCancelButton: true,
+			closeOnConfirm: false,
+			animation: 'slide-from-top',
+			inputPlaceholder: '输入备注',
+			showLoaderOnConfirm: true, 
+		}, (inputValue) => {
+			if (inputValue === false) return false;
+			if (inputValue === '') {
+				swal.showInputError('还没有输入备注哦！');
+				return false;
 			}
-		});
+
+			template.remark = inputValue;
+
+			$.ajax({
+				type: 'POST',
+				contentType: 'application/json',
+				url: '/templates',
+				data: JSON.stringify(template),
+				dataType: 'json',
+				success(data) {
+					swal('Nice', 'submit now', 'success');
+				},
+			});
+		});	
+
 	}
 
 }

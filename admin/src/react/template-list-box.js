@@ -15,7 +15,10 @@ import {
 	Table,
 	Panel,
 	Label,
+	Nav,
+	NavItem,
 } from 'react-bootstrap';
+import { EmailSender } from './senders';
 
 import TemplateBox from './template-box';
 
@@ -94,7 +97,7 @@ class TemplateList extends Component {
 		const templates = this.props.templates.map((template) => {
 			return (<Template template={template} />);	
 		});
-		let puttyDom = new Array;
+		let puttyDom = [];
 		templates.forEach((template, index, arr) => {
 			if (index % 2 == 0) { // 偶数元素
 				if (index == arr.length) 
@@ -154,9 +157,9 @@ class Template extends Component {
 	render() {
 		const spanStyle = { marginRight: "15px" };
 		let items = this.props.template.items.map((item) => {
-			let options = item.options.map((option) => {
-				if (!option || option == '') return;
-				return (<Label style={spanStyle}>{option}</Label>);
+			let options = item.options.map((opt) => {
+				if (!opt || opt.value == '') return;
+				return (<Label style={spanStyle}>{opt.value}</Label>);
 			});
 			return (
 				<tr>
@@ -186,19 +189,21 @@ class Template extends Component {
 							<Button bsSize="xs" style={{marginLeft: "10px"}} onClick={this.open}>
 								<Glyphicon glyph="link" />
 							</Button>
-							<Modal show={this.state.showModal} onHide={this.close}>
+							<Modal show={this.state.showModal} onHide={this.close} bsSize="lg">
 								<Modal.Header closeBUtton>
 									<Modal.Title>生成链接</Modal.Title>
 								</Modal.Header>
 								<Modal.Body>
-									<Form horizontal>
-										<FormGroup>
-											<Col componentClass={ControlLabel} sm={3}>淘宝订单号</Col>
-											<Col sm={9}>
-												<FormControl placeholder="淘宝订单号" onChange={this.handleVidChange} />
-											</Col>
-										</FormGroup>
-									</Form>
+									<div style={{ paddingBottom: '15px' }}>
+										<Nav bsStyle="tabs" justified activeKey={1}>
+											<NavItem eventKey={1}>Email</NavItem>
+											<NavItem eventKey={2}>微信</NavItem>
+											<NavItem eventKey={3}>手机号码</NavItem>
+										</Nav>
+									</div>
+									<div>
+									<EmailSender />
+									</div>
 								</Modal.Body>
 								<Modal.Footer>
 									<Button bsStyle="success" onClick={this.handleSubmit}>提交</Button>
