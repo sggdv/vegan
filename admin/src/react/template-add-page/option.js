@@ -6,7 +6,7 @@ import {
 	FormControl,
 } from 'react-bootstrap';
 import { DragSource, DropTarget } from 'react-dnd';
-import { DNDTypes } from './constants';
+import { DNDTypes } from '../common/constants';
 
 const source = {
 	beginDrag(props) {

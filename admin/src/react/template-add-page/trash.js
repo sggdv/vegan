@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
-import { DNDTypes } from './constants';
+import { DNDTypes } from '../common/constants';
 import { 
 	Button,
 	Glyphicon,

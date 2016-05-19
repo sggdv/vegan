@@ -21,7 +21,7 @@ var _itemBox = require('./item-box');
 
 var _itemBox2 = _interopRequireDefault(_itemBox);
 
-var _clientBox = require('./client-box');
+var _clientBox = require('../client-box');
 
 var _clientBox2 = _interopRequireDefault(_clientBox);
 
@@ -37,7 +37,7 @@ var _reactBootstrap = require('react-bootstrap');
 
 var _reactDnd = require('react-dnd');
 
-var _constants = require('./constants');
+var _constants = require('../common/constants');
 
 var _reactDndHtml5Backend = require('react-dnd-html5-backend');
 

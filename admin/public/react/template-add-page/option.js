@@ -19,7 +19,7 @@ var _reactBootstrap = require('react-bootstrap');
 
 var _reactDnd = require('react-dnd');
 
-var _constants = require('./constants');
+var _constants = require('../common/constants');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

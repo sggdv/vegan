@@ -8,7 +8,7 @@ import {
 	Col,
 } from 'react-bootstrap';
 import { DragSource, DropTarget } from 'react-dnd';
-import { DNDTypes, ItemTypes } from './constants';
+import { DNDTypes, ItemTypes } from '../common/constants';
 import OptionBox from './option-box';
 
 const itemSource = {

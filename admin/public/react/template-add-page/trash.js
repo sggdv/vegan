@@ -15,7 +15,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDnd = require('react-dnd');
 
-var _constants = require('./constants');
+var _constants = require('../common/constants');
 
 var _reactBootstrap = require('react-bootstrap');
 

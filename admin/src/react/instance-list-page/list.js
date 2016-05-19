@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Instance from './instance';
 import { Row } from 'react-bootstrap';
 
+// instance列表
 class List extends Component {
 
 	render() {

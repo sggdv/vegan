@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import InstanceListBox from './instance-list-box';
-import TemplateListBox from './template-list-box';
+import InstanceListBox from '../instance-list-page';
+import TemplateListBox from '../template-list-page';
 
 class Nav extends Component {
 

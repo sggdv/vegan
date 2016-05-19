@@ -1,25 +1,20 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import Operation from './instance-list-page/operation';
-import List from './instance-list-page/list';
+import Operation from './operation';
+import List from './list';
 
 export default class InstanceListPage extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {instances: []};
-
-		this.componentDidMount = this.componentDidMount.bind(this);
-	}
-
-	componentDidMount() {
 		$.ajax({
 			type: 'GET',
 			url: '/instances',
 			dataType: 'json',
 			cache: false,
 			success: function(instances) {
-				this.setState({instances});
+				this.state = {instances};
 			}.bind(this),
 			error: function(xhr, stat, err) {
 				console.error('/instances', stat, err.toString);
@@ -30,7 +25,7 @@ export default class InstanceListPage extends Component {
 	render() {
 		return (
 			<div>
-				<Opration />
+				<Operation />
 				<List instances={this.state.instances} />
 			</div>
 		);

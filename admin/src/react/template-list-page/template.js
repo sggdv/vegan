@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { ItemTypes: { TEXT, RADIO, CHECKBOX, FILE } } from './constants';
+import { ItemTypes } from '../common/constants';
 
 const buttonStyle = { marginLeft: '10px' };
-const spanStyle = { marginRight: "15px" };
+const spanStyle = { marginRight: '15px' };
 
 // 单个表单展示
 class Template extends Component {
@@ -53,29 +53,35 @@ class Template extends Component {
 		const itemsROM = items.map((item) => {
 			const { name, type, options } = item;
 
+			let typeText;
+			switch (type) {
+			case ItemTypes.TEXT : 
+				typeText = "文本";
+				break;
+			case ItemTypes.RADIO : 
+				typeText = "单选";
+				break;
+			case ItemTypes.CHECKBOX : 
+				typeText = "多选";
+				break;
+			case ItemTypes.FILE : 
+				typeText = "文件";
+				break;
+			default : 
+				typeText = "";
+			}
+
+			const optionsDOM = options.map((opt) => {
+				if (!opt || opt.value == '') 
+					return;
+				return (<Label style={spanStyle}>{opt.value}</Label>);
+			});
+
 			return (
 				<tr>
 					<td>{name}</td>
-					<td>
-						{() => {
-							switch (type) {
-							case TEXT : return "文本";
-							case RADIO: return "单选";
-							case CHECKBOX: return "多选";
-							case FILE: return "文件";
-							default: return "";
-							}
-						}()}
-					</td>
-					<td>
-						{() => {
-							return options.map((opt) => {
-								if (!opt || opt.value == '') 
-									return;
-								return (<Label style={spanStyle}>{opt.value}</Label>>);
-							});
-						}()}
-					</td>
+					<td>{typeText}</td>
+					<td>{optionsDOM}</td>
 				</tr>
 			);
 		});

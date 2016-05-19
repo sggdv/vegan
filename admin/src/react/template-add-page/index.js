@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
 import ItemBox from './item-box';
-import ClientBox from './client-box';
+import ClientBox from '../client-box';
 import OptionGenerator from './option-generator';
 import Trash from './trash';
 import {
@@ -17,7 +17,7 @@ import {
 	PageHeader,
 } from 'react-bootstrap';
 import { DragDropContext } from 'react-dnd';
-import { ItemTypes } from './constants';
+import { ItemTypes } from '../common/constants';
 import HTML5Backend from 'react-dnd-html5-backend';
 import swal from 'sweetalert';
 

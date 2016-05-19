@@ -15,13 +15,13 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _instanceListBox = require('./instance-list-box');
+var _instanceListPage = require('../instance-list-page');
 
-var _instanceListBox2 = _interopRequireDefault(_instanceListBox);
+var _instanceListPage2 = _interopRequireDefault(_instanceListPage);
 
-var _templateListBox = require('./template-list-box');
+var _templateListPage = require('../template-list-page');
 
-var _templateListBox2 = _interopRequireDefault(_templateListBox);
+var _templateListPage2 = _interopRequireDefault(_templateListPage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -97,13 +97,13 @@ var NavBox = function (_Component2) {
 				url: '#',
 				click: function click() {
 					console.log('资料');
-					_reactDom2.default.render(_react2.default.createElement(_instanceListBox2.default, null), document.getElementById(domId));
+					_reactDom2.default.render(_react2.default.createElement(_instanceListPage2.default, null), document.getElementById(domId));
 				}
 			}, {
 				name: '表单',
 				url: '#',
 				click: function click() {
-					_reactDom2.default.render(_react2.default.createElement(_templateListBox2.default, null), document.getElementById(domId));
+					_reactDom2.default.render(_react2.default.createElement(_templateListPage2.default, null), document.getElementById(domId));
 				}
 			}, {
 				name: '偏好设置',

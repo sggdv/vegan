@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Glyphicon } from 'react-bootstrap';
 import { DragSource } from 'react-dnd';
-import { DNDTypes } from './constants';
+import { DNDTypes } from '../common/constants';
 
 const style = {
 	marginTop: "50px",

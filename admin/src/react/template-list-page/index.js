@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Operation from './template-list-page/operation';
-import List from './template-list-page/list';
+import Operation from './operation';
+import List from './list';
 
 // template列表页面
 export default class TemplateListBox extends Component {

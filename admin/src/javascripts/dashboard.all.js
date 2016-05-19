@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NavBox from '../react/nav-box';
-import InstanceListBox from '../react/instance-list-box';
-import Footer from '../react/footer-box';
+import NavBox from '../react/common/nav-box';
+import InstanceListBox from '../react/instance-list-page';
+import Footer from '../react/common/footer-box';
 
 ReactDOM.render(
 	<NavBox projectName="VEGAN" domId="content" />,

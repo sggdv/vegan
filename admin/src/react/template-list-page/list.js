@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row } from 'react-bootstrap';
-import Template from './template-list-template';
+import Template from './template';
 
 export default class TemplateList extends Component {
 
