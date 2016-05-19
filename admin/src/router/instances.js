@@ -13,10 +13,15 @@ router.post('/', (req, res) => {
 		json: true,
 		body: instance
 	}, (err, apiRes, body) => {
-		if (!err && apiRes.statusCode == 201)
+		if (!err && apiRes.statusCode == 201) {
+			if (body.email) {
+				// TODO 发送邮件
+				console.log(body.email);
+			}
 			res.status(201).json(body);
-		else
+		} else {
 			res.status(500).json({err, statusCode: apiRes.statusCode});
+		}
 	});
 });
 

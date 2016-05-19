@@ -14,6 +14,7 @@ import {
 	ControlLabel,
 } from 'react-bootstrap';
 import { ItemTypes } from '../common/constants';
+import swal from 'sweetalert';
 
 const buttonStyle = { marginLeft: '10px' };
 const spanStyle = { marginRight: '15px' };
@@ -38,21 +39,25 @@ export default class Template extends Component {
 		this.setState({ showModal: true });
 	}
 
-	handleVidChange(event) {
-		const vid = event.target.value;
-		this.setState({vid});
+	handleEmailChange(event) {
+		const email = event.target.value;
+		this.setState({email});
 	}
 
 	handleSubmit() {
 		const { template } = this.props;
-		const { vid } = this.state;
-		const instance = {template, vid};
+		const { email } = this.state;
+		const instance = {template, email};
 		$.ajax({
 			type: 'POST',
 			url: '/instances',
 			data: instance,
 			dataType: 'json',
-			success(data) {
+			success(data, stat) {
+				if (stat == 201) {
+					// sweetalert 提示语
+					console.log('ok');
+				}
 				console.log(data);
 			},
 			error(xhr, stat, err) {
@@ -140,7 +145,7 @@ export default class Template extends Component {
 							<FormGroup>
 								<Col componentClass={ControlLabel} sm={2}>邮箱地址</Col>
 								<Col sm={10}>
-									<FormControl type="email" placeholder="邮箱地址" />
+									<FormControl type="email" placeholder="邮箱地址" onChange={this.handleEmailChange} />
 								</Col>
 							</FormGroup>
 						</Form>
