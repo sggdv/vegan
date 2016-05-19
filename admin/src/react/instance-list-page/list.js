@@ -3,7 +3,7 @@ import Instance from './instance';
 import { Row } from 'react-bootstrap';
 
 // instance列表
-class List extends Component {
+export default class List extends Component {
 
 	render() {
 		const { instances } = this.props;

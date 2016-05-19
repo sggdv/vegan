@@ -44,16 +44,20 @@ var TemplateList = function (_Component) {
 			templates.forEach(function (template, index, arr) {
 				if (index % 2 == 0) {
 					// 偶数元素
-					if (index == arr.length) puttyDom.push(_react2.default.createElement(
-						_reactBootstrap.Row,
-						null,
-						_react2.default.createElement(_template2.default, { template: template })
-					));else puttyDom.push(_react2.default.createElement(
-						_reactBootstrap.Row,
-						null,
-						_react2.default.createElement(_template2.default, { template: template }),
-						_react2.default.createElement(_template2.default, { template: arr[index + 1] })
-					));
+					if (index + 1 == arr.length) {
+						puttyDom.push(_react2.default.createElement(
+							_reactBootstrap.Row,
+							null,
+							_react2.default.createElement(_template2.default, { template: template })
+						));
+					} else {
+						puttyDom.push(_react2.default.createElement(
+							_reactBootstrap.Row,
+							null,
+							_react2.default.createElement(_template2.default, { template: template }),
+							_react2.default.createElement(_template2.default, { template: arr[index + 1] })
+						));
+					}
 				}
 			});
 

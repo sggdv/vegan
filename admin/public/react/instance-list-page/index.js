@@ -40,24 +40,31 @@ var InstanceListPage = function (_Component) {
 		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InstanceListPage).call(this, props));
 
 		_this.state = { instances: [] };
-		_jquery2.default.ajax({
-			type: 'GET',
-			url: '/instances',
-			dataType: 'json',
-			cache: false,
-			success: function (instances) {
-				this.state = { instances: instances };
-			}.bind(_this),
-			error: function (xhr, stat, err) {
-				console.error('/instances', stat, err.toString);
-			}.bind(_this)
-		});
+
+		_this.componentDidMount = _this.componentDidMount.bind(_this);
 		return _this;
 	}
 
 	_createClass(InstanceListPage, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			_jquery2.default.ajax({
+				type: 'GET',
+				url: '/instances',
+				dataType: 'json',
+				cache: false,
+				success: function (instances) {
+					this.setState({ instances: instances });
+				}.bind(this),
+				error: function (xhr, stat, err) {
+					console.error('/instances', stat, err.toString);
+				}.bind(this)
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
+			console.log(this.state.instances);
 			return _react2.default.createElement(
 				'div',
 				null,

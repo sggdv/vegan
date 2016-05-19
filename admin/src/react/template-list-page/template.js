@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
+import {
+	Label,
+	Button,
+	Glyphicon,
+	Modal,
+	Table,
+	Col,
+	Nav,
+	NavItem,
+} from 'react-bootstrap';
 import { ItemTypes } from '../common/constants';
 
 const buttonStyle = { marginLeft: '10px' };
 const spanStyle = { marginRight: '15px' };
 
 // 单个表单展示
-class Template extends Component {
+export default class Template extends Component {
 
 	constructor(props) {
 		super(props);
@@ -50,7 +60,7 @@ class Template extends Component {
 	render() {
 		const { template: { title, remark, items } } = this.props;
 
-		const itemsROM = items.map((item) => {
+		const itemsDOM = items.map((item) => {
 			const { name, type, options } = item;
 
 			let typeText;

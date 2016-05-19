@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 import FlagGroupBox from './flag-group-box';
 
-class Instance extends Component {
+export default class Instance extends Component {
 
 	render() {
 		const { 

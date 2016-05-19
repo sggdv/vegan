@@ -1,10 +1,17 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = undefined;
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
 
 var _constants = require('../common/constants');
 
@@ -82,7 +89,7 @@ var Template = function (_Component) {
 			var items = _props$template.items;
 
 
-			var itemsROM = items.map(function (item) {
+			var itemsDOM = items.map(function (item) {
 				var name = item.name;
 				var type = item.type;
 				var options = item.options;
@@ -109,7 +116,7 @@ var Template = function (_Component) {
 				var optionsDOM = options.map(function (opt) {
 					if (!opt || opt.value == '') return;
 					return _react2.default.createElement(
-						Label,
+						_reactBootstrap.Label,
 						{ style: spanStyle },
 						opt.value
 					);
@@ -137,7 +144,7 @@ var Template = function (_Component) {
 			});
 
 			return _react2.default.createElement(
-				Col,
+				_reactBootstrap.Col,
 				{ sm: 6 },
 				_react2.default.createElement(
 					'div',
@@ -146,7 +153,7 @@ var Template = function (_Component) {
 						'div',
 						{ className: 'panel-heading' },
 						_react2.default.createElement(
-							Button,
+							_reactBootstrap.Button,
 							{ className: 'close' },
 							_react2.default.createElement(
 								'span',
@@ -159,9 +166,9 @@ var Template = function (_Component) {
 							{ className: 'panel-title' },
 							title,
 							_react2.default.createElement(
-								Button,
+								_reactBootstrap.Button,
 								{ bsSize: 'xs', style: buttonStyle, onClick: this.open },
-								_react2.default.createElement(Glyphicon, { glyph: 'link' })
+								_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'link' })
 							)
 						)
 					),
@@ -171,7 +178,7 @@ var Template = function (_Component) {
 						remark
 					),
 					_react2.default.createElement(
-						Table,
+						_reactBootstrap.Table,
 						{ hover: true },
 						_react2.default.createElement(
 							'tr',
@@ -196,38 +203,38 @@ var Template = function (_Component) {
 					)
 				),
 				_react2.default.createElement(
-					Modal,
+					_reactBootstrap.Modal,
 					{ show: this.state.showModal, onHide: this.close, bsSize: 'lg' },
 					_react2.default.createElement(
-						Modal.Header,
+						_reactBootstrap.Modal.Header,
 						{ closeBUtton: true },
 						_react2.default.createElement(
-							Modal.Title,
+							_reactBootstrap.Modal.Title,
 							null,
 							'生成链接'
 						)
 					),
 					_react2.default.createElement(
-						Modal.Body,
+						_reactBootstrap.Modal.Body,
 						null,
 						_react2.default.createElement(
 							'div',
 							{ style: { paddingBottom: '15px' } },
 							_react2.default.createElement(
-								Nav,
+								_reactBootstrap.Nav,
 								{ bsStyle: 'tabs', justified: true, activeKey: 1 },
 								_react2.default.createElement(
-									NavItem,
+									_reactBootstrap.NavItem,
 									{ eventKey: 1 },
 									'Email'
 								),
 								_react2.default.createElement(
-									NavItem,
+									_reactBootstrap.NavItem,
 									{ eventKey: 2 },
 									'微信'
 								),
 								_react2.default.createElement(
-									NavItem,
+									_reactBootstrap.NavItem,
 									{ eventKey: 3 },
 									'手机号码'
 								)
@@ -236,15 +243,15 @@ var Template = function (_Component) {
 						_react2.default.createElement('div', null)
 					),
 					_react2.default.createElement(
-						Modal.Footer,
+						_reactBootstrap.Modal.Footer,
 						null,
 						_react2.default.createElement(
-							Button,
+							_reactBootstrap.Button,
 							{ bsStyle: 'success', onClick: this.handleSubmit },
 							'提交'
 						),
 						_react2.default.createElement(
-							Button,
+							_reactBootstrap.Button,
 							{ onClick: this.close },
 							'Close'
 						)
@@ -256,3 +263,5 @@ var Template = function (_Component) {
 
 	return Template;
 }(_react.Component);
+
+exports.default = Template;

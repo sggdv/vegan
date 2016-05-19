@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import React, { Component } from 'react';
 
 import Operation from './operation';
@@ -31,6 +32,7 @@ export default class TemplateListBox extends Component {
 		return (
 			<div>
 				<Operation />
+				<hr />
 				<List templates={this.state.templates} />
 			</div>
 		);

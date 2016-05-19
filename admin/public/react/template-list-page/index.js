@@ -7,6 +7,10 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -45,7 +49,7 @@ var TemplateListBox = function (_Component) {
 	_createClass(TemplateListBox, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			$.ajax({
+			_jquery2.default.ajax({
 				type: 'GET',
 				url: '/templates',
 				dataType: 'json',
@@ -65,6 +69,7 @@ var TemplateListBox = function (_Component) {
 				'div',
 				null,
 				_react2.default.createElement(_operation2.default, null),
+				_react2.default.createElement('hr', null),
 				_react2.default.createElement(_list2.default, { templates: this.state.templates })
 			);
 		}

@@ -8,13 +8,18 @@ export default class InstanceListPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {instances: []};
+
+		this.componentDidMount = this.componentDidMount.bind(this);
+	}
+
+	componentDidMount() {
 		$.ajax({
 			type: 'GET',
 			url: '/instances',
 			dataType: 'json',
 			cache: false,
 			success: function(instances) {
-				this.state = {instances};
+				this.setState({instances});
 			}.bind(this),
 			error: function(xhr, stat, err) {
 				console.error('/instances', stat, err.toString);
@@ -23,6 +28,7 @@ export default class InstanceListPage extends Component {
 	}
 
 	render() {
+		console.log(this.state.instances);
 		return (
 			<div>
 				<Operation />
@@ -32,3 +38,4 @@ export default class InstanceListPage extends Component {
 	}
 
 }
+

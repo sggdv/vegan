@@ -56081,24 +56081,31 @@ var InstanceListPage = function (_Component) {
 		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InstanceListPage).call(this, props));
 
 		_this.state = { instances: [] };
-		_jquery2.default.ajax({
-			type: 'GET',
-			url: '/instances',
-			dataType: 'json',
-			cache: false,
-			success: function (instances) {
-				this.state = { instances: instances };
-			}.bind(_this),
-			error: function (xhr, stat, err) {
-				console.error('/instances', stat, err.toString);
-			}.bind(_this)
-		});
+
+		_this.componentDidMount = _this.componentDidMount.bind(_this);
 		return _this;
 	}
 
 	_createClass(InstanceListPage, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			_jquery2.default.ajax({
+				type: 'GET',
+				url: '/instances',
+				dataType: 'json',
+				cache: false,
+				success: function (instances) {
+					this.setState({ instances: instances });
+				}.bind(this),
+				error: function (xhr, stat, err) {
+					console.error('/instances', stat, err.toString);
+				}.bind(this)
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
+			console.log(this.state.instances);
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -56114,6 +56121,11 @@ var InstanceListPage = function (_Component) {
 exports.default = InstanceListPage;
 },{"./list":592,"./operation":593,"jquery":89,"react":566}],591:[function(require,module,exports){
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -56247,8 +56259,15 @@ var Instance = function (_Component) {
 
 	return Instance;
 }(_react.Component);
+
+exports.default = Instance;
 },{"./flag-group-box":588,"react":566,"react-bootstrap":343}],592:[function(require,module,exports){
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -56317,6 +56336,8 @@ var List = function (_Component) {
 
 	return List;
 }(_react.Component);
+
+exports.default = List;
 },{"./instance":591,"react":566,"react-bootstrap":343}],593:[function(require,module,exports){
 'use strict';
 
@@ -57421,6 +57442,10 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -57459,7 +57484,7 @@ var TemplateListBox = function (_Component) {
 	_createClass(TemplateListBox, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			$.ajax({
+			_jquery2.default.ajax({
 				type: 'GET',
 				url: '/templates',
 				dataType: 'json',
@@ -57479,6 +57504,7 @@ var TemplateListBox = function (_Component) {
 				'div',
 				null,
 				_react2.default.createElement(_operation2.default, null),
+				_react2.default.createElement('hr', null),
 				_react2.default.createElement(_list2.default, { templates: this.state.templates })
 			);
 		}
@@ -57488,7 +57514,7 @@ var TemplateListBox = function (_Component) {
 }(_react.Component);
 
 exports.default = TemplateListBox;
-},{"./list":602,"./operation":603,"react":566}],602:[function(require,module,exports){
+},{"./list":602,"./operation":603,"jquery":89,"react":566}],602:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -57535,16 +57561,20 @@ var TemplateList = function (_Component) {
 			templates.forEach(function (template, index, arr) {
 				if (index % 2 == 0) {
 					// 偶数元素
-					if (index == arr.length) puttyDom.push(_react2.default.createElement(
-						_reactBootstrap.Row,
-						null,
-						_react2.default.createElement(_template2.default, { template: template })
-					));else puttyDom.push(_react2.default.createElement(
-						_reactBootstrap.Row,
-						null,
-						_react2.default.createElement(_template2.default, { template: template }),
-						_react2.default.createElement(_template2.default, { template: arr[index + 1] })
-					));
+					if (index + 1 == arr.length) {
+						puttyDom.push(_react2.default.createElement(
+							_reactBootstrap.Row,
+							null,
+							_react2.default.createElement(_template2.default, { template: template })
+						));
+					} else {
+						puttyDom.push(_react2.default.createElement(
+							_reactBootstrap.Row,
+							null,
+							_react2.default.createElement(_template2.default, { template: template }),
+							_react2.default.createElement(_template2.default, { template: arr[index + 1] })
+						));
+					}
 				}
 			});
 
@@ -57636,11 +57666,18 @@ exports.default = Operation;
 },{"../template-add-page":594,"react":566,"react-bootstrap":343,"react-dom":386}],604:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = undefined;
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
 
 var _constants = require('../common/constants');
 
@@ -57718,7 +57755,7 @@ var Template = function (_Component) {
 			var items = _props$template.items;
 
 
-			var itemsROM = items.map(function (item) {
+			var itemsDOM = items.map(function (item) {
 				var name = item.name;
 				var type = item.type;
 				var options = item.options;
@@ -57745,7 +57782,7 @@ var Template = function (_Component) {
 				var optionsDOM = options.map(function (opt) {
 					if (!opt || opt.value == '') return;
 					return _react2.default.createElement(
-						Label,
+						_reactBootstrap.Label,
 						{ style: spanStyle },
 						opt.value
 					);
@@ -57773,7 +57810,7 @@ var Template = function (_Component) {
 			});
 
 			return _react2.default.createElement(
-				Col,
+				_reactBootstrap.Col,
 				{ sm: 6 },
 				_react2.default.createElement(
 					'div',
@@ -57782,7 +57819,7 @@ var Template = function (_Component) {
 						'div',
 						{ className: 'panel-heading' },
 						_react2.default.createElement(
-							Button,
+							_reactBootstrap.Button,
 							{ className: 'close' },
 							_react2.default.createElement(
 								'span',
@@ -57795,9 +57832,9 @@ var Template = function (_Component) {
 							{ className: 'panel-title' },
 							title,
 							_react2.default.createElement(
-								Button,
+								_reactBootstrap.Button,
 								{ bsSize: 'xs', style: buttonStyle, onClick: this.open },
-								_react2.default.createElement(Glyphicon, { glyph: 'link' })
+								_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'link' })
 							)
 						)
 					),
@@ -57807,7 +57844,7 @@ var Template = function (_Component) {
 						remark
 					),
 					_react2.default.createElement(
-						Table,
+						_reactBootstrap.Table,
 						{ hover: true },
 						_react2.default.createElement(
 							'tr',
@@ -57832,38 +57869,38 @@ var Template = function (_Component) {
 					)
 				),
 				_react2.default.createElement(
-					Modal,
+					_reactBootstrap.Modal,
 					{ show: this.state.showModal, onHide: this.close, bsSize: 'lg' },
 					_react2.default.createElement(
-						Modal.Header,
+						_reactBootstrap.Modal.Header,
 						{ closeBUtton: true },
 						_react2.default.createElement(
-							Modal.Title,
+							_reactBootstrap.Modal.Title,
 							null,
 							'生成链接'
 						)
 					),
 					_react2.default.createElement(
-						Modal.Body,
+						_reactBootstrap.Modal.Body,
 						null,
 						_react2.default.createElement(
 							'div',
 							{ style: { paddingBottom: '15px' } },
 							_react2.default.createElement(
-								Nav,
+								_reactBootstrap.Nav,
 								{ bsStyle: 'tabs', justified: true, activeKey: 1 },
 								_react2.default.createElement(
-									NavItem,
+									_reactBootstrap.NavItem,
 									{ eventKey: 1 },
 									'Email'
 								),
 								_react2.default.createElement(
-									NavItem,
+									_reactBootstrap.NavItem,
 									{ eventKey: 2 },
 									'微信'
 								),
 								_react2.default.createElement(
-									NavItem,
+									_reactBootstrap.NavItem,
 									{ eventKey: 3 },
 									'手机号码'
 								)
@@ -57872,15 +57909,15 @@ var Template = function (_Component) {
 						_react2.default.createElement('div', null)
 					),
 					_react2.default.createElement(
-						Modal.Footer,
+						_reactBootstrap.Modal.Footer,
 						null,
 						_react2.default.createElement(
-							Button,
+							_reactBootstrap.Button,
 							{ bsStyle: 'success', onClick: this.handleSubmit },
 							'提交'
 						),
 						_react2.default.createElement(
-							Button,
+							_reactBootstrap.Button,
 							{ onClick: this.close },
 							'Close'
 						)
@@ -57892,7 +57929,9 @@ var Template = function (_Component) {
 
 	return Template;
 }(_react.Component);
-},{"../common/constants":585,"react":566}],605:[function(require,module,exports){
+
+exports.default = Template;
+},{"../common/constants":585,"react":566,"react-bootstrap":343}],605:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
