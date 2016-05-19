@@ -57906,7 +57906,24 @@ var Template = function (_Component) {
 								)
 							)
 						),
-						_react2.default.createElement('div', null)
+						_react2.default.createElement(
+							_reactBootstrap.Form,
+							{ horizontal: true },
+							_react2.default.createElement(
+								_reactBootstrap.FormGroup,
+								null,
+								_react2.default.createElement(
+									_reactBootstrap.Col,
+									{ componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+									'邮箱地址'
+								),
+								_react2.default.createElement(
+									_reactBootstrap.Col,
+									{ sm: 10 },
+									_react2.default.createElement(_reactBootstrap.FormControl, { type: 'email', placeholder: '邮箱地址' })
+								)
+							)
+						)
 					),
 					_react2.default.createElement(
 						_reactBootstrap.Modal.Footer,

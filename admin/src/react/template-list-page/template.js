@@ -8,6 +8,10 @@ import {
 	Col,
 	Nav,
 	NavItem,
+	Form,
+	FormGroup,
+	FormControl,
+	ControlLabel,
 } from 'react-bootstrap';
 import { ItemTypes } from '../common/constants';
 
@@ -132,8 +136,14 @@ export default class Template extends Component {
 								<NavItem eventKey={3}>手机号码</NavItem>
 							</Nav>
 						</div>
-						<div>
-						</div>
+						<Form horizontal>
+							<FormGroup>
+								<Col componentClass={ControlLabel} sm={2}>邮箱地址</Col>
+								<Col sm={10}>
+									<FormControl type="email" placeholder="邮箱地址" />
+								</Col>
+							</FormGroup>
+						</Form>
 					</Modal.Body>
 					<Modal.Footer>
 						<Button bsStyle="success" onClick={this.handleSubmit}>提交</Button>
