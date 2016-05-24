@@ -9,7 +9,7 @@
 ## 数据结构
 
 表单模版Template
-```json
+```js
 {
   title: '',     // 表单标题
   items: [{      // 表单资料项
@@ -26,7 +26,7 @@
 ```
 
 已填表单Instance
-```json
+```js
 {
 	vid: '', // 验证信息
 	createTime: '', // 提交时间
@@ -36,10 +36,10 @@
 ```
 
 ## TODO 
-推送方式
-Email
-标旗帜
-归档
-导出
-Client端的输入限制
++ 推送方式
++ Email
++ 标旗帜
++ 归档
++ 导出
++ Client端的输入限制
 
