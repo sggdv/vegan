@@ -9,7 +9,7 @@
 ## 数据结构
 
 表单模版Template
-```bash
+```js
 {
   title: '',     // 表单标题
   items: [{      // 表单资料项
@@ -26,7 +26,7 @@
 ```
 
 已填表单Instance
-```bash
+```js
 {
 	vid: '', // 验证信息
 	createTime: '', // 提交时间
