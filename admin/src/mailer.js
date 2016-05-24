@@ -1,8 +1,8 @@
-var nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
-var default_to = '331599158@qq.com';
-
-var conf = {
+const TO_DEFAULT = '331599158@qq.com';
+const FROM_DEFAULT = 'sggdv2015@163.com';
+const CONF = {
   service: '163',
   auth: {
     user: 'sggdv2015@163.com',
@@ -10,11 +10,7 @@ var conf = {
   }
 };
 
-var mailOptions = {
-  from: 'sggdv2015@163.com'
-};
-
-var callback = function (err, info) {
+function printResult(err, info) {
   if (err) {
     console.log(err);
   } else {
@@ -22,15 +18,11 @@ var callback = function (err, info) {
   }
 };
 
-module.exports = {
-  send: function(opt) {
-    var to = opt.to;
-    var subject = opt.subject;
-    var html = opt.html;
+export default class Mailer {
 
-    mailOptions.to = to ? to : default_to;
-    mailOptions.subject = subject;
-    mailOptions.html = html;
-    nodemailer.createTransport(conf).sendMail(mailOptions, callback);
+  send({ to = TO_DEFAULT, subject, html, callback = printResult }) {
+    nodemailer.createTransport(CONF)
+      .sendMail({to, subject, html, from: FROM_DEFAULT}, callback);
   }
-};
+
+}
