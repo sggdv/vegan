@@ -20,7 +20,7 @@ function printResult(err, info) {
 
 export default class Mailer {
 
-  send({ to = TO_DEFAULT, subject, html, callback = printResult }) {
+  send({ to = TO_DEFAULT, subject, html }, callback = printResult) {
     nodemailer.createTransport(CONF)
       .sendMail({to, subject, html, from: FROM_DEFAULT}, callback);
   }
