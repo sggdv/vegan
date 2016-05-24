@@ -16,7 +16,7 @@ function printResult(err, info) {
   } else {
     console.log(info.response);
   }
-};
+}
 
 export default class Mailer {
 
