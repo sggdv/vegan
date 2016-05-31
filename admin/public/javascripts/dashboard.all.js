@@ -57490,6 +57490,8 @@ var TemplateListBox = function (_Component) {
 				dataType: 'json',
 				cache: false,
 				success: function (templates) {
+					console.log('templates=');
+					console.log(templates);
 					this.setState({ templates: templates });
 				}.bind(this),
 				error: function (xhr, status, err) {
@@ -57500,12 +57502,16 @@ var TemplateListBox = function (_Component) {
 	}, {
 		key: 'render',
 		value: function render() {
+			var templates = this.state.templates;
+
+			console.log(templates);
+
 			return _react2.default.createElement(
 				'div',
 				null,
 				_react2.default.createElement(_operation2.default, null),
 				_react2.default.createElement('hr', null),
-				_react2.default.createElement(_list2.default, { templates: this.state.templates })
+				_react2.default.createElement(_list2.default, { templates: templates })
 			);
 		}
 	}]);
@@ -57577,6 +57583,9 @@ var TemplateList = function (_Component) {
 					}
 				}
 			});
+
+			console.log('dom=');
+			console.log(puttyDom);
 
 			return _react2.default.createElement(
 				'div',
@@ -57681,6 +57690,14 @@ var _reactBootstrap = require('react-bootstrap');
 
 var _constants = require('../common/constants');
 
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _sweetalert = require('sweetalert');
+
+var _sweetalert2 = _interopRequireDefault(_sweetalert);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -57705,7 +57722,7 @@ var Template = function (_Component) {
 		_this.state = { showModal: false, vid: '' };
 		_this.close = _this.close.bind(_this);
 		_this.open = _this.open.bind(_this);
-		_this.handleVidChange = _this.handleVidChange.bind(_this);
+		_this.handleEmailChange = _this.handleEmailChange.bind(_this);
 		_this.handleSubmit = _this.handleSubmit.bind(_this);
 		return _this;
 	}
@@ -57721,26 +57738,31 @@ var Template = function (_Component) {
 			this.setState({ showModal: true });
 		}
 	}, {
-		key: 'handleVidChange',
-		value: function handleVidChange(event) {
-			var vid = event.target.value;
-			this.setState({ vid: vid });
+		key: 'handleEmailChange',
+		value: function handleEmailChange(event) {
+			var email = event.target.value;
+			this.setState({ email: email });
 		}
 	}, {
 		key: 'handleSubmit',
 		value: function handleSubmit() {
 			var template = this.props.template;
-			var vid = this.state.vid;
+			var email = this.state.email;
 
-			var instance = { template: template, vid: vid };
-			$.ajax({
+			var instance = { template: template, email: email };
+			_jquery2.default.ajax({
 				type: 'POST',
 				url: '/instances',
 				data: instance,
 				dataType: 'json',
-				success: function success(data) {
-					console.log(data);
-				},
+				success: function (data, stat, xhr) {
+					if (xhr.status == 201) {
+						// sweetalert 提示语
+						console.log('ok');
+						this.setState({ showModal: false });
+						(0, _sweetalert2.default)('Nice', 'submit now', 'success');
+					}
+				}.bind(this),
 				error: function error(xhr, stat, err) {
 					console.log(err);
 				}
@@ -57749,12 +57771,14 @@ var Template = function (_Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-			var _props$template = this.props.template;
+			var _props = this.props;
+			var template = _props.template;
+			var _props$template = _props.template;
 			var title = _props$template.title;
 			var remark = _props$template.remark;
 			var items = _props$template.items;
 
-
+			console.log(template);
 			var itemsDOM = items.map(function (item) {
 				var name = item.name;
 				var type = item.type;
@@ -57920,7 +57944,7 @@ var Template = function (_Component) {
 								_react2.default.createElement(
 									_reactBootstrap.Col,
 									{ sm: 10 },
-									_react2.default.createElement(_reactBootstrap.FormControl, { type: 'email', placeholder: '邮箱地址' })
+									_react2.default.createElement(_reactBootstrap.FormControl, { type: 'email', placeholder: '邮箱地址', onChange: this.handleEmailChange })
 								)
 							)
 						)
@@ -57948,7 +57972,7 @@ var Template = function (_Component) {
 }(_react.Component);
 
 exports.default = Template;
-},{"../common/constants":585,"react":566,"react-bootstrap":343}],605:[function(require,module,exports){
+},{"../common/constants":585,"jquery":89,"react":566,"react-bootstrap":343,"sweetalert":576}],605:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};

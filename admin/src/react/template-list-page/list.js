@@ -6,7 +6,7 @@ export default class TemplateList extends Component {
 
 	render() {
 		const { templates } = this.props;
-
+		
 		let puttyDom = [];
 		templates.forEach((template, index, arr) => {
 			if (index % 2 == 0) { // 偶数元素
@@ -17,6 +17,9 @@ export default class TemplateList extends Component {
 				}
 			}
 		});
+
+		console.log('dom=');
+		console.log(puttyDom);
 
 		return (<div>{puttyDom}</div>);
 	}

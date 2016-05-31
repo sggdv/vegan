@@ -55,6 +55,8 @@ var TemplateListBox = function (_Component) {
 				dataType: 'json',
 				cache: false,
 				success: function (templates) {
+					console.log('templates=');
+					console.log(templates);
 					this.setState({ templates: templates });
 				}.bind(this),
 				error: function (xhr, status, err) {
@@ -65,12 +67,16 @@ var TemplateListBox = function (_Component) {
 	}, {
 		key: 'render',
 		value: function render() {
+			var templates = this.state.templates;
+
+			console.log(templates);
+
 			return _react2.default.createElement(
 				'div',
 				null,
 				_react2.default.createElement(_operation2.default, null),
 				_react2.default.createElement('hr', null),
-				_react2.default.createElement(_list2.default, { templates: this.state.templates })
+				_react2.default.createElement(_list2.default, { templates: templates })
 			);
 		}
 	}]);

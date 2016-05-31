@@ -20,20 +20,25 @@ export default class TemplateListBox extends Component {
 			dataType: 'json',
 			cache: false,
 			success: function(templates) {
+				console.log('templates=');
+				console.log(templates);
 				this.setState({templates});
 			}.bind(this),
 			error: function(xhr, status, err) {
 				console.error('abc', status, err.toString());
-			}.bind(this)
+			}.bind(this),
 		});
 	}
 
 	render() {
+		const { templates } = this.state;
+		console.log(templates);
+
 		return (
 			<div>
 				<Operation />
 				<hr />
-				<List templates={this.state.templates} />
+				<List templates={templates} />
 			</div>
 		);
 	}

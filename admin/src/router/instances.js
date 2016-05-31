@@ -1,5 +1,6 @@
 import express from 'express';
 import request from 'request';
+import mailer from '../mailer';
 
 let router = express.Router();
 let API_BASE_URL = 'http://127.0.0.1:3002/instances';
@@ -17,6 +18,12 @@ router.post('/', (req, res) => {
 			if (body.email) {
 				// TODO 发送邮件
 				console.log(body.email);
+
+				const to = body.email;
+				const subject = '很高兴认识你';
+				const html = '<h3>我叫Kim, 很高兴认识你！这是我的常用邮箱，有事可以随时向我发送邮件。</h3>';
+
+				mailer({to, subject, html});
 			}
 			res.status(201).json(body);
 		} else {

@@ -12,6 +12,10 @@ var _request = require('request');
 
 var _request2 = _interopRequireDefault(_request);
 
+var _mailer = require('../mailer');
+
+var _mailer2 = _interopRequireDefault(_mailer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = _express2.default.Router();
@@ -26,7 +30,21 @@ router.post('/', function (req, res) {
 		json: true,
 		body: instance
 	}, function (err, apiRes, body) {
-		if (!err && apiRes.statusCode == 201) res.status(201).json(body);else res.status(500).json({ err: err, statusCode: apiRes.statusCode });
+		if (!err && apiRes.statusCode == 201) {
+			if (body.email) {
+				// TODO 发送邮件
+				console.log(body.email);
+
+				var to = body.email;
+				var subject = '很高兴认识你';
+				var html = '<h3>我叫Kim, 很高兴认识你！这是我的常用邮箱，有事可以随时向我发送邮件。</h3>';
+
+				(0, _mailer2.default)({ to: to, subject: subject, html: html });
+			}
+			res.status(201).json(body);
+		} else {
+			res.status(500).json({ err: err, statusCode: apiRes.statusCode });
+		}
 	});
 });
 

@@ -14,6 +14,7 @@ import {
 	ControlLabel,
 } from 'react-bootstrap';
 import { ItemTypes } from '../common/constants';
+import $ from 'jquery';
 import swal from 'sweetalert';
 
 const buttonStyle = { marginLeft: '10px' };
@@ -27,7 +28,7 @@ export default class Template extends Component {
 		this.state = { showModal: false, vid: '' };
 		this.close = this.close.bind(this);
 		this.open = this.open.bind(this);
-		this.handleVidChange = this.handleVidChange.bind(this);
+		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
@@ -53,13 +54,14 @@ export default class Template extends Component {
 			url: '/instances',
 			data: instance,
 			dataType: 'json',
-			success(data, stat) {
-				if (stat == 201) {
+			success: function(data, stat, xhr) {
+				if (xhr.status == 201) {
 					// sweetalert 提示语
 					console.log('ok');
+					this.setState({ showModal: false });
+					swal('Nice', 'submit now', 'success');
 				}
-				console.log(data);
-			},
+			}.bind(this),
 			error(xhr, stat, err) {
 				console.log(err);
 			},
@@ -67,27 +69,27 @@ export default class Template extends Component {
 	}
 																																																																									
 	render() {
-		const { template: { title, remark, items } } = this.props;
-
+		const { template, template: { title, remark, items } } = this.props;
+		console.log(template);
 		const itemsDOM = items.map((item) => {
 			const { name, type, options } = item;
 
 			let typeText;
 			switch (type) {
-			case ItemTypes.TEXT : 
-				typeText = "文本";
-				break;
-			case ItemTypes.RADIO : 
-				typeText = "单选";
-				break;
-			case ItemTypes.CHECKBOX : 
-				typeText = "多选";
-				break;
-			case ItemTypes.FILE : 
-				typeText = "文件";
-				break;
-			default : 
-				typeText = "";
+				case ItemTypes.TEXT : 
+					typeText = "文本";
+					break;
+				case ItemTypes.RADIO : 
+					typeText = "单选";
+					break;
+				case ItemTypes.CHECKBOX : 
+					typeText = "多选";
+					break;
+				case ItemTypes.FILE : 
+					typeText = "文件";
+					break;
+				default : 
+					typeText = "";
 			}
 
 			const optionsDOM = options.map((opt) => {
