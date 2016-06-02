@@ -18,9 +18,6 @@ export default class TemplateList extends Component {
 			}
 		});
 
-		console.log('dom=');
-		console.log(puttyDom);
-
 		return (<div>{puttyDom}</div>);
 	}
 

@@ -150,12 +150,14 @@ export default class TemplateBox extends Component {
 			showLoaderOnConfirm: true, 
 		}, (inputValue) => {
 			if (inputValue === false) return false;
+
 			if (inputValue === '') {
 				swal.showInputError('还没有输入备注哦！');
 				return false;
 			}
 
 			template.remark = inputValue;
+			delete template.__react_key;
 
 			$.ajax({
 				type: 'POST',

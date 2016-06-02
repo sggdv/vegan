@@ -57584,9 +57584,6 @@ var TemplateList = function (_Component) {
 				}
 			});
 
-			console.log('dom=');
-			console.log(puttyDom);
-
 			return _react2.default.createElement(
 				'div',
 				null,

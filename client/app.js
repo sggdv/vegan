@@ -45,9 +45,13 @@ function fullHtml(data) {
 }
 
 app.get('/:id', function (req, res) {
+	var id = req.params.id;
+
+	console.log('id=' + id);
+
 	(0, _request2.default)({
 		method: 'GET',
-		url: 'http://127.0.0.1:3002/instances/5728284b54b3ac461774eef1',
+		url: 'http://127.0.0.1:3002/instances/' + id,
 		json: true
 	}, function (err, apiRes, body) {
 		if (err) return res.status(500).send(err);
@@ -58,17 +62,18 @@ app.get('/:id', function (req, res) {
 
 app.post('/update', function (req, res) {
 	var instance = req.body;
+
 	var id = instance.id;
 	delete instance.id;
-	console.log(id);
-	console.log(instance);
+
 	(0, _request2.default)({
 		method: 'put',
 		url: 'http://127.0.0.1:3002/instances/' + id,
 		json: true,
 		body: instance
 	}, function (err, apiRes, body) {
-		console.log(err);
+		if (err) console.log(err);
+
 		res.json({});
 	});
 });

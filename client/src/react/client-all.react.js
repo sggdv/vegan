@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ClientBox from './client-box';
 
-let updateInstance = (template) => {
+function updateInstance(template) {
 	let data = instance;
 	data.template = template;
 	console.log('data');
@@ -20,7 +20,7 @@ let updateInstance = (template) => {
 			console.log(err);
 		},
 	});
-};
+}
 
 ReactDOM.render(
 	<ClientBox template={instance.template} callbackParent={updateInstance} />,

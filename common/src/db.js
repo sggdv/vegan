@@ -32,6 +32,7 @@ class Dao {
 	}
 
 	findOne(id, callback) {
+		console.log(`id=${id}`);
 		pool.acquire((err, db) => {
 			if (err) return callback(err);
 			let col = db.collection(this.target);

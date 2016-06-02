@@ -58,6 +58,7 @@ var Dao = function () {
 		value: function findOne(id, callback) {
 			var _this2 = this;
 
+			console.log('id=' + id);
 			pool.acquire(function (err, db) {
 				if (err) return callback(err);
 				var col = db.collection(_this2.target);

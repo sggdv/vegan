@@ -34,32 +34,38 @@ function fullHtml(data) {
 }
 
 app.get('/:id', (req, res) => {
+	const { id } = req.params;
+	console.log(`id=${id}`);
+
 	request({
 		method: 'GET',
-		url: 'http://127.0.0.1:3002/instances/5728284b54b3ac461774eef1',
+		url: 'http://127.0.0.1:3002/instances/' + id,
 		json: true
 	}, (err, apiRes, body) => {
 		if (err) return res.status(500).send(err);
 //		let dom = ReactDOMServer.renderToString(client(body));
 		res.send(fullHtml(JSON.stringify(body)));
 	});
+
 });
 
 app.post('/update', (req, res) => {
 	let instance = req.body;
-	let id = instance.id;
+
+	const id = instance.id;
 	delete instance.id;
-	console.log(id);
-	console.log(instance);
+
 	request({
 		method: 'put',
 		url: 'http://127.0.0.1:3002/instances/' + id,
 		json: true,
 		body: instance,
 	}, (err, apiRes, body) => {
-		console.log(err);
+		if (err) console.log(err);
+
 		res.json({});
 	});
+
 });
 
 app.listen(3001, () => console.log ('done'));

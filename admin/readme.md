@@ -43,3 +43,6 @@
 + 导出
 + Client端的输入限制
 
+## FIXME
+新建instance的时候，删除__react_key属性。该属性仅用于react-dnd的排序，是临时数据，无需进行存储。
+

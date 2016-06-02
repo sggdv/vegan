@@ -39,3 +39,6 @@ Client端
 
 + 查询 Instance
 + 修改 Instance
+
+## FIXME
+提交instance时，自动记录时间。
