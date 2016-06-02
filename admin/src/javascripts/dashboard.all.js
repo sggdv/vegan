@@ -5,7 +5,7 @@ import InstanceListBox from '../react/instance-list-page';
 import Footer from '../react/common/footer-box';
 
 ReactDOM.render(
-	<NavBox projectName="VEGAN" domId="content" />,
+	<NavBox projectName="VEGAN" />,
 	document.getElementById('nav')
 );
 

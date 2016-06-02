@@ -157,8 +157,13 @@ export default class TemplateBox extends Component {
 			}
 
 			template.remark = inputValue;
-			delete template.__react_key;
+			if (template.items) {
+				template.items.forEach((item) => {
+					delete item.__react_key;
+				});			
+			}
 
+			// 新增template
 			$.ajax({
 				type: 'POST',
 				contentType: 'application/json',
@@ -169,6 +174,9 @@ export default class TemplateBox extends Component {
 					swal('Nice', 'submit now', 'success');
 				},
 			});
+
+			// 修改template
+
 		});	
 
 	}
@@ -183,5 +191,10 @@ function generatorItem(items, type = ItemTypes.TEXT) {
 		options.push({ key: 1, value: '' });
 	}
 
-	return { name, type, __react_key, options };
+	let newItem = { name, type, __react_key, options };
+	if (newItem.options.length == 0) {
+		delete newItem.options;
+	}
+
+	return newItem;
 }

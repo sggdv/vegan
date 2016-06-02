@@ -31,6 +31,29 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var sidebar = {
+	position: 'fixed',
+	top: '51px',
+	bottom: 0,
+	left: 0,
+	zIndex: 1000,
+	display: 'block',
+	padding: '20px',
+	overflowX: 'hidden',
+	overflowY: 'auto',
+	backgroundColor: '#f5f5f5',
+	borderRight: '1px solid #eee'
+};
+var navSidebar = {
+	marginRight: '-21px',
+	marginBottom: '20px',
+	marginLeft: '-20px'
+};
+var main = {
+	paddingRight: '40px',
+	paddingLeft: '40px'
+};
+
 var InstanceListPage = function (_Component) {
 	_inherits(InstanceListPage, _Component);
 
@@ -67,9 +90,30 @@ var InstanceListPage = function (_Component) {
 			console.log(this.state.instances);
 			return _react2.default.createElement(
 				'div',
-				null,
-				_react2.default.createElement(_operation2.default, null),
-				_react2.default.createElement(_list2.default, { instances: this.state.instances })
+				{ className: 'row' },
+				_react2.default.createElement(
+					'div',
+					{ className: 'col-sm-2 col-md-1', style: sidebar },
+					_react2.default.createElement(
+						'ul',
+						{ className: 'nav', style: navSidebar },
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								'a',
+								{ href: '#' },
+								'Overview'
+							)
+						)
+					)
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'col-sm-10 col-sm-offset-2 col-md-11 col-md-offset-1', style: main },
+					_react2.default.createElement(_operation2.default, null),
+					_react2.default.createElement(_list2.default, { instances: this.state.instances })
+				)
 			);
 		}
 	}]);

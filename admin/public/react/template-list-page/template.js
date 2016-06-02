@@ -128,15 +128,20 @@ var Template = function (_Component) {
 						typeText = "";
 				}
 
-				var optionsDOM = options.map(function (opt) {
-					if (!opt || opt.value == '') return;
-					return _react2.default.createElement(
-						_reactBootstrap.Label,
-						{ style: spanStyle },
-						opt.value
-					);
-				});
+				var optionsDOM = [];
 
+				if (options) {
+					// 在type属性为TEXT的情况下，options是没有被定义的!
+					optionsDOM = options.map(function (opt) {
+						if (!opt || opt.value == '') return;
+
+						return _react2.default.createElement(
+							_reactBootstrap.Label,
+							{ style: spanStyle },
+							opt.value
+						);
+					});
+				}
 				return _react2.default.createElement(
 					'tr',
 					null,

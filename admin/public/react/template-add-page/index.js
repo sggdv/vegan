@@ -251,13 +251,20 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 				showLoaderOnConfirm: true
 			}, function (inputValue) {
 				if (inputValue === false) return false;
+
 				if (inputValue === '') {
 					_sweetalert2.default.showInputError('还没有输入备注哦！');
 					return false;
 				}
 
 				template.remark = inputValue;
+				if (template.items) {
+					template.items.forEach(function (item) {
+						delete item.__react_key;
+					});
+				}
 
+				// 新增template
 				_jquery2.default.ajax({
 					type: 'POST',
 					contentType: 'application/json',
@@ -268,6 +275,8 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 						(0, _sweetalert2.default)('Nice', 'submit now', 'success');
 					}
 				});
+
+				// 修改template
 			});
 		}
 	}]);
@@ -287,5 +296,10 @@ function generatorItem(items) {
 		options.push({ key: 1, value: '' });
 	}
 
-	return { name: name, type: type, __react_key: __react_key, options: options };
+	var newItem = { name: name, type: type, __react_key: __react_key, options: options };
+	if (newItem.options.length == 0) {
+		delete newItem.options;
+	}
+
+	return newItem;
 }

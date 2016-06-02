@@ -55378,7 +55378,7 @@ var _footerBox2 = _interopRequireDefault(_footerBox);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(_navBox2.default, { projectName: 'VEGAN', domId: 'content' }), document.getElementById('nav'));
+_reactDom2.default.render(_react2.default.createElement(_navBox2.default, { projectName: 'VEGAN' }), document.getElementById('nav'));
 
 _reactDom2.default.render(_react2.default.createElement(_instanceListPage2.default, null), document.getElementById('content'));
 
@@ -55719,9 +55719,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _reactBootstrap = require('react-bootstrap');
 
 var _instanceListPage = require('../instance-list-page');
 
@@ -55739,141 +55737,87 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Nav = function (_Component) {
-	_inherits(Nav, _Component);
-
-	function Nav(props) {
-		_classCallCheck(this, Nav);
-
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Nav).call(this, props));
-
-		_this.handleChange = _this.handleChange.bind(_this);
-		return _this;
-	}
-
-	_createClass(Nav, [{
-		key: 'render',
-		value: function render() {
-			var _props = this.props;
-			var active = _props.active;
-			var _props$nav = _props.nav;
-			var url = _props$nav.url;
-			var name = _props$nav.name;
-
-			var clzName = active ? 'active' : '';
-			return _react2.default.createElement(
-				'li',
-				{ className: clzName },
-				_react2.default.createElement(
-					'a',
-					{ href: url, onClick: this.handleChange },
-					name
-				)
-			);
-		}
-	}, {
-		key: 'handleChange',
-		value: function handleChange() {
-			var _props2 = this.props;
-			var nav = _props2.nav;
-			var callbackParent = _props2.callbackParent;
-			var index = _props2.index;
-
-			callbackParent(index);
-			if (nav.click) {
-				nav.click();
-			}
-		}
-	}]);
-
-	return Nav;
-}(_react.Component);
-
-var NavBox = function (_Component2) {
-	_inherits(NavBox, _Component2);
+var NavBox = function (_Component) {
+	_inherits(NavBox, _Component);
 
 	function NavBox(props) {
 		_classCallCheck(this, NavBox);
 
-		var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(NavBox).call(this, props));
-
-		var domId = _this2.props.domId;
-
-		_this2.state = {
-			navs: [{
-				name: '资料',
-				url: '#',
-				click: function click() {
-					console.log('资料');
-					_reactDom2.default.render(_react2.default.createElement(_instanceListPage2.default, null), document.getElementById(domId));
-				}
-			}, {
-				name: '表单',
-				url: '#',
-				click: function click() {
-					_reactDom2.default.render(_react2.default.createElement(_templateListPage2.default, null), document.getElementById(domId));
-				}
-			}, {
-				name: '偏好设置',
-				url: '#',
-				click: function click() {
-					console.log('偏好设置');
-				}
-			}],
-			activeNav: 0
-		};
-
-		_this2.handleNavChange = _this2.handleNavChange.bind(_this2);
-		return _this2;
+		return _possibleConstructorReturn(this, Object.getPrototypeOf(NavBox).call(this, props));
 	}
 
 	_createClass(NavBox, [{
 		key: 'render',
 		value: function render() {
-			var _this3 = this;
+			var projectName = this.props.projectName;
 
-			var navs = this.state.navs.map(function (nav, index) {
-				var active = index == _this3.state.activeNav;
-				return _react2.default.createElement(Nav, { nav: nav, index: index, active: active, callbackParent: _this3.handleNavChange });
-			}, this);
+
 			return _react2.default.createElement(
-				'nav',
-				{ className: 'navbar navbar-inverse navbar-fixed-top' },
+				_reactBootstrap.Navbar,
+				{ inverse: true, fixedTop: true, fluid: true },
 				_react2.default.createElement(
-					'div',
-					{ className: 'container' },
+					_reactBootstrap.Navbar.Header,
+					null,
 					_react2.default.createElement(
-						'div',
-						{ className: 'navbar-header' },
-						_react2.default.createElement(
-							'button',
-							{ type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#navbar', 'aria-expanded': 'false', 'aria-controls': 'navbar' },
-							_react2.default.createElement('span', { className: 'icon-bar' }),
-							_react2.default.createElement('span', { className: 'icon-bar' }),
-							_react2.default.createElement('span', { className: 'icon-bar' })
-						),
+						_reactBootstrap.Navbar.Brand,
+						null,
 						_react2.default.createElement(
 							'a',
-							{ className: 'navbar-brand', href: '#' },
-							this.props.projectName
+							{ href: '#' },
+							projectName
+						)
+					),
+					_react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
+				),
+				_react2.default.createElement(
+					_reactBootstrap.Navbar.Collapse,
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.Nav,
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.NavDropdown,
+							{ eventKey: 1, title: '资料' },
+							_react2.default.createElement(
+								_reactBootstrap.MenuItem,
+								null,
+								'待处理'
+							),
+							_react2.default.createElement(
+								_reactBootstrap.MenuItem,
+								null,
+								'归档'
+							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.NavItem,
+							{ eventKey: 2 },
+							'表单'
 						)
 					),
 					_react2.default.createElement(
-						'div',
-						{ id: 'navbar', className: 'collapse navbar-collapse' },
+						_reactBootstrap.Nav,
+						{ pullRight: true },
 						_react2.default.createElement(
-							'ul',
-							{ className: 'nav navbar-nav' },
-							navs
+							_reactBootstrap.NavItem,
+							{ eventKey: 1 },
+							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'bell' }),
+							' ',
+							_react2.default.createElement(
+								_reactBootstrap.Badge,
+								null,
+								'2'
+							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.NavItem,
+							{ eventKey: 2 },
+							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user' }),
+							' Kim'
 						)
 					)
 				)
 			);
-		}
-	}, {
-		key: 'handleNavChange',
-		value: function handleNavChange(index) {
-			this.setState({ activeNav: index });
 		}
 	}]);
 
@@ -55881,7 +55825,7 @@ var NavBox = function (_Component2) {
 }(_react.Component);
 
 exports.default = NavBox;
-},{"../instance-list-page":590,"../template-list-page":601,"react":566,"react-dom":386}],588:[function(require,module,exports){
+},{"../instance-list-page":590,"../template-list-page":601,"react":566,"react-bootstrap":343}],588:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -56072,6 +56016,29 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var sidebar = {
+	position: 'fixed',
+	top: '51px',
+	bottom: 0,
+	left: 0,
+	zIndex: 1000,
+	display: 'block',
+	padding: '20px',
+	overflowX: 'hidden',
+	overflowY: 'auto',
+	backgroundColor: '#f5f5f5',
+	borderRight: '1px solid #eee'
+};
+var navSidebar = {
+	marginRight: '-21px',
+	marginBottom: '20px',
+	marginLeft: '-20px'
+};
+var main = {
+	paddingRight: '40px',
+	paddingLeft: '40px'
+};
+
 var InstanceListPage = function (_Component) {
 	_inherits(InstanceListPage, _Component);
 
@@ -56108,9 +56075,30 @@ var InstanceListPage = function (_Component) {
 			console.log(this.state.instances);
 			return _react2.default.createElement(
 				'div',
-				null,
-				_react2.default.createElement(_operation2.default, null),
-				_react2.default.createElement(_list2.default, { instances: this.state.instances })
+				{ className: 'row' },
+				_react2.default.createElement(
+					'div',
+					{ className: 'col-sm-2 col-md-1', style: sidebar },
+					_react2.default.createElement(
+						'ul',
+						{ className: 'nav', style: navSidebar },
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								'a',
+								{ href: '#' },
+								'Overview'
+							)
+						)
+					)
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'col-sm-10 col-sm-offset-2 col-md-11 col-md-offset-1', style: main },
+					_react2.default.createElement(_operation2.default, null),
+					_react2.default.createElement(_list2.default, { instances: this.state.instances })
+				)
 			);
 		}
 	}]);
@@ -56160,24 +56148,23 @@ var Instance = function (_Component) {
 		key: 'render',
 		value: function render() {
 			var _props$instance = this.props.instance;
-			var vid = _props$instance.vid;
+			var email = _props$instance.email;
 			var _props$instance$templ = _props$instance.template;
 			var title = _props$instance$templ.title;
 			var items = _props$instance$templ.items;
-			var createTime = _props$instance.createTime;
+			var submitTime = _props$instance.submitTime;
 
+
+			var tmpDate = new Date();
+			tmpDate.setTime(submitTime);
+			var submitTimeFormat = tmpDate.toLocaleString();
 
 			var titleDOM = _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(_flagGroupBox2.default, null),
-				_react2.default.createElement(
-					_reactBootstrap.Button,
-					{ bsStyle: 'link', bsSize: 'sm' },
-					_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'cog' })
-				),
-				' # ',
-				vid
+				_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'envelope' }),
+				' ',
+				email
 			);
 
 			var itemsDOM = items.map(function (item) {
@@ -56206,7 +56193,22 @@ var Instance = function (_Component) {
 				{ sm: 6 },
 				_react2.default.createElement(
 					_reactBootstrap.Panel,
-					{ header: title, bsStyle: 'info' },
+					{ header: titleDOM, bsStyle: 'info' },
+					_react2.default.createElement(
+						_reactBootstrap.Row,
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ sm: 12 },
+							_react2.default.createElement(_flagGroupBox2.default, null),
+							_react2.default.createElement(
+								_reactBootstrap.Button,
+								{ bsStyle: 'link', bsSize: 'sm' },
+								_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'cog' })
+							)
+						)
+					),
+					_react2.default.createElement('hr', null),
 					_react2.default.createElement(
 						_reactBootstrap.Row,
 						null,
@@ -56222,7 +56224,7 @@ var Instance = function (_Component) {
 							{ sm: 6 },
 							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'time' }),
 							' ',
-							createTime
+							submitTimeFormat
 						)
 					),
 					_react2.default.createElement(
@@ -56651,13 +56653,20 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 				showLoaderOnConfirm: true
 			}, function (inputValue) {
 				if (inputValue === false) return false;
+
 				if (inputValue === '') {
 					_sweetalert2.default.showInputError('还没有输入备注哦！');
 					return false;
 				}
 
 				template.remark = inputValue;
+				if (template.items) {
+					template.items.forEach(function (item) {
+						delete item.__react_key;
+					});
+				}
 
+				// 新增template
 				_jquery2.default.ajax({
 					type: 'POST',
 					contentType: 'application/json',
@@ -56668,6 +56677,8 @@ var TemplateBox = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.
 						(0, _sweetalert2.default)('Nice', 'submit now', 'success');
 					}
 				});
+
+				// 修改template
 			});
 		}
 	}]);
@@ -56687,7 +56698,12 @@ function generatorItem(items) {
 		options.push({ key: 1, value: '' });
 	}
 
-	return { name: name, type: type, __react_key: __react_key, options: options };
+	var newItem = { name: name, type: type, __react_key: __react_key, options: options };
+	if (newItem.options.length == 0) {
+		delete newItem.options;
+	}
+
+	return newItem;
 }
 },{"../client-box":584,"../common/constants":585,"./item-box":595,"./option-generator":598,"./trash":600,"jquery":89,"react":566,"react-bootstrap":343,"react-dnd":377,"react-dnd-html5-backend":363,"sweetalert":576}],595:[function(require,module,exports){
 'use strict';
@@ -57800,15 +57816,20 @@ var Template = function (_Component) {
 						typeText = "";
 				}
 
-				var optionsDOM = options.map(function (opt) {
-					if (!opt || opt.value == '') return;
-					return _react2.default.createElement(
-						_reactBootstrap.Label,
-						{ style: spanStyle },
-						opt.value
-					);
-				});
+				var optionsDOM = [];
 
+				if (options) {
+					// 在type属性为TEXT的情况下，options是没有被定义的!
+					optionsDOM = options.map(function (opt) {
+						if (!opt || opt.value == '') return;
+
+						return _react2.default.createElement(
+							_reactBootstrap.Label,
+							{ style: spanStyle },
+							opt.value
+						);
+					});
+				}
 				return _react2.default.createElement(
 					'tr',
 					null,

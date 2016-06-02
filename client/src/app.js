@@ -51,6 +51,7 @@ app.get('/:id', (req, res) => {
 
 app.post('/update', (req, res) => {
 	let instance = req.body;
+	instance.submitTime = new Date().getTime();
 
 	const id = instance.id;
 	delete instance.id;

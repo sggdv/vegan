@@ -14,19 +14,19 @@ export default class Instance extends Component {
 	render() {
 		const { 
 			instance: {
-				vid, 
+				email, 
 				template: { title, items }, 
-				createTime
+				submitTime,
 			} 
 		} = this.props;
 
+		let tmpDate = new Date();
+		tmpDate.setTime(submitTime);
+		const submitTimeFormat = tmpDate.toLocaleString();
+
 		const titleDOM = (
 			<div>
-				<FlagGroupBox />
-				<Button bsStyle="link" bsSize="sm">
-					<Glyphicon glyph="cog" />
-				</Button>
-				&nbsp;# {vid}
+				<Glyphicon glyph="envelope" /> {email}
 			</div>
 		);
 
@@ -43,13 +43,22 @@ export default class Instance extends Component {
 
 		return (
 			<Col sm={6}>
-				<Panel header={title} bsStyle="info">
+				<Panel header={titleDOM} bsStyle="info">
+					<Row>
+						<Col sm={12}>
+							<FlagGroupBox />
+							<Button bsStyle="link" bsSize="sm">
+								<Glyphicon glyph="cog" />
+							</Button>
+						</Col>
+					</Row>
+					<hr />
 					<Row>
 						<Col sm={6}>
 							<Glyphicon glyph="list-alt" /> {title}  
 						</Col>
 						<Col sm={6}>
-							<Glyphicon glyph="time" /> {createTime}
+							<Glyphicon glyph="time" /> {submitTimeFormat}
 						</Col>
 					</Row>
 					<Table hover fill>

@@ -38,24 +38,23 @@ var Instance = function (_Component) {
 		key: 'render',
 		value: function render() {
 			var _props$instance = this.props.instance;
-			var vid = _props$instance.vid;
+			var email = _props$instance.email;
 			var _props$instance$templ = _props$instance.template;
 			var title = _props$instance$templ.title;
 			var items = _props$instance$templ.items;
-			var createTime = _props$instance.createTime;
+			var submitTime = _props$instance.submitTime;
 
+
+			var tmpDate = new Date();
+			tmpDate.setTime(submitTime);
+			var submitTimeFormat = tmpDate.toLocaleString();
 
 			var titleDOM = _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(_flagGroupBox2.default, null),
-				_react2.default.createElement(
-					_reactBootstrap.Button,
-					{ bsStyle: 'link', bsSize: 'sm' },
-					_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'cog' })
-				),
-				' # ',
-				vid
+				_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'envelope' }),
+				' ',
+				email
 			);
 
 			var itemsDOM = items.map(function (item) {
@@ -84,7 +83,22 @@ var Instance = function (_Component) {
 				{ sm: 6 },
 				_react2.default.createElement(
 					_reactBootstrap.Panel,
-					{ header: title, bsStyle: 'info' },
+					{ header: titleDOM, bsStyle: 'info' },
+					_react2.default.createElement(
+						_reactBootstrap.Row,
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ sm: 12 },
+							_react2.default.createElement(_flagGroupBox2.default, null),
+							_react2.default.createElement(
+								_reactBootstrap.Button,
+								{ bsStyle: 'link', bsSize: 'sm' },
+								_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'cog' })
+							)
+						)
+					),
+					_react2.default.createElement('hr', null),
 					_react2.default.createElement(
 						_reactBootstrap.Row,
 						null,
@@ -100,7 +114,7 @@ var Instance = function (_Component) {
 							{ sm: 6 },
 							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'time' }),
 							' ',
-							createTime
+							submitTimeFormat
 						)
 					),
 					_react2.default.createElement(

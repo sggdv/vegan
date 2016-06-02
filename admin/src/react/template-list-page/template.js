@@ -92,12 +92,15 @@ export default class Template extends Component {
 					typeText = "";
 			}
 
-			const optionsDOM = options.map((opt) => {
-				if (!opt || opt.value == '') 
-					return;
-				return (<Label style={spanStyle}>{opt.value}</Label>);
-			});
+			let optionsDOM = [];
+			
+			if (options) { // 在type属性为TEXT的情况下，options是没有被定义的!
+				optionsDOM = options.map((opt) => {
+					if (!opt || opt.value == '') return;
 
+					return (<Label style={spanStyle}>{opt.value}</Label>);
+				});
+			}
 			return (
 				<tr>
 					<td>{name}</td>

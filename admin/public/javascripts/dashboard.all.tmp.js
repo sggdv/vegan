@@ -22,7 +22,7 @@ var _footerBox2 = _interopRequireDefault(_footerBox);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(_navBox2.default, { projectName: 'VEGAN', domId: 'content' }), document.getElementById('nav'));
+_reactDom2.default.render(_react2.default.createElement(_navBox2.default, { projectName: 'VEGAN' }), document.getElementById('nav'));
 
 _reactDom2.default.render(_react2.default.createElement(_instanceListPage2.default, null), document.getElementById('content'));
 
