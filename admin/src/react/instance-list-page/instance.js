@@ -7,8 +7,20 @@ import {
 	Panel,
 	Table,
 } from 'react-bootstrap';
+import { DragSource } from 'react-dnd';
 import FlagGroupBox from './flag-group-box';
 
+const source = {
+	beginDrag(props) {
+		return {};
+	}
+};
+
+@DragSource('Instance', source, (connect, monitor) => ({
+	connectDragSource: connect.dragSource(),
+	connectDragPreview: connect.dragPreview(),
+	isDragging: monitor.isDragging(),
+}))
 export default class Instance extends Component {
 
 	render() {
@@ -17,15 +29,18 @@ export default class Instance extends Component {
 				email, 
 				template: { title, items }, 
 				submitTime,
-			} 
+			}, 
+			connectDragSource,
+			connectDragPreview,
+			isDragging, 
 		} = this.props;
 
 		let tmpDate = new Date();
 		tmpDate.setTime(submitTime);
 		const submitTimeFormat = tmpDate.toLocaleString();
 
-		const titleDOM = (
-			<div>
+		const titleDOM = connectDragSource(
+			<div style={{ cursor: 'move' }}>
 				<Glyphicon glyph="envelope" /> {email}
 			</div>
 		);
@@ -41,7 +56,9 @@ export default class Instance extends Component {
 			);
 		});
 
-		return (
+		const opacity = isDragging ? 0 : 1;
+		return connectDragPreview(
+			<div style={{opacity}}>
 			<Col sm={6}>
 				<Panel header={titleDOM} bsStyle="info">
 					<Row>
@@ -74,6 +91,7 @@ export default class Instance extends Component {
 					</Table>
 				</Panel>
 			</Col>
+			</div>
 		);
 	}
 

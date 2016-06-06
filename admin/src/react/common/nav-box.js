@@ -7,6 +7,9 @@ import {
 	MenuItem,
 	Glyphicon,
 	Badge,
+	FormGroup,
+	FormControl,
+	Button,
 } from 'react-bootstrap';
 import InstanceListBox from '../instance-list-page';
 import TemplateListBox from '../template-list-page';
@@ -24,16 +27,13 @@ export default class NavBox extends Component {
 			<Navbar inverse fixedTop fluid>
 				<Navbar.Header>
 					<Navbar.Brand>
-						<a href="#">{projectName}</a>
+						<a href="/">{projectName}</a>
 					</Navbar.Brand>
 					<Navbar.Toggle />
 				</Navbar.Header>
 				<Navbar.Collapse>
 					<Nav>
-						<NavDropdown eventKey={1} title="资料">
-							<MenuItem>待处理</MenuItem>
-							<MenuItem>归档</MenuItem>
-						</NavDropdown>
+						<NavItem eventKey={1}>资料</NavItem>
 						<NavItem eventKey={2}>表单</NavItem>
 					</Nav>
 					<Nav pullRight>
@@ -44,6 +44,15 @@ export default class NavBox extends Component {
 							<Glyphicon glyph="user" /> Kim
 						</NavItem>
 					</Nav>
+					<Navbar.Form pullRight>
+						<FormGroup>
+							<FormControl />
+						</FormGroup>
+						{' '}
+						<Button>
+							<Glyphicon glyph="search" /> 搜索
+						</Button>
+					</Navbar.Form>
 				</Navbar.Collapse>
 			</Navbar>
 		);

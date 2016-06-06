@@ -7,17 +7,23 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _dec, _class;
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactBootstrap = require('react-bootstrap');
+
+var _reactDnd = require('react-dnd');
+
+var _reactDndHtml5Backend = require('react-dnd-html5-backend');
+
+var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
+
 var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
-
-var _operation = require('./operation');
-
-var _operation2 = _interopRequireDefault(_operation);
 
 var _list = require('./list');
 
@@ -54,7 +60,7 @@ var main = {
 	paddingLeft: '40px'
 };
 
-var InstanceListPage = function (_Component) {
+var InstanceListPage = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default), _dec(_class = function (_Component) {
 	_inherits(InstanceListPage, _Component);
 
 	function InstanceListPage(props) {
@@ -62,9 +68,15 @@ var InstanceListPage = function (_Component) {
 
 		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InstanceListPage).call(this, props));
 
-		_this.state = { instances: [] };
+		_this.state = {
+			instances: [],
+			inbox: true,
+			tags: false
+		};
 
 		_this.componentDidMount = _this.componentDidMount.bind(_this);
+		_this.handleInboxClick = _this.handleInboxClick.bind(_this);
+		_this.handleTagsClick = _this.handleTagsClick.bind(_this);
 		return _this;
 	}
 
@@ -85,15 +97,52 @@ var InstanceListPage = function (_Component) {
 			});
 		}
 	}, {
+		key: 'handleInboxClick',
+		value: function handleInboxClick() {
+			var _state = this.state;
+			var inbox = _state.inbox;
+			var tags = _state.tags;
+
+			inbox = !inbox;
+			if (inbox) {
+				tags = false;
+			}
+			this.setState({ inbox: inbox, tags: tags });
+		}
+	}, {
+		key: 'handleTagsClick',
+		value: function handleTagsClick() {
+			var _state2 = this.state;
+			var inbox = _state2.inbox;
+			var tags = _state2.tags;
+
+			tags = !tags;
+			if (tags) {
+				inbox = false;
+			}
+			this.setState({ inbox: inbox, tags: tags });
+		}
+	}, {
 		key: 'render',
 		value: function render() {
-			console.log(this.state.instances);
+			var _state3 = this.state;
+			var inbox = _state3.inbox;
+			var tags = _state3.tags;
+
+			var inboxStyle = inbox ? 'primary' : 'default';
+			var tagsStyle = tags ? 'primary' : 'default';
+
+			var pageHeaderText = inbox ? '待处理资料' : '所有资料';
+			if (!inbox) {
+				pageHeaderText = tags ? '已归档资料' : pageHeaderText;
+			}
+
 			return _react2.default.createElement(
 				'div',
 				{ className: 'row' },
 				_react2.default.createElement(
 					'div',
-					{ className: 'col-sm-2 col-md-1', style: sidebar },
+					{ className: 'col-sm-2 col-md-1 text-center', style: sidebar },
 					_react2.default.createElement(
 						'ul',
 						{ className: 'nav', style: navSidebar },
@@ -101,9 +150,27 @@ var InstanceListPage = function (_Component) {
 							'li',
 							null,
 							_react2.default.createElement(
-								'a',
-								{ href: '#' },
-								'Overview'
+								_reactBootstrap.Button,
+								{ bsSize: 'lg', bsStyle: inboxStyle, onClick: this.handleInboxClick },
+								_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'inbox' })
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								_reactBootstrap.Button,
+								{ bsSize: 'lg', bsStyle: tagsStyle, onClick: this.handleTagsClick },
+								_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'tags' })
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							null,
+							_react2.default.createElement(
+								_reactBootstrap.Button,
+								{ bsSize: 'lg' },
+								_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'trash' })
 							)
 						)
 					)
@@ -111,7 +178,11 @@ var InstanceListPage = function (_Component) {
 				_react2.default.createElement(
 					'div',
 					{ className: 'col-sm-10 col-sm-offset-2 col-md-11 col-md-offset-1', style: main },
-					_react2.default.createElement(_operation2.default, null),
+					_react2.default.createElement(
+						_reactBootstrap.PageHeader,
+						null,
+						pageHeaderText
+					),
 					_react2.default.createElement(_list2.default, { instances: this.state.instances })
 				)
 			);
@@ -119,6 +190,5 @@ var InstanceListPage = function (_Component) {
 	}]);
 
 	return InstanceListPage;
-}(_react.Component);
-
+}(_react.Component)) || _class);
 exports.default = InstanceListPage;

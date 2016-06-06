@@ -7,11 +7,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _dec, _class;
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = require('react-bootstrap');
+
+var _reactDnd = require('react-dnd');
 
 var _flagGroupBox = require('./flag-group-box');
 
@@ -25,7 +29,19 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Instance = function (_Component) {
+var source = {
+	beginDrag: function beginDrag(props) {
+		return {};
+	}
+};
+
+var Instance = (_dec = (0, _reactDnd.DragSource)('Instance', source, function (connect, monitor) {
+	return {
+		connectDragSource: connect.dragSource(),
+		connectDragPreview: connect.dragPreview(),
+		isDragging: monitor.isDragging()
+	};
+}), _dec(_class = function (_Component) {
 	_inherits(Instance, _Component);
 
 	function Instance() {
@@ -37,25 +53,29 @@ var Instance = function (_Component) {
 	_createClass(Instance, [{
 		key: 'render',
 		value: function render() {
-			var _props$instance = this.props.instance;
+			var _props = this.props;
+			var _props$instance = _props.instance;
 			var email = _props$instance.email;
 			var _props$instance$templ = _props$instance.template;
 			var title = _props$instance$templ.title;
 			var items = _props$instance$templ.items;
 			var submitTime = _props$instance.submitTime;
+			var connectDragSource = _props.connectDragSource;
+			var connectDragPreview = _props.connectDragPreview;
+			var isDragging = _props.isDragging;
 
 
 			var tmpDate = new Date();
 			tmpDate.setTime(submitTime);
 			var submitTimeFormat = tmpDate.toLocaleString();
 
-			var titleDOM = _react2.default.createElement(
+			var titleDOM = connectDragSource(_react2.default.createElement(
 				'div',
-				null,
+				{ style: { cursor: 'move' } },
 				_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'envelope' }),
 				' ',
 				email
-			);
+			));
 
 			var itemsDOM = items.map(function (item) {
 				var name = item.name;
@@ -78,78 +98,82 @@ var Instance = function (_Component) {
 				);
 			});
 
-			return _react2.default.createElement(
-				_reactBootstrap.Col,
-				{ sm: 6 },
+			var opacity = isDragging ? 0 : 1;
+			return connectDragPreview(_react2.default.createElement(
+				'div',
+				{ style: { opacity: opacity } },
 				_react2.default.createElement(
-					_reactBootstrap.Panel,
-					{ header: titleDOM, bsStyle: 'info' },
+					_reactBootstrap.Col,
+					{ sm: 6 },
 					_react2.default.createElement(
-						_reactBootstrap.Row,
-						null,
+						_reactBootstrap.Panel,
+						{ header: titleDOM, bsStyle: 'info' },
 						_react2.default.createElement(
-							_reactBootstrap.Col,
-							{ sm: 12 },
-							_react2.default.createElement(_flagGroupBox2.default, null),
-							_react2.default.createElement(
-								_reactBootstrap.Button,
-								{ bsStyle: 'link', bsSize: 'sm' },
-								_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'cog' })
-							)
-						)
-					),
-					_react2.default.createElement('hr', null),
-					_react2.default.createElement(
-						_reactBootstrap.Row,
-						null,
-						_react2.default.createElement(
-							_reactBootstrap.Col,
-							{ sm: 6 },
-							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'list-alt' }),
-							' ',
-							title
-						),
-						_react2.default.createElement(
-							_reactBootstrap.Col,
-							{ sm: 6 },
-							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'time' }),
-							' ',
-							submitTimeFormat
-						)
-					),
-					_react2.default.createElement(
-						_reactBootstrap.Table,
-						{ hover: true, fill: true },
-						_react2.default.createElement(
-							'thead',
+							_reactBootstrap.Row,
 							null,
 							_react2.default.createElement(
-								'tr',
-								null,
+								_reactBootstrap.Col,
+								{ sm: 12 },
+								_react2.default.createElement(_flagGroupBox2.default, null),
 								_react2.default.createElement(
-									'th',
-									null,
-									'名称'
-								),
-								_react2.default.createElement(
-									'th',
-									null,
-									'值'
+									_reactBootstrap.Button,
+									{ bsStyle: 'link', bsSize: 'sm' },
+									_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'cog' })
 								)
 							)
 						),
+						_react2.default.createElement('hr', null),
 						_react2.default.createElement(
-							'tbody',
+							_reactBootstrap.Row,
 							null,
-							itemsDOM
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ sm: 6 },
+								_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'list-alt' }),
+								' ',
+								title
+							),
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ sm: 6 },
+								_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'time' }),
+								' ',
+								submitTimeFormat
+							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.Table,
+							{ hover: true, fill: true },
+							_react2.default.createElement(
+								'thead',
+								null,
+								_react2.default.createElement(
+									'tr',
+									null,
+									_react2.default.createElement(
+										'th',
+										null,
+										'名称'
+									),
+									_react2.default.createElement(
+										'th',
+										null,
+										'值'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'tbody',
+								null,
+								itemsDOM
+							)
 						)
 					)
 				)
-			);
+			));
 		}
 	}]);
 
 	return Instance;
-}(_react.Component);
-
+}(_react.Component)) || _class);
 exports.default = Instance;

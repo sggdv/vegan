@@ -55,7 +55,7 @@ var NavBox = function (_Component) {
 						null,
 						_react2.default.createElement(
 							'a',
-							{ href: '#' },
+							{ href: '/' },
 							projectName
 						)
 					),
@@ -68,18 +68,9 @@ var NavBox = function (_Component) {
 						_reactBootstrap.Nav,
 						null,
 						_react2.default.createElement(
-							_reactBootstrap.NavDropdown,
-							{ eventKey: 1, title: '资料' },
-							_react2.default.createElement(
-								_reactBootstrap.MenuItem,
-								null,
-								'待处理'
-							),
-							_react2.default.createElement(
-								_reactBootstrap.MenuItem,
-								null,
-								'归档'
-							)
+							_reactBootstrap.NavItem,
+							{ eventKey: 1 },
+							'资料'
 						),
 						_react2.default.createElement(
 							_reactBootstrap.NavItem,
@@ -106,6 +97,22 @@ var NavBox = function (_Component) {
 							{ eventKey: 2 },
 							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user' }),
 							' Kim'
+						)
+					),
+					_react2.default.createElement(
+						_reactBootstrap.Navbar.Form,
+						{ pullRight: true },
+						_react2.default.createElement(
+							_reactBootstrap.FormGroup,
+							null,
+							_react2.default.createElement(_reactBootstrap.FormControl, null)
+						),
+						' ',
+						_react2.default.createElement(
+							_reactBootstrap.Button,
+							null,
+							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' }),
+							' 搜索'
 						)
 					)
 				)
